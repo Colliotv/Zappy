@@ -1,5 +1,4 @@
 #ignore all
-*
 # designore compile files
 !*.c
 !*.cpp
