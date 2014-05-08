@@ -1,21 +1,17 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+#ignore all
+*
+# designore compile files
+!*.c
+!*.cpp
+!*.h
+!*.hh
+!*.hpp
+# designore auteur
+!auteur
+# designore Makefile
+!Makefile
+# designore 
+!.gitignore
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+# README just in case
+!README
