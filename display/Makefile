@@ -1,34 +1,32 @@
-CC = g++
 
-RM = rm -f
+NAME   		= 	zappy
 
-CFLAGS += -Wextra -Wall -Werror
-CFLAGS += -ansi -pedantic
-CFLAGS += -I.
+SRCS    	= 	./sources/main.cpp \
 
-LDFLAGS =
+OBJS    	= 	$(SRCS:.cpp=.o)
 
-NAME = binaire_sfml
+CC      	= 	g++
 
-SRCS = main.cpp
+RM      	= 	rm -f
 
-JS = $(SRCS:.c=.o)
+CXXFLAGS  	+=	-Wextra -Wall -I./includes
 
-#all: $(NAME)
+LIBSFLAGS	+=	-I./sfml/branches/sfml2
+LIBSFLAGS	+=	-L./sfml/trunk/lib -lsfml-graphics -lsfml-window -lsfml-system
 
-all:
-		g++ -c main.cpp -I./sfml/branches/sfml2/
-		g++ main.o -o $(NAME) -L./sfml/trunk/lib -lsfml-graphics -lsfml-window -lsfml-system
+all: 		$(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+$(NAME): 	$(OBJS)
+			$(CC) -o $(NAME) $(OBJS) $(CXXFLAGS) $(LIBSFLAGS)
 
 clean:
-	$(RM) $(OBJS)
+			$(RM) $(OBJS)
 
-fclean: clean
-	$(RM) $(NAME)
 
-re: fclean all
+fclean: 	clean
+			$(RM) $(NAME)
 
-.PHONY: all clean fclean re
+
+re: 		fclean all
+
+.PHONY: 	all clean fclean re
