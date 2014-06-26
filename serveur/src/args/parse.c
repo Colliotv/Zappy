@@ -1,8 +1,12 @@
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+
 #include "argues.h"
 #include "lerror.h"
 
 static void	fillin(struct args* this,
-		       argsType	opt, int *itt, char* args){
+		       enum argsType	opt, int *itt, char** args){
   if (opt == port)
     this->port = atoi(args[*itt]);
   if (opt == X)
@@ -81,9 +85,9 @@ struct args*	getArgs(int ac, char** av){
     lerror(MEMORY_ERROR(strlen(ARGS)));
   itt = 0;
   bzero((this->initialized), sizeof(bool) * ARGSNUM);
-  while ((syntax[i] = strsep(pre_syntax, "|")) != NULL)
-    i++;
-  syntax[i] = pre_syntax;
+  while ((syntax[itt] = strsep(&pre_syntax, "|")) != NULL)
+    itt++;
+  syntax[itt] = pre_syntax;
   this->names = NULL;
   fillArgs(this, syntax, av, ac);
   free(pre_syntax);

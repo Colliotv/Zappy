@@ -9,5 +9,5 @@ void	lerror(const char*, ... );
 # define MEMORY_ERROR(size) "memory allocation fail on %u bytes\n", size
 
 # define NAMES_UNITIALIZED "ERROR: teams name non-initialized, process will quit\n"
-
+# define WRONG_ARGUES_NUMBER "ERROR: non-matching arguments parameter\n"
 #endif

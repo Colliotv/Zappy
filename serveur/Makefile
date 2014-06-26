@@ -5,17 +5,17 @@ RM	= rm -f
 
 SRC	=
 INC	= -I ./includes
-
 ###############
-
+#### ARGUES ####
+ARGUES	= src/args/parse.c
 ###############
-SRC = 
+SRC = $(ARGUES)
 
 FLAGS	= -W -Wall -Wextra $(INC)
 CFLAGS	= $(FLAGS)
 LDFLAGS	=
 
-OBJ		= $(SRC:.cpp=.o)
+OBJ		= $(SRC:.c=.o)
 
 all: $(NAME)
 
