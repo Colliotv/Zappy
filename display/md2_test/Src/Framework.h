@@ -1,11 +1,11 @@
 #ifndef _GLFRAMEWORK
 #define _GLFRAMEWORK
 
-#include <GL/glfw.h>
+//#include "glfw.h"
+#include <GLFW/glfw3.h>
 
 // Functions
-void FlipBuffers();
-void Render();
+void Render(GLFWwindow* window);
 
 // A struct to hold mouse data
 struct MouseInfo
@@ -23,7 +23,7 @@ extern MouseInfo Mouse; // Mouse monitor
 // uppercase characters for characer keys - 'X' is the x key for
 // example.
 const unsigned int
-  VK_ESCAPE = GLFW_KEY_ESC,
+  VK_ESCAPE = GLFW_KEY_ESCAPE,
   VK_RETURN = GLFW_KEY_ENTER,
   VK_SPACE = GLFW_KEY_SPACE,
   VK_UP = GLFW_KEY_UP,
@@ -33,6 +33,6 @@ const unsigned int
   VK_HOME = GLFW_KEY_HOME,
   VK_END = GLFW_KEY_END,
   VK_INSERT = GLFW_KEY_INSERT,
-  VK_DELETE = GLFW_KEY_DEL;
+  VK_DELETE = GLFW_KEY_DELETE;
 
 #endif

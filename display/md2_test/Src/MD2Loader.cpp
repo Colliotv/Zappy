@@ -1,5 +1,5 @@
-#include "MD2Loader.h"
 
+#include "MD2Loader.h"
 
 MD2Obj::MD2Obj()
 	{
