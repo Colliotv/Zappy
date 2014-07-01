@@ -1,14 +1,14 @@
 #ifndef __RESSOURCE_H__
+# define __RESSOURCE_H__
 
 typedef enum eRessource{
-  linemate,
+  linemate = 0,
   deraumere,
   sibur,
   mendiane,
   phiras,
-  thystane
-} Ressource;
-
-char*	ressourceName(Ressource);
+  thystane,
+  ressourceLength
+} ressource;
 
 #endif

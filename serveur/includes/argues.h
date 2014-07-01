@@ -11,6 +11,7 @@
 # define BASE_Y 100
 # define BASE_NBY 1
 # define BASE_TIME 10
+# define BASE_POND 10
 
 struct nameNode{
   struct nameNode* next;
@@ -31,12 +32,12 @@ struct args{
 };
 
 enum argsType {
-  port,
+  port = 0,
   X,
   Y,
   names,
   nByTeams,
-  time
+  atime
 };
 
 char* getName(enum argsType);

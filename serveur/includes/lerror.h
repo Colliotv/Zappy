@@ -5,6 +5,8 @@
 
 void	lerror(const char*, ... );
 
+# define FUNCTION_ERROR(function_name)  "error for %s: cause is %m\n", function_name
+
 # define MEMORY_ERROR_UNSPECIFIED "memory allocation fail\n"
 # define MEMORY_ERROR(size) "memory allocation fail on %u bytes\n", size
 
