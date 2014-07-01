@@ -1,7 +1,8 @@
 
 NAME   		= 	zappy
 
-SRCS    	= 	./sources/main.cpp \
+SRCS    	= 	./sources/menu/main.cpp \
+				./sources/menu/Menu.cpp \
 
 OBJS    	= 	$(SRCS:.cpp=.o)
 
@@ -9,10 +10,11 @@ CC      	= 	g++
 
 RM      	= 	rm -f
 
-CXXFLAGS  	+=	-Wextra -Wall -I./includes
+CXXFLAGS  	+=	-Wextra -Wall -I./includes --std=c++11
 
 LIBSFLAGS	+=	-I./sfml/branches/sfml2
-LIBSFLAGS	+=	-L./sfml/trunk/lib -lsfml-graphics -lsfml-window -lsfml-system
+LIBSFLAGS	+=	-L./sfml/trunk/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+LIBSFLAGS	+=	-L./GLEW/libGLEW.so.1.9.0
 
 all: 		$(NAME)
 
@@ -21,7 +23,6 @@ $(NAME): 	$(OBJS)
 
 clean:
 			$(RM) $(OBJS)
-
 
 fclean: 	clean
 			$(RM) $(NAME)
