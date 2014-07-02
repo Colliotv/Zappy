@@ -2,15 +2,14 @@
 
 import os, sys
 import socket
-from serv_message import *
 from iaClass import *
 
-def lvl1(connexion):
+def lvl1(ia):
 	up = 0
 	linemate = 0
 	while (up != 1):
-		voir(connexion)
-		print(listv)
+		ia.voir()
+		print(ia.listVoir)
 	return 0
 	
 def main():
@@ -23,6 +22,8 @@ def main():
 		while (ia.lvl != 8):
 			ia.avance()
 			print(ia.lvl)
+			if (ia.lvl == 1):
+				lvl1(ia)
 
 if __name__ == '__main__':
 	main()

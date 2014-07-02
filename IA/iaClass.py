@@ -110,6 +110,7 @@ class iaClass:
 	
 	def voir(self):
 		self.connexion.send(b"voir\n")
+		msg_recu = ""
 		while (msg_recu[0] != '{'):
 			msg_recu = self.connexion.recv(1024).decode()
 		self.listVoir = msg_recu.split(',')
