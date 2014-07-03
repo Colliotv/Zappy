@@ -78,23 +78,32 @@ def findResources(ia, obj):
 	return -1
 
 def getCloser(ia, position):
-	if (2 <= int(position) <= 4):
+	int(position) = pos
+	if (2 <= pos <= 4):
 		ia.gauche()
 		ia.avance()
-		print(" 2-3-4")
-	elif (6 <= int(position) <= 8):
+		if pos == 2:
+			ia.droite()
+			ia.avance()
+		elif pos == 4:
+			ia.gauche()
+			ia.avance()
+	elif (6 <= pos <= 8):
 		ia.droite()
 		ia.avance()
-		print(" 6-7-8")
-	else:
-		if (int(position) == 1):
+		if pos == 6:
+			ia.droite()
 			ia.avance()
-			print("1")
+		elif pos == 8:
+			ia.gauche()
+			ia.avance()
+	else:
+		if (pos == 1):
+			ia.avance()
 		else:
 			ia.droite()
 			ia.droite()
 			ia.avance()
-			print(" 5")
 	return 0
 
 def lvl2(ia):
@@ -110,4 +119,5 @@ def lvl2(ia):
 def checkMsg(ia):
 	for msg in ia.listMsgRecv:
 		if msg[:8] == "message ":
-			getCloser(ia, msg[8])
+			if msg[10:] == "stop" and msg[15] == ia.lvl:
+				getCloser(ia, msg[8])

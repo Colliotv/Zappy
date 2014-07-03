@@ -1,5 +1,6 @@
 import os, sys
 import socket
+from lvl2 import *
 
 class iaClass:
 	def __init__(self):
@@ -31,6 +32,7 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.append(msg_recu)
 			self.nbMsg += 1
+			checkMsg(self)
 
 	def droite(self):
 		self.connexion.send(b"droite\n")
@@ -39,6 +41,7 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.append(msg_recu)
 			self.nbMsg += 1
+			checkMsg(self)
 
 	def gauche(self):
 		self.connexion.send(b"gauche\n")
@@ -47,6 +50,7 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.append(msg_recu)
 			self.nbMsg += 1
+			checkMsg(self)
 
 	def prend(self, objet):
 		prend = "prend " + objet + '\n'
@@ -56,6 +60,7 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()		
 			self.listMsgRecv.append(msg_recu)
 			self.nbMsg += 1
+			checkMsg(self)
 		if msg_recu == "ok\n":
 			return 0
 		return -1
@@ -68,6 +73,7 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.append(msg_recu)
 			self.nbMsg += 1
+			checkMsg(self)
 
 	def expulse(self):
 		self.connexion.send(b"expulse\n")
@@ -76,6 +82,7 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.append(msg_recu)
 			self.nbMsg += 1
+			checkMsg(self)
 
 
 	def broadcast(self, msg):
@@ -86,6 +93,7 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.append(msg_recu)
 			self.nbMsg += 1
+			checkMsg(self)
 
 	def incantation(self):
 		self.connexion.send("incantation\n".encode())
