@@ -1,16 +1,38 @@
-#ignore all
-# designore compile files
-!*.c
-!*.cpp
-!*.h
-!*.hh
-!*.hpp
-# designore auteur
-!auteur
-# designore Makefile
-!Makefile
-# designore 
 !.gitignore
 
-# README just in case
-!README
+#ignore all
+*
+
+#unginore folder
+!*/
+
+#unignore compile
+!*.cpp
+!*.cc
+!*.c
+!*.hpp
+!*.hh
+!*.h
+!Makefile
+
+#unignore gdl_libs
+!*.a
+!*.so
+!libfbxsdk.a
+!libfbxsdk.so
+!libgdl_gl.a
+!libGLEW.a
+!libSDL2.a
+!libSDL2main.a
+
+#unignore 3d and texture
+!*.tga
+!*.FBX
+!*.max
+
+#unignore auteur
+!auteur
+
+#unignore readme (just in case)
+!readme*
+!README*
