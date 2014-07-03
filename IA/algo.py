@@ -78,7 +78,10 @@ def findResources(ia, obj):
 
 def getCloser(ia, position):
 	pos = int(position)
+	if (pos == 0):
+		return 1
 	if (2 <= pos <= 4):
+		print("la")
 		ia.gauche()
 		ia.avance()
 		if pos == 2:
@@ -114,22 +117,35 @@ def checkNourriture(ia):
 	else:
 		return 0
 
+def checkIncantation(ia):
+	return -1
+
 def algo(ia):
 	up = 1
 	while (up != 2):
+		ia.inventaire()
 		if checkNourriture(ia) == -1:
 			while ia.food < 10:
 				checkNourriture(ia)
 				findResources(ia, "nourriture")
-			ia.mode = "search"
-		while ia.mode == "seargit pch":
+		#if checkIncatation(ia) == 0:
+		#	ia.incantation()
+		checkCalled(ia)
+		while ia.mode == "search":
 			if findResources(ia, "linemate") == 1:
 				ia.mode = "findOther"
-		#ia.avance()
 	return 0
 
-def checkMsg(ia):
+def checkCalled(ia):
 	for msg in ia.listMsgRecv:
 		if msg[:8] == "message ":
-			if msg[10:] == "stop" and msg[15] == ia.lvl:
-				getCloser(ia, msg[8])
+			print(msg[8])
+			if msg[10:14] == "stop" and int(msg[15]) == ia.lvl:
+				ia.mode = "comming"
+				while getCloser(ia, msg[8]) != 1:
+					ia.inventaire()
+					if checkNourriture(ia) == -1:
+						while ia.food < 10:
+							checkNourriture(ia)
+							findResources(ia, "nourriture")
+	return -1

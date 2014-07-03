@@ -38,27 +38,25 @@ class iaClass:
 		msg_recu = ""
 		while (msg_recu != "ok\n"):
 			msg_recu = self.connexion.recv(1024).decode()
-			self.listMsgRecv.append(msg_recu)
+			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
-			checkMsg(self)
+			checkCalled(self)
 
 	def droite(self):
 		self.connexion.send(b"droite\n")
 		msg_recu = ""
 		while (msg_recu != "ok\n"):
 			msg_recu = self.connexion.recv(1024).decode()
-			self.listMsgRecv.append(msg_recu)
+			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
-			checkMsg(self)
 
 	def gauche(self):
 		self.connexion.send(b"gauche\n")
 		msg_recu = ""
 		while (msg_recu != "ok\n"):
 			msg_recu = self.connexion.recv(1024).decode()
-			self.listMsgRecv.append(msg_recu)
+			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
-			checkMsg(self)
 
 	def prend(self, objet):
 		prend = "prend " + objet + '\n'
@@ -66,9 +64,9 @@ class iaClass:
 		msg_recu = ""
 		while (msg_recu != "ok\n" and msg_recu != "ko\n"):
 			msg_recu = self.connexion.recv(1024).decode()		
-			self.listMsgRecv.append(msg_recu)
+			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
-			checkMsg(self)
+			checkCalled(self)
 		if msg_recu == "ok\n":
 			return 0
 		return -1
@@ -79,18 +77,18 @@ class iaClass:
 		msg_recu = ""
 		while (msg_recu != "ok\n" and msg_recu != "ko\n"):
 			msg_recu = self.connexion.recv(1024).decode()
-			self.listMsgRecv.append(msg_recu)
+			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
-			checkMsg(self)
+			checkCalled(self)
 
 	def expulse(self):
 		self.connexion.send(b"expulse\n")
 		msg_recu = ""
 		while (msg_recu != "ok\n" and msg_recu != "ko\n"):
 			msg_recu = self.connexion.recv(1024).decode()
-			self.listMsgRecv.append(msg_recu)
+			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
-			checkMsg(self)
+			checkCalled(self)
 
 
 	def broadcast(self, msg):
@@ -99,21 +97,21 @@ class iaClass:
 		msg_recu = ""
 		while (msg_recu != "ok\n"):
 			msg_recu = self.connexion.recv(1024).decode()
-			self.listMsgRecv.append(msg_recu)
+			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
-			checkMsg(self)
+			checkCalled(self)
 
 	def incantation(self):
 		self.connexion.send("incantation\n".encode())
 		msg_recu = ""
 		while (msg_recu != "elevation en cours\n" and msg_recu != "ko"):
 			msg_recu = self.connexion.recv(1024).decode()
-			self.listMsgRecv.append(msg_recu)
+			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
 			if (msg_recu != "ko"):
 				while(msg_recu[:15] != "niveau actuel :"):
 					msg_recu = self.connexion.recv(1024).decode()
-					self.listMsgRecv.append(msg_recu)
+					self.listMsgRecv.insert(0, msg_recu)
 					self.nbMsg += 1
 					self.lvl = int(msg_recu[17:len(msg_recu)])
 					return(self.lvl)
@@ -124,7 +122,7 @@ class iaClass:
 		msg_recu = ""
 		while (msg_recu != "ok\n"):
 			msg_recu = self.connexion.recv(1024).decode()
-			self.listMsgRecv.append(msg_recu)
+			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
 	
 	def voir(self):
@@ -139,4 +137,5 @@ class iaClass:
 		msg_recu = "v"
 		while msg_recu[0] != '{':
 			msg_recu = self.connexion.recv(1024).decode()
+			self.listMsgRecv.insert(0, msg_recu)
 		self.listInventaire = msg_recu.split(',')

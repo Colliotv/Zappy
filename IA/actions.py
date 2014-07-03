@@ -15,4 +15,4 @@ def callOthers(ia):
 					if (item == "joueur"):
 						nbPlayers += 1
 			i += 1
-	ia.broadcast(msg)
+		ia.broadcast(msg)
