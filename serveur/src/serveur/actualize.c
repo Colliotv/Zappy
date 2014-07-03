@@ -1,9 +1,33 @@
-#include <sys/select.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <unistd.h>
-
 #include "serveur.h"
+
+static int	fetchIAClient(iaClients* node, fd_set *rd, fd_set *wr) {
+  int	max;
+  int	tmax;
+
+  if (!node)
+    return (0);
+  if (node->iaClient >= 0) {
+    max = node->iaClient;
+    FD_SET(max, rd);
+    FD_SET(max, wr);
+    max += 1;
+  }
+  else
+    max = 0;
+  tmax = fetchIAClient(node->next, rd, wr);
+  return ((tmax > max) ? (tmax) : (max));
+}
+
+static int	fetchTeam(teams* node, fd_set *rd, fd_set *wr) {
+  int	max;
+  int	tmax;
+
+  if (!node)
+    return (0);
+  max = fetchIAClient(node->list, rd, wr);
+  tmax = fetchTeam(node->next, rd, wr);
+  return ((tmax > max) ? (tmax) : (max));
+}
 
 static int	fetchClient(clients* node, fd_set *rd, bool doWr, fd_set *wr) {
   int	max;
@@ -27,17 +51,18 @@ static int	fetchFDS(serveur* this, fd_set *rd, fd_set *wr) {
 
   FD_SET(this->serv, rd);
   max = this->serv + 1;
-  if ((tmax = fetchClient(this->unaffecteds, rd, false, NULL)) > max)
+  if ((tmax = fetchClient(this->unaffecteds, rd, true, wr)) > max)
     max = tmax;
   if ((tmax = fetchClient(this->monitor, rd, true, wr)) > max)
     max = tmax;
   if (this->waiting)
     if ((tmax = fetchClient(&(this->waiting->_), rd, false, NULL)) > max)
       max = tmax;
+  tmax = fetchTeam(this->teams, rd, wr);
+  if (tmax > max)
+    tmax = max;
   return (max);
 }
-
-#include <stdio.h>
 
 void	actualize(serveur* this) {
   fd_set rd;
@@ -55,4 +80,9 @@ void	actualize(serveur* this) {
     usleep(1.f/this->time * 1000000.f);
   else
     usleep(100000.f);
+  addClient(this, &rd);
+  actualize_unaff(this, &rd, &wr);
+  actualize_waiting(this, &rd, &wr);
+  actualize_IA(this, &rd, &wr);
+  push_monitor(this->monitor, &rd, &wr);
 }

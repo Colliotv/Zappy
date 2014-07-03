@@ -7,6 +7,8 @@
 # include "gameTypes.h"
 # include "circularBuffer.h"
 
+# define REQUEST "avance|droite|gauche|voir|inventaire|prend|pose|inventaire|expulse|broadcast|incantation|fork|connect_nbr"
+
 typedef struct s_iaClients{
   struct s_iaClients*	next;
   /* cmds */
@@ -26,6 +28,7 @@ typedef struct s_teams{
   struct s_teams*	next;
   iaClients*		list;
   int			size;
+  int			unaff_size;
   char* name;
 } teams;
 

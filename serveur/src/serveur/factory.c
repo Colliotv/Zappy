@@ -43,6 +43,8 @@ static teams*	addTeam(struct nameNode* teamName, struct args* arg,
   if (prev)
     prev->next = node;
   node->list = addIaClient(arg, arg->nByTeams, NULL);
+  node->size = arg->nByTeams;
+  node->unaff_size = arg->nByTeams;
   addTeam(teamName->next, arg, node);
   free(teamName);
   return (node);
@@ -53,7 +55,7 @@ static void	fillMap(serveur* this, int pond) {
 
   i = 0;
   while (i < this->size.y * this->size.x * ressourceLength) {
-    (this->ressources)[i++] = !(random() % pond);
+    (this->ressources)[i++] = random() % pond;
   }
 }
 
@@ -92,6 +94,8 @@ serveur* factory(struct args* args){
 
   this->size.x = args->X;
   this->size.y = args->Y;
+
+  this->time = args->time;
 
   if ((this->ressources =
        malloc(sizeof(*(this->ressources)) *

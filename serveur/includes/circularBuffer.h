@@ -18,5 +18,5 @@ void	pushNode(circularBuffer*, char* value);
 char*	popNode(circularBuffer*);
 
 circularBuffer*		createBuffer();
-
+void			destroyBuffer(circularBuffer*);
 #endif
