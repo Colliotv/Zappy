@@ -3,7 +3,7 @@
 import os, sys
 import socket
 from iaClass import *
-from lvl2 import *
+from algo import *
 
 def checkList(ia, sizeList):
 	i = 0
@@ -12,30 +12,6 @@ def checkList(ia, sizeList):
 			return i
 		i += 1
 	return -1
-
-def findObj(ia, obj):
-	ia.voir()
-	direction = checkList(ia, 3)
-	if direction == -1:
-		ia.avance()
-	if direction == 0:
-		return 1
-	if direction == 1:
-		ia.gauche()
-		ia.avance()
-		ia.droite()
-		ia.avance()
-		lvl1(ia)
-	if direction == 2:
-		ia.avance()
-		return 1
-	if direction == 3:
-		ia.droite()
-		ia.avance()
-		ia.gauche()
-		ia.avance()
-		lvl1(ia)
-	return 0
 	
 def lvl1(ia):
 	up = 0
@@ -61,9 +37,7 @@ def main():
 		ia = iaClass()
 		ia.connect(sys.argv[1], sys.argv[2])
 		ia.launchGame(sys.argv[3])
-		#while (ia.lvl != 8):
-		#	ia.avance()
-		lvl2(ia)
+		algo(ia)
 
 if __name__ == '__main__':
 	main()

@@ -1,6 +1,6 @@
 import os, sys
 import socket
-from lvl2 import *
+from algo import *
 
 class iaClass:
 	def __init__(self):
@@ -10,6 +10,8 @@ class iaClass:
 		self.listMsgRecv = []
 		self.nbMsg = 0
 		self.connexion = 0
+		self.mode = ""
+		self.food = 10
 		self.listlvl2 = [1, "linemate"]
 		self.listlvl3 = [2, "linemate", "deraumere", "sibur"]
 		self.listlvl4 = [2, "linemate", "linemate", "sibur", "phiras", "phiras"]
@@ -130,3 +132,10 @@ class iaClass:
 		while (msg_recu[0] != '{'):
 			msg_recu = self.connexion.recv(1024).decode()
 		self.listVoir = msg_recu.split(',')
+
+	def inventaire(self):
+		self.connexion.send(b"inventaire\n")
+		msg_recu = "v"
+		while msg_recu[0] != '{':
+			msg_recu = self.connexion.recv(1024).decode()
+		self.listInventaire = msg_recu.split(',')
