@@ -10,6 +10,11 @@ class iaClass:
 		self.listMsgRecv = []
 		self.nbMsg = 0
 		self.connexion = 0
+		self.listlvl2 = [1, "linemate"]
+		self.listlvl3 = [2, "linemate", "deraumere", "sibur"]
+		self.listlvl4 = [2, "linemate", "linemate", "sibur", "phiras", "phiras"]
+		self.listlvl5 = [4, "linemate", "deraumere", "sibur", "sibur", "phiras"]
+		self.listlvl6 = [4, "linemate", "deraumere", "deraumere", "sibur", "mendiane", "mendiane", "mendiane"]
 
 	def connect(self, serv, port):
 		try:
