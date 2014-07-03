@@ -63,7 +63,7 @@ def main():
 		ia.launchGame(sys.argv[3])
 		#while (ia.lvl != 8):
 		#	ia.avance()
-		lvl2(ia)
+		algo(ia)
 
 if __name__ == '__main__':
 	main()

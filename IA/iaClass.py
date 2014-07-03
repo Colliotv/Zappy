@@ -15,6 +15,7 @@ class iaClass:
 		self.listlvl4 = [2, "linemate", "linemate", "sibur", "phiras", "phiras"]
 		self.listlvl5 = [4, "linemate", "deraumere", "sibur", "sibur", "phiras"]
 		self.listlvl6 = [4, "linemate", "deraumere", "deraumere", "sibur", "mendiane", "mendiane", "mendiane"]
+		self.listNbPlayers = [1, 2, 2, 4, 4]
 
 	def connect(self, serv, port):
 		try:

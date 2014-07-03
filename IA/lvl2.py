@@ -1,8 +1,9 @@
 import os, sys
 import socket
 from iaClass import *
+from actions import *
 
-def findResources(ia, obj):
+def findObject(ia, obj):
 	ia.voir()
 	i = 0;
 	for fullCase in ia.listVoir:
@@ -78,7 +79,7 @@ def findResources(ia, obj):
 	return -1
 
 def getCloser(ia, position):
-	int(position) = pos
+	pos = int(position)
 	if (2 <= pos <= 4):
 		ia.gauche()
 		ia.avance()
@@ -106,14 +107,21 @@ def getCloser(ia, position):
 			ia.avance()
 	return 0
 
-def lvl2(ia):
+def algo(ia):
 	up = 1
 	mode = "search"
-	while (up != 2):
-		while (mode == "search"):
-			if ((findResources(ia, "linemate")) == 1):
-				mode = "findOther"
-		ia.avance()
+	while (up != 8):
+		callOthers(ia)
+		# msg_recu = ""
+		# msg_recu = self.connexion.recv(1024).decode()
+		# ia.listMsgRecv.append(msg_recu)
+		# ia.nbMsg += 1
+		# checkMsg(ia)
+		# while (mode == "search"):
+		# 	if ((findObject(ia, "linemate")) == 1):
+		# 		mode = "findOther"
+
+		# ia.avance()
 	return 0
 
 def checkMsg(ia):
