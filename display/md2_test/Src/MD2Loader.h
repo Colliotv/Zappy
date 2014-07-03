@@ -72,7 +72,7 @@ struct Mesh_UV
 
 struct MD2Frame
 	{
-	 Mesh_Vtx *Vtx;
+    Mesh_Vtx *Vtx;
 		Mesh_Vtx *Norm;
 	};
 

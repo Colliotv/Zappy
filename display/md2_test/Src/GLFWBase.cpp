@@ -18,7 +18,7 @@ GLFWwindow* InitWindow(int ScrX, int ScrY)
 
   if (glfwInit() != GL_TRUE)
     throw "Failed to initialize GLFW.";
-  window = glfwCreateWindow(ScrX, ScrY, "OpenGL", NULL, NULL);
+  window = glfwCreateWindow(ScrX, ScrY, "OpenGL", NULL, NULL); // dernier param -> partager texture contexte
   if (!window)
   {
     glfwTerminate();

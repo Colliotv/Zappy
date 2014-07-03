@@ -1,3 +1,4 @@
+#include <cerrno> 
 #include "tga.h"
 
 TGAImg::TGAImg()
@@ -51,15 +52,27 @@ int TGAImg::Load(char* szFilename)
     }
 
   // Open the specified file
-  fIn.open(szFilename,ios::binary);
-    
-   if(fIn==NULL)
-    return IMG_ERR_NO_FILE;
-
-  // Get file size
-  fIn.seekg(0,ios_base::end);
-  ulSize=fIn.tellg();
-  fIn.seekg(0,ios_base::beg);
+    std::cout << "szFilename ------->" << szFilename << std::endl;
+    fIn.open(szFilename,ios::binary);
+//    std::cout << "----> apres open " << ret_open << std::endl;
+    if (fIn)
+    {
+      cerr << "ITS OOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKKKKKKKK\n";
+    }
+    else
+    {
+       cerr << "File could not be opened!\n"; // Report error
+       cerr << "Error code: " << strerror(errno);
+    }
+    if(fIn==NULL)
+    {
+      std::cout << "---------------------------->OPEN A FOIRE\n";
+      return IMG_ERR_NO_FILE;
+    }
+    // Get file size
+    fIn.seekg(0,ios_base::end);
+    ulSize=fIn.tellg();
+    fIn.seekg(0,ios_base::beg);
 
   // Allocate some space
   // Check and clear pDat, just in case
