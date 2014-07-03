@@ -56,6 +56,9 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()		
 			self.listMsgRecv.append(msg_recu)
 			self.nbMsg += 1
+		if msg_recu == "ok\n":
+			return 0
+		return -1
 
 	def pose(self, objet):
 		pose = "pose " + objet + '\n'
@@ -110,7 +113,7 @@ class iaClass:
 	
 	def voir(self):
 		self.connexion.send(b"voir\n")
-		msg_recu = ""
+		msg_recu = "v"
 		while (msg_recu[0] != '{'):
 			msg_recu = self.connexion.recv(1024).decode()
 		self.listVoir = msg_recu.split(',')
