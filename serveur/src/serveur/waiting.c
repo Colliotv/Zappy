@@ -1,6 +1,7 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "lerror.h"
 #include "serveur.h"
@@ -21,7 +22,7 @@ static wclients* del_waiting(serveur* this, wclients* node) {
       if (pnod)
 	pnod->_.next = node->_.next;
     }
-  destroyBuffer(node->_.rdBuffer);
+  destroyBuffer(node->_.rdBuffer, false);
   free(node);
   return (nn);
 }
@@ -43,9 +44,24 @@ static int	let_it_know(serveur* this, wclients* waiting) {
   return (let_it_know(this, (wclients*)waiting->_.next));
 }
 
-static void	propagate_buffer()
+static int	propagate_buffer(serveur* this, wclients* node, fd_set* wr) {
+  char* k;
+
+  if (!node)
+    return (0);
+  if (FD_ISSET(node->_.client, wr))
+    {
+      if ((k = popNode(node->_.rdBuffer)))
+	{
+	  if (write(node->_.client, k, strlen(k)) < (int)strlen(k))
+	    return (propagate_buffer(this, del_waiting(this, node), wr));
+	}
+    }
+  return (propagate_buffer(this, (wclients*)node->_.next, wr));
+}
 
 void	actualize_waiting(serveur* this, fd_set* rd, fd_set* wr) {
+  (void)rd;
   let_it_know(this, this->waiting);
-  propagate_buffer(this->waiting, wr);
+  propagate_buffer(this, this->waiting, wr);
 }

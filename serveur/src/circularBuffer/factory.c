@@ -16,6 +16,7 @@ void	pushNode(circularBuffer* this, char* value) {
     this->queue = this->endQueue;
   node->next = NULL;
   node->value = value;
+  this->size += 1;
 }
 
 char*	popNode(circularBuffer* this) {
@@ -30,7 +31,19 @@ char*	popNode(circularBuffer* this) {
     this->endQueue = NULL;
   this->queue = this->queue->next;
   free(node);
+  this->size -= 1;
   return (txt);
+}
+
+void	destroyBuffer(circularBuffer* this, bool freeNodeVal) {
+  char* k;
+
+  while (this->size > 0) {
+  k = popNode(this);
+  if (freeNodeVal)
+    free(k);
+}
+  free(this);
 }
 
 circularBuffer*	createBuffer(){
@@ -39,5 +52,6 @@ circularBuffer*	createBuffer(){
   if ((this = malloc(sizeof(circularBuffer))) == NULL)
     lerror(MEMORY_ERROR(sizeof(circularBuffer)));
   this->queue = this->endQueue = NULL;
+  this->size = 0;
   return (this);
 }
