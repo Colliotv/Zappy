@@ -3,6 +3,7 @@
 import os, sys
 import socket
 from iaClass import *
+from lvl2 import *
 
 def checkList(ia, sizeList):
 	i = 0
@@ -62,7 +63,7 @@ def main():
 		ia.launchGame(sys.argv[3])
 		#while (ia.lvl != 8):
 		#	ia.avance()
-		lvl1(ia)
+		lvl2(ia)
 
 if __name__ == '__main__':
 	main()
