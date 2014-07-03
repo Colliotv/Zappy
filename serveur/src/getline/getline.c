@@ -10,7 +10,7 @@ char*	_get_socket(_fd fd) {
 
   itt = 0;
   buff = NULL;
-  while (read(fd, &c, 1)) {
+  while (read(fd, &c, 1) > 0) {
     buff = realloc(buff, itt + 1);
     if (c == '\n')
       break;
