@@ -2,19 +2,32 @@
 #ifndef	_OBJ_HH_
 #define	_OBJ_HH_
 
-enum {GROUND, STONE, PLAYER};
-enum {LINEMATE, DERAUMERE, SIBUR, MENDIANE, PHIRAS, THYSTAME};
+#include	<string>
 
-class object
+struct players
 {
-	public:
-		int		type;
-		int		sort;
-		float		pos_x;
-		float		pos_y;
+	int nb;
+	std::string team;
+	int food;
+	int	linemate;
+	int	deraumere;
+	int	sibur;
+	int	mendiane;
+	int	phiras;
+	int	thystame;
+};
 
-		object();
-		~object();
+struct square
+{
+	int	pos_x;
+	int	pos_y;
+	int	food;
+	int	linemate;
+	int	deraumere;
+	int	sibur;
+	int	mendiane;
+	int	phiras;
+	int	thystame;
 };
 
 #endif

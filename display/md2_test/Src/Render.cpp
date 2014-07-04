@@ -14,21 +14,26 @@ using namespace std;
 
 #define FRAMEDELAY 70
 
-double rotate_y=0; 
-double rotate_x=0;
+  float move_X = 1.0;
+  float move_Y = 1.0;
+  float move_Z = 1.0;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     glfwSetWindowShouldClose(window, GL_TRUE);
-  if (key == GLFW_KEY_RIGHT)
-    rotate_y += 5;
+  else if (key == GLFW_KEY_RIGHT)
+    move_X = move_X - 0.1;
   else if (key == GLFW_KEY_LEFT)
-    rotate_y -= 5;
+    move_X = move_X + 0.1;
   else if (key == GLFW_KEY_UP)
-    rotate_x += 5;
+    move_Y = move_Y - 0.1;
   else if (key == GLFW_KEY_DOWN)
-    rotate_x -= 5;
+    move_Y = move_Y + 0.1;
+  else if (key == GLFW_KEY_KP_ADD)
+    move_Z = move_Z - 0.1;
+  else if (key == GLFW_KEY_KP_SUBTRACT)
+    move_Z = move_Z + 0.1;
 }
 
 bool LoadTexture(char *TexName, GLuint TexHandle)
@@ -51,21 +56,21 @@ bool LoadTexture(char *TexName, GLuint TexHandle)
   return true;
 }
 
-std::vector<object> createList()
+std::vector<square> createList(float size_x, float size_y)
 {
-  std::vector<object> objectList;
-  object buff;
+  std::vector<square> objectList;
+  square buff;
   float x = 0.0f;
   float y = 0.0f;
 
-  while (x < 5.0f)
+  while (x < size_x)
   {
     y = 0.0f;
-    while (y < 5.0f)
+    while (y < size_y)
     {
-      buff.type = GROUND;
       buff.pos_x = x;
       buff.pos_y = y;
+      buff.linemate = 2;
       objectList.push_back(buff);
       y++;
     }
@@ -84,10 +89,10 @@ void  Rendering(GLFWwindow* window)
   char Text[256];
   GLfloat Ambient[]  = { 0.9f,  0.9f,  0.9f, 10.0f};
   GLfloat Diffuse[]  = { 10.0f,  10.0f,  10.0f, 10.0f};
-  GLfloat Position[] = {10.0f, 60.0f, 10.0f, 1.0f};
+  GLfloat Position[] = {500.0f, 500.0f, -10.0f, 1.0f};
   glGenTextures(1,&texGround);
   char File[256];
-  std::vector<object> objectList;
+  std::vector<square> objectList;
 
   strcpy(File, "md2_test/Obj/Ground.md2");
   if (ground.Load(File))
@@ -103,7 +108,7 @@ void  Rendering(GLFWwindow* window)
     ground.SetTexture(texGround);
   LoadTexture("md2_test/Obj/Grass.tga" ,texGround);
   ground.SetTexture(texGround);
-  glClearColor(0.0f,0.0f,0.0f,1.0f);
+  glClearColor(0.2f,0.2f,0.2f,1.0f);
 
   glMatrixMode(GL_PROJECTION);
   glViewport(0,0,1200,800);
@@ -121,7 +126,7 @@ void  Rendering(GLFWwindow* window)
   Time1=Time2=clock();
   NextFrame=Time1 + FRAMEDELAY;
 
-  objectList = createList();
+  objectList = createList(20.0, 20.0);
 
   while(!glfwWindowShouldClose(window))
   {
@@ -132,7 +137,8 @@ void  Rendering(GLFWwindow* window)
     Ticks=Time2-Time1;
     Time1=Time2;
 
-    glTranslatef(0.0f,-50.0f,-500.0f);
+    glTranslatef(-600.0f, -100.0f,-1000.0f);
+    glTranslatef(50.0f * move_X,25.0f * move_Z,-50.0f * move_Y);
     glRotatef(-60.0f,1.0f,0.0f,0.0f);
     glLightfv(GL_LIGHT0,GL_POSITION,Position);
     // glRotatef(ViewRotate,0.0f,0.0f,1.0f);
@@ -140,19 +146,17 @@ void  Rendering(GLFWwindow* window)
     n = 0;
     while (n < objectList.size())
     {
-
-      glTranslatef(65.0f * objectList[n].pos_x,65.0f * objectList[n].pos_y,0.0f);
+      // glScalef(1.1, 1.1, 1.1);
+      glTranslatef(60.5f * objectList[n].pos_x,60.5f * objectList[n].pos_y,0.0f);
       ground.Draw(CurFrame);
-      glTranslatef(-65.0f * objectList[n].pos_x,-65.0f * objectList[n].pos_y,0.0f);
+      glTranslatef(-60.5f * objectList[n].pos_x,-60.5f * objectList[n].pos_y,0.0f);
+      // glScalef(-1.1, -1.1, -1.1);
       n++;
     }
-
-
     if(Time1>NextFrame)
     {
       CurFrame++;
       NextFrame=Time1 + FRAMEDELAY;
-
       if(CurFrame>=Frames)
         CurFrame=0;
     }

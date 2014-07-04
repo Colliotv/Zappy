@@ -7,7 +7,6 @@ SRCS    	= 	./sources/menu/main.cpp \
 				./md2_test/Src/MD2Loader.cpp \
 				./md2_test/Src/Render.cpp \
 				./md2_test/Src/tga.cpp \
-				./md2_test/Src/Obj.cpp \
 
 
 OBJS    	= 	$(SRCS:.cpp=.o)
