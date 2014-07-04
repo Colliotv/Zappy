@@ -152,7 +152,7 @@ int MD2Obj::Load(char *filename)
 		 for(FrameLoop=0;FrameLoop!=nFrames;++FrameLoop)
 				{
 				 frame[FrameLoop].Vtx = new Mesh_Vtx[nVtx];
-					frame[FrameLoop].Norm= new Mesh_Vtx[nVtx];
+					frame[FrameLoop].Norm= new Mesh_Vtx[nVtx + 200];
 
 					 if(!frame[FrameLoop].Vtx || !frame[FrameLoop].Norm)
 							{

@@ -4,7 +4,7 @@
 class Game
 {
 	public:
-		std::vector<team>listTeams;
+		std::vector<team>	listTeams;
 		std::vector<player>	listPlayers;
 		
 };

@@ -8,13 +8,14 @@ SRCS    	= 	./sources/menu/main.cpp \
 				./md2_test/Src/Render.cpp \
 				./md2_test/Src/tga.cpp \
 
+
 OBJS    	= 	$(SRCS:.cpp=.o)
 
 CC      	= 	g++
 
 RM      	= 	rm -f
 
-CXXFLAGS  	+=	-Wextra -Wall -I./includes --std=c++11
+CXXFLAGS  	+=	-Wextra -Wall -I./includes --std=c++11 -g3
 
 LIBSFLAGS	+=	-I./sfml/branches/sfml2
 LIBSFLAGS	+=	-L./sfml/trunk/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
