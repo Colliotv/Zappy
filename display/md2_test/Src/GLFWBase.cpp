@@ -6,11 +6,7 @@
 int RunLevel = 1;
 bool Keys[GLFW_KEY_LAST] = {false};
 
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-    glfwSetWindowShouldClose(window, GL_TRUE);
-}
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 GLFWwindow* InitWindow(int ScrX, int ScrY)
 {

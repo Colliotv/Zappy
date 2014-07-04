@@ -4,9 +4,11 @@
 #include    <unistd.h>
 #include    <SFML/Graphics.hpp>
 #include    "Menu.hh"
+#include    "../../md2_test/Src/Render.h"
 #include    "../../md2_test/Src/Framework.h"
 
 GLFWwindow* InitWindow(int ScrX, int ScrY);
+void    Rendering(GLFWwindow* window);
 
 void    buttonSwitcher(int dir, Menu &menu)
 {
@@ -42,16 +44,16 @@ void    buttonSwitcher(int dir, Menu &menu)
     }
 }
 
-void    exec_game(sf::RenderWindow &window)
+void    exec_game()
 {
-    window.close();
-    Render(InitWindow(1200, 800));
+    // window.close();
+    Rendering(InitWindow(1200, 800));
     _exit(0);
 }
 
 void    exec_menu()
 {
-    sf::RenderWindow window(sf::VideoMode(1200, 800), "Zappy");
+     // sf::RenderWindow window(sf::VideoMode(1200, 800), "Zappy");
     // Menu    menu;
 
     // menu.music.play();
@@ -72,7 +74,7 @@ void    exec_menu()
     //             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
     //                 buttonSwitcher(1, menu);
     //             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && menu.button == 3)
-                    exec_game(window);
+    exec_game();
     //         }
     //         if (event.type == sf::Event::TextEntered)
     //         {
