@@ -30,6 +30,7 @@ class iaClass:
 		self.mendiane = 0
 		self.phiras = 0
 		self.thystame = 0
+		self.fork = 0
 
 	def connect(self, serv, port):
 		try:
@@ -157,5 +158,14 @@ class iaClass:
 		self.sibur = int(self.listInventaire[3][6:])
 		self.mendiane = int(self.listInventaire[4][8:])
 		self.phiras = int(self.listInventaire[5][7:])
-		self.thystame = int(self.listInventaire[6][9:len(self.listInventaire[6])-2])
+		self.thystame = int(self.listInventaire[6][9:10])
 		
+
+	def fork(self):
+		self.connexion.send(b"fork\n")
+		msg_recu = ""
+		while (msg_recu != "ok"):
+			msg_recu = self.connexion.recv(1024).decode()
+			self.listMsgRecv.insert(0, msg_recu)
+			self.nbMsg += 1
+		self.fork = 1
