@@ -1,6 +1,7 @@
 import os, sys
 import socket
 from iaClass import *
+from actions import *
 
 def findResources(ia, obj):
 	ia.voir()
@@ -122,29 +123,109 @@ def checkNourriture(ia):
 	ia.inventaire()
 	lfood = ia.listInventaire[0]
 	ia.food = int(lfood[12:len(lfood)])
-	if ia.food < 5:
+	if ia.food < 10:
 		return -1
 	else:
 		return 0
 
-def checkIncantation(ia):
+def nbPlayerOnCase(ia):
+	ia.voir()
+	i = 0
+	nbPlayer = 0
+	ia.listVoir = ia.listVoir[0].split(' ')
+	lenList = len(ia.listVoir)
+	while i != lenList:
+		if ia.listVoir[i] == "joueur":
+			nbPlayer += 1
+		i += 1
+	return nbPlayer
+
+
+def checkInventaire(ia):
+	ia.inventaire()
+	linemate = 0
+	deraumere = 0
+	sibur = 0
+	mendiane = 0
+	phiras = 0
+	thystame = 0
+	i = 1
+	while i != len(ia.dictionnaireLvl[ia.lvl]):
+		if ia.dictionnaireLvl[ia.lvl][i] == "linemate":
+			linemate += 1
+		if ia.dictionnaireLvl[ia.lvl][i] == "deraumere":
+			deraumere += 1
+		if ia.dictionnaireLvl[ia.lvl][i] == "sibur":
+			sibur += 1
+		if ia.dictionnaireLvl[ia.lvl][i] == "mendiane":
+			mendiane += 1
+		if ia.dictionnaireLvl[ia.lvl][i] == "phiras":
+			phiras += 1
+		if ia.dictionnaireLvl[ia.lvl][i] == "thystame":
+			thystame += 1
+		i += 1
+	if ia.linemate >= linemate and ia.deraumere >= deraumere and ia.sibur >= sibur and ia.mendiane >= mendiane and ia.phiras >= phiras and ia.thystame >= thystame:
+		return 0
 	return -1
+
+def takeAll(ia):
+	ia.prend("nourriture")
+	ia.prend("linemate")
+	ia.prend("deraumere")
+	ia.prend("sibur")
+	ia.prend("mendiane")
+	ia.prend("phiras")
+	ia.prend("thystame")
+
+def emptyCase(ia):
+	while ia.listVoir[0] != "{ joueur":
+		ia.voir()
+		takeAll(ia)
+	return 0
+
+def poseObjet(ia):
+	i = 1
+	while i != len(ia.dictionnaireLvl[ia.lvl]):
+		ia.pose(ia.dictionnaireLvl[ia.lvl][i])
+		i += 1
+
+def checkIncantation(ia):
+	i = 1
+	if checkInventaire(ia) == 0:
+		if nbPlayerOnCase(ia) == int(ia.dictionnaireLvl[ia.lvl][0]):
+			emptyCase(ia)
+			poseObjet(ia)
+			if (checkNourriture(ia) == -1):
+				while ia.food < 20:
+					checkNourriture(ia)
+					findResources(ia, "nourriture")
+			ia.incantation()
+			print(ia.lvl)
+		else:
+			callOthers(ia)
+			checkIncantation(ia)
+
+	else:
+		while i != len(ia.dictionnaireLvl[ia.lvl]):
+			findResources(ia, ia.dictionnaireLvl[ia.lvl][i])
+			i += 1
+		checkIncantation(ia)
+
 
 def algo(ia):
 	up = 1
 	while (up != 2):
 		if checkNourriture(ia) == -1:
-			while ia.food < 10:
+			while ia.food < 20:
 				checkNourriture(ia)
 				findResources(ia, "nourriture")
-		#if checkIncatation(ia) == 0:
-		#	ia.incantation()
 		checkCalled(ia)
 		ia.reached = 0
 		print("toto")
 		while ia.mode == "search":
 			if findResources(ia, "linemate") == 1:
 				ia.mode = "findOther"
+		checkIncantation(ia)
 	return 0
 
 def checkCalled(ia):
