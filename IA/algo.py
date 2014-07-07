@@ -12,26 +12,26 @@ def findResources(ia, obj):
 			if (item == obj):
 				if (i == 0):
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 1):
 					ia.avance()
 					ia.gauche()
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 2):
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 3):
 					ia.avance()
 					ia.droite()
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 4):
 					ia.avance()
@@ -40,7 +40,7 @@ def findResources(ia, obj):
 					ia.avance()
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 5):
 					ia.avance()
@@ -48,13 +48,13 @@ def findResources(ia, obj):
 					ia.gauche()
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 6):
 					ia.avance()
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 7):
 					ia.avance()
@@ -62,7 +62,7 @@ def findResources(ia, obj):
 					ia.droite()
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 8):
 					ia.avance()
@@ -71,7 +71,7 @@ def findResources(ia, obj):
 					ia.avance()
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 		i = i + 1
 	ia.avance()
@@ -230,7 +230,6 @@ def checkCalled(ia):
 	if (ia.reached == 0):
 		if ia.listMsgRecv[0][:8] == "message ":
 			if ia.listMsgRecv[0][10:14] == "stop" and int(ia.listMsgRecv[0][15]) == ia.lvl:
-				print("reached = ", ia.reached)
 				case = int(ia.listMsgRecv[0][8])
 				if getCloser(ia, case) == 1:
 					ia.reached = 1
