@@ -12,26 +12,26 @@ def findResources(ia, obj):
 			if (item == obj):
 				if (i == 0):
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 1):
 					ia.avance()
 					ia.gauche()
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 2):
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 3):
 					ia.avance()
 					ia.droite()
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 4):
 					ia.avance()
@@ -40,7 +40,7 @@ def findResources(ia, obj):
 					ia.avance()
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 5):
 					ia.avance()
@@ -48,13 +48,13 @@ def findResources(ia, obj):
 					ia.gauche()
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 6):
 					ia.avance()
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 7):
 					ia.avance()
@@ -62,7 +62,7 @@ def findResources(ia, obj):
 					ia.droite()
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 				if (i == 8):
 					ia.avance()
@@ -71,7 +71,7 @@ def findResources(ia, obj):
 					ia.avance()
 					ia.avance()
 					ia.prend(obj)
-					print("PRIS")
+					print("PRIS ", obj)
 					return 1
 		i = i + 1
 	ia.avance()
@@ -81,7 +81,6 @@ def getCloser(ia, position):
 	pos = position
 	print("pos =", pos)
 	if (pos == 0):
-		ia.reached = 1
 		return 1
 	if (2 <= pos <= 4):
 		ia.gauche()
@@ -223,22 +222,29 @@ def algo(ia):
 				findResources(ia, "nourriture")
 		ia.reached = 0
 		checkIncantation(ia)
+		checkCalled(ia)
+		# while ia.mode == "search":
+		# 	if findResources(ia, "linemate") == 1:
+		# 		ia.mode = "findOther"
+		#checkIncantation(ia)
 	return 0
 
 def checkCalled(ia):
-	while ia.reached != 1:
-		ia.inventaire()
-		for msg in ia.listMsgRecv:
-			if msg[:8] == "message ":
-				if msg[10:14] == "stop" and int(msg[15]) == ia.lvl:
-					case = int(msg[8])
-					print("ICI")
-					getCloser(ia, case)
-					ia.listMsgRecv.remove(msg)
-					if checkNourriture(ia) == -1:
-						while ia.food < 10:
-							checkNourriture(ia)
-							findResources(ia, "nourriture")
-		print("BOUCLE")
+	ia.inventaire()
+	if (ia.reached == 0):
+		if ia.listMsgRecv[0][:8] == "message ":
+			if ia.listMsgRecv[0][10:14] == "stop" and int(ia.listMsgRecv[0][15]) == ia.lvl:
+				case = int(ia.listMsgRecv[0][8])
+				if getCloser(ia, case) == 1:
+					ia.reached = 1
+					return 0;
+				ia.listMsgRecv.remove(ia.listMsgRecv[0])
+				if checkNourriture(ia) == -1:
+					while ia.food < 10:
+						checkNourriture(ia)
+						findResources(ia, "nourriture")
+				if (ia.reached == 0):
+					while ia.reached != 1:
+						checkCalled(ia)
 
 	return -1
