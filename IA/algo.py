@@ -81,7 +81,6 @@ def getCloser(ia, position):
 	pos = position
 	print("pos =", pos)
 	if (pos == 0):
-		ia.reached = 1
 		return 1
 	if (2 <= pos <= 4):
 		ia.gauche()
@@ -220,28 +219,29 @@ def algo(ia):
 				checkNourriture(ia)
 				findResources(ia, "nourriture")
 		checkCalled(ia)
-		ia.reached = 0
-		print("toto")
-		while ia.mode == "search":
-			if findResources(ia, "linemate") == 1:
-				ia.mode = "findOther"
-		checkIncantation(ia)
+		# while ia.mode == "search":
+		# 	if findResources(ia, "linemate") == 1:
+		# 		ia.mode = "findOther"
+		#checkIncantation(ia)
 	return 0
 
 def checkCalled(ia):
-	while ia.reached != 1:
-		ia.inventaire()
-		for msg in ia.listMsgRecv:
-			if msg[:8] == "message ":
-				if msg[10:14] == "stop" and int(msg[15]) == ia.lvl:
-					case = int(msg[8])
-					print("ICI")
-					getCloser(ia, case)
-					ia.listMsgRecv.remove(msg)
-					if checkNourriture(ia) == -1:
-						while ia.food < 10:
-							checkNourriture(ia)
-							findResources(ia, "nourriture")
-		print("BOUCLE")
+	ia.inventaire()
+	if (ia.reached == 0):
+		if ia.listMsgRecv[0][:8] == "message ":
+			if ia.listMsgRecv[0][10:14] == "stop" and int(ia.listMsgRecv[0][15]) == ia.lvl:
+				print("reached = ", ia.reached)
+				case = int(ia.listMsgRecv[0][8])
+				if getCloser(ia, case) == 1:
+					ia.reached = 1
+					return 0;
+				ia.listMsgRecv.remove(ia.listMsgRecv[0])
+				if checkNourriture(ia) == -1:
+					while ia.food < 10:
+						checkNourriture(ia)
+						findResources(ia, "nourriture")
+				if (ia.reached == 0):
+					while ia.reached != 1:
+						checkCalled(ia)
 
 	return -1

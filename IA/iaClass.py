@@ -19,7 +19,7 @@ class iaClass:
 		self.listlvl5 = [4, "linemate", "deraumere", "sibur", "sibur", "phiras"]
 		self.listlvl6 = [4, "linemate", "deraumere", "deraumere", "sibur", "mendiane", "mendiane", "mendiane"]
 		self.listNbPlayers = [1, 2, 2, 4, 4]
-		self.reached = 0
+		self.reached = 1
 		self.listlvl7 = [6, "linemate", "deraumere", "deraumere", "sibur", "sibur", "sibur", "phiras"]
 		self.listlvl8 = [6, "linemate", "linemate", "deraumere", "deraumere", "sibur", "sibur", "mendiane", "mendiane", "phiras", "phiras", "thystame"]
 		self.dictionnaireLvl = {}
@@ -151,6 +151,9 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()
 			if (msg_recu[:8] == "message "):
 				self.listMsgRecv.insert(0, msg_recu)
+				if msg_recu[10:14] == "stop" and int(msg_recu[15]) == self.lvl:
+					self.reached = 0
+					
 		self.listInventaire = msg_recu.split(',')
 		self.linemate = int(self.listInventaire[1][8:])
 		self.deraumere = int(self.listInventaire[2][10:])
