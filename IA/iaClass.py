@@ -18,6 +18,7 @@ class iaClass:
 		self.listlvl5 = [4, "linemate", "deraumere", "sibur", "sibur", "phiras"]
 		self.listlvl6 = [4, "linemate", "deraumere", "deraumere", "sibur", "mendiane", "mendiane", "mendiane"]
 		self.listNbPlayers = [1, 2, 2, 4, 4]
+		self.reached = 0
 
 	def connect(self, serv, port):
 		try:
@@ -32,22 +33,19 @@ class iaClass:
 		t = 0
 		self.team = team + '\n'
 		self.connexion.send(self.team.encode())
+		self.listMsgRecv.append("")
 
 	def avance(self):
 		self.connexion.send(b"avance\n")
 		msg_recu = ""
 		while (msg_recu != "ok\n"):
 			msg_recu = self.connexion.recv(1024).decode()
-			self.listMsgRecv.insert(0, msg_recu)
-			self.nbMsg += 1
-			checkCalled(self)
 
 	def droite(self):
 		self.connexion.send(b"droite\n")
 		msg_recu = ""
 		while (msg_recu != "ok\n"):
 			msg_recu = self.connexion.recv(1024).decode()
-			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
 
 	def gauche(self):
@@ -55,7 +53,6 @@ class iaClass:
 		msg_recu = ""
 		while (msg_recu != "ok\n"):
 			msg_recu = self.connexion.recv(1024).decode()
-			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
 
 	def prend(self, objet):
@@ -66,7 +63,6 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()		
 			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
-			checkCalled(self)
 		if msg_recu == "ok\n":
 			return 0
 		return -1
@@ -79,7 +75,6 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
-			checkCalled(self)
 
 	def expulse(self):
 		self.connexion.send(b"expulse\n")
@@ -88,7 +83,6 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
-			checkCalled(self)
 
 
 	def broadcast(self, msg):
@@ -99,7 +93,6 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
-			checkCalled(self)
 
 	def incantation(self):
 		self.connexion.send("incantation\n".encode())
@@ -137,5 +130,6 @@ class iaClass:
 		msg_recu = "v"
 		while msg_recu[0] != '{':
 			msg_recu = self.connexion.recv(1024).decode()
-			self.listMsgRecv.insert(0, msg_recu)
+			if (msg_recu[:8] == "message "):
+				self.listMsgRecv.insert(0, msg_recu)
 		self.listInventaire = msg_recu.split(',')

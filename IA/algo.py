@@ -77,35 +77,45 @@ def findResources(ia, obj):
 	return -1
 
 def getCloser(ia, position):
-	pos = int(position)
+	pos = position
+	print("pos =", pos)
 	if (pos == 0):
+		ia.reached = 1
 		return 1
 	if (2 <= pos <= 4):
-		print("la")
 		ia.gauche()
 		ia.avance()
+		print("gauche avance")
 		if pos == 2:
 			ia.droite()
 			ia.avance()
+			print("droite avance")
 		elif pos == 4:
 			ia.gauche()
 			ia.avance()
+			print("gauche avance")
 	elif (6 <= pos <= 8):
 		ia.droite()
 		ia.avance()
+		print("droite avance")
 		if pos == 6:
 			ia.droite()
 			ia.avance()
+			print("droite avance")
 		elif pos == 8:
 			ia.gauche()
 			ia.avance()
+			print("gauche avance")
 	else:
 		if (pos == 1):
 			ia.avance()
+			print("avance")
 		else:
 			ia.droite()
 			ia.droite()
 			ia.avance()
+			print("droite droite avance")
+
 	return 0
 
 def checkNourriture(ia):
@@ -123,7 +133,6 @@ def checkIncantation(ia):
 def algo(ia):
 	up = 1
 	while (up != 2):
-		ia.inventaire()
 		if checkNourriture(ia) == -1:
 			while ia.food < 10:
 				checkNourriture(ia)
@@ -131,21 +140,27 @@ def algo(ia):
 		#if checkIncatation(ia) == 0:
 		#	ia.incantation()
 		checkCalled(ia)
+		ia.reached = 0
+		print("toto")
 		while ia.mode == "search":
 			if findResources(ia, "linemate") == 1:
 				ia.mode = "findOther"
 	return 0
 
 def checkCalled(ia):
-	for msg in ia.listMsgRecv:
-		if msg[:8] == "message ":
-			print(msg[8])
-			if msg[10:14] == "stop" and int(msg[15]) == ia.lvl:
-				ia.mode = "comming"
-				while getCloser(ia, msg[8]) != 1:
-					ia.inventaire()
+	while ia.reached != 1:
+		ia.inventaire()
+		for msg in ia.listMsgRecv:
+			if msg[:8] == "message ":
+				if msg[10:14] == "stop" and int(msg[15]) == ia.lvl:
+					case = int(msg[8])
+					print("ICI")
+					getCloser(ia, case)
+					ia.listMsgRecv.remove(msg)
 					if checkNourriture(ia) == -1:
 						while ia.food < 10:
 							checkNourriture(ia)
 							findResources(ia, "nourriture")
+		print("BOUCLE")
+
 	return -1
