@@ -10,7 +10,8 @@ int main(int ac, char** av)
 
   arg  = getArgs(ac, av);
   serv = factory(arg);
-  actualize(serv);
+  while (1)
+    actualize(serv);
   free(arg);
   destroy(serv);
   return (0);

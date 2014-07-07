@@ -2,13 +2,18 @@
 # define __RESSOURCE_H__
 
 typedef enum eRessource{
-  linemate = 0,
+  error = -1,
+  nourriture = 0,
+  linemate,
   deraumere,
   sibur,
   mendiane,
   phiras,
   thystane,
-  ressourceLength
+  ressourceLength,
 } ressource;
+
+char*	getRessourceOnMap(char* ressource);
+ressource getRessourceId(char* ressource);
 
 #endif

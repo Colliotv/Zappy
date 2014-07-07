@@ -10,12 +10,16 @@ char*	_get_socket(_fd fd) {
 
   itt = 0;
   buff = NULL;
-  while (read(fd, &c, 1) > 0) {
-    buff = realloc(buff, itt + 1);
-    if (c == '\n')
-      break;
-    buff[itt] = c;
-    itt += 1;
-  }
+  c = 0;
+  while (c != '\n' && read(fd, &c, 1) > 0)
+    {
+      buff = realloc(buff, itt + 1);
+      buff[itt] = c;
+      itt += 1;
+      if (c == '\n')
+	buff = realloc(buff, itt + 1);
+      if (c == '\n')
+	buff[itt] = 0;
+    }
   return (buff);
 }

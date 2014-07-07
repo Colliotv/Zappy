@@ -5,7 +5,7 @@
 #include "lerror.h"
 #include "serveur.h"
 
-static iaClients*	addIaClient(struct args* arg, int n, iaClients* prev){
+static iaClients*	addIaClient(serveur* this , struct args* arg, int n, iaClients* prev){
   iaClients	*node;
 
   if (!n)
@@ -16,22 +16,22 @@ static iaClients*	addIaClient(struct args* arg, int n, iaClients* prev){
   if (prev)
     prev->next = node;
 
+  node->num = this->num;
+  this->num += 1;
   node->iaClient = FD_NOSET;
   node->pause = READY;
-  node->rdBuffer = createBuffer();
   node->wrBuffer = createBuffer();
 
   bzero(node->stash, sizeof(node->stash));
-  node->_life.time = uLife;
-  node->_life.amount = 10;
+  node->lvl = 1;
   node->_o = random() % maxOrientation;
   node->_p.x = random() % arg->X;
   node->_p.y = random() % arg->Y;
-  addIaClient(arg, n-1, node);
+  addIaClient(this, arg, n-1, node);
   return (node);
 }
 
-static teams*	addTeam(struct nameNode* teamName, struct args* arg,
+static teams*	addTeam(serveur* this, struct nameNode* teamName, struct args* arg,
 			teams *prev){
   teams	*node;
 
@@ -42,10 +42,11 @@ static teams*	addTeam(struct nameNode* teamName, struct args* arg,
   node->next = NULL;
   if (prev)
     prev->next = node;
-  node->list = addIaClient(arg, arg->nByTeams, NULL);
+  node->list = addIaClient(this, arg, arg->nByTeams, NULL);
   node->size = arg->nByTeams;
+  node->name = teamName->name;
   node->unaff_size = arg->nByTeams;
-  addTeam(teamName->next, arg, node);
+  addTeam(this, teamName->next, arg, node);
   free(teamName);
   return (node);
 }
@@ -55,8 +56,10 @@ static void	fillMap(serveur* this, int pond) {
 
   i = 0;
   while (i < this->size.y * this->size.x * ressourceLength) {
-    (this->ressources)[i++] = random() % pond;
+    (this->ressources)[i] = random() % (pond * (1 + 10 * !(i %   ressourceLength == nourriture)));
+    i++;
   }
+  include_treatement(this);
 }
 
 static void	enableNetworking(serveur* this, _port port) {
@@ -86,17 +89,13 @@ serveur* factory(struct args* args){
   enableNetworking(this, args->port);
   srandom(time(NULL));
   this->unaffecteds = NULL;
-
   this->monitor = NULL;
-
+  this->num = 0;
   this->waiting = NULL;
-  this->teams = addTeam(args->names, args, NULL);
-
+  this->teams = addTeam(this, args->names, args, NULL);
   this->size.x = args->X;
   this->size.y = args->Y;
-
   this->time = args->time;
-
   if ((this->ressources =
        malloc(sizeof(*(this->ressources)) *
 	      (args->X * args->Y * ressourceLength))) == NULL)

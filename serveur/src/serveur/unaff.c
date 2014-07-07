@@ -24,7 +24,7 @@ static bool	treat_node(serveur* this,
       ((wclients*)node) ->team = msg;
       node->next = (clients*)(this->waiting);
       this->waiting = (wclients*)node;
-      ((wclients*)node) ->info = false;
+      printf("new node for team[%s]\n", msg);
     }
   if (!prev)
     this->unaffecteds = next;
@@ -33,18 +33,36 @@ static bool	treat_node(serveur* this,
   return (true);
 }
 
+static clients*	delete_node(serveur* this,
+			    clients* prev, clients* node) {
+  if (!prev)
+    this->unaffecteds = node->next;
+  else
+    prev->next = node->next;
+  close(node->client);
+  free(node);
+  return (prev);
+}
+
 static void	_change(serveur* this,
 			clients* prev, clients* _node,
 			fd_set *rd) {
   clients*	node;
   clients*	next;
+  char*		k;
 
   if (!_node)
     return ;
   next = _node->next;
   node = _node;
-  if (FD_ISSET(_node->client, rd) && treat_node(this, _node, _get_socket(_node->client), prev))
-    node = (prev) ? (prev) : (NULL);
+  if (FD_ISSET(_node->client, rd)) {
+    FD_CLR(_node->client, rd);
+    k = _get_socket(_node->client);
+    if (k == NULL)
+      node = delete_node(this, prev, _node);
+    else if (treat_node(this, _node, k, prev))
+      node = (prev) ? (prev) : (NULL);
+  }
   _change(this, node, next, rd);
 }
 

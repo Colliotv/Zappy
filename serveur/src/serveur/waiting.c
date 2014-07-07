@@ -1,5 +1,3 @@
-#define _GNU_SOURCE
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -7,7 +5,7 @@
 #include "lerror.h"
 #include "serveur.h"
 
-static wclients* del_waiting(serveur* this, wclients* node) {
+wclients* del_waiting(serveur* this, wclients* node) {
   wclients* pnod;
   wclients* nn;
 
@@ -28,23 +26,6 @@ static wclients* del_waiting(serveur* this, wclients* node) {
   return (nn);
 }
 
-static int	let_it_know(serveur* this, wclients* waiting) {
-  char* sending;
-  teams* team;
-
-  if (!waiting)
-    return (0);
-  if (!waiting->info) {
-    if ((team = getTeamById(this, waiting->team)) == NULL)
-      return (let_it_know(this, del_waiting(this, waiting)));
-    asprintf(&sending, "%d\n", team->unaff_size);
-    pushNode(waiting->_.rdBuffer, sending);
-    asprintf(&sending, "%d %d\n", this->size.x, this->size.y);
-    pushNode(waiting->_.rdBuffer, sending);
-  }
-  return (let_it_know(this, (wclients*)waiting->_.next));
-}
-
 static int	propagate_buffer(serveur* this, wclients* node, fd_set* wr) {
   char* k;
 
@@ -63,6 +44,7 @@ static int	propagate_buffer(serveur* this, wclients* node, fd_set* wr) {
 
 static int	getcmd(serveur* this, wclients* node, fd_set* rd) {
   char* k;
+
   if (!node)
     return (0);
   if (FD_ISSET(node->_.client, rd))
@@ -76,6 +58,5 @@ static int	getcmd(serveur* this, wclients* node, fd_set* rd) {
 
 void	actualize_waiting(serveur* this, fd_set* rd, fd_set* wr) {
   getcmd(this, this->waiting, rd);
-  let_it_know(this, this->waiting);
   propagate_buffer(this, this->waiting, wr);
 }

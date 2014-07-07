@@ -27,6 +27,7 @@ static void	fillin(struct args* this,
       next->name = args[*itt];
       *itt += 1;
     }
+    *itt -= 1;
   }
 }
 

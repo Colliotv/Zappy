@@ -9,6 +9,12 @@
 # include "teams.h"
 # include "argues.h"
 
+typedef struct s_serveur serveur;
+
+# define NTREAT 12
+# define REQUEST "avance|droite|gauche|voir |inventaire|prend|pose|expulse|broadcast |incantation|fork|connect_nbr"
+typedef void	(*_treating_)(serveur*, iaClients*, char*);
+
 typedef struct s_clients{
   struct s_clients	*next;
   _fd			client;
@@ -19,10 +25,10 @@ typedef struct s_clients{
 typedef struct s_wclients{
   struct s_clients	_;
   char*			team;
-  bool			info;
 }wclients;
 
-# define GET_SQUARE(this, x, y) (&(((this)->ressources)[x * (this)->size.y + y]))
+# define GET_SQUARE(this, _x_, _y_) (&(((this)->ressources)[_x_ * (this)->size.y + _y_]))
+# define N(_p_) ((_p_ < 0) ? (-_p_) : (_p_))
 
 typedef struct s_serveur{
   /*	time		*/
@@ -36,7 +42,12 @@ typedef struct s_serveur{
   clients*	monitor;
 
   /*	Clients		*/
+  int			num;
   wclients*		waiting;		
+
+  
+  char*			cmds[NTREAT];
+  _treating_		treat[NTREAT];
   teams*		teams;
 
   /*	map		*/
@@ -46,16 +57,34 @@ typedef struct s_serveur{
 
 serveur* factory(struct args*);
 void	destroy(serveur*);
+void	include_treatement(serveur*);
 
 void	actualize(serveur*);
 /* refresh */
-void	addClient(serveur*, fd_set*);
-void	actualize_unaff(serveur*, fd_set*, fd_set*);
-void	actualize_waiting(serveur*, fd_set*, fd_set*);
-void	actualize_IA(serveur*, fd_set*, fd_set*);
-void	push_monitor(clients*, fd_set*, fd_set*);
+void	addClient		(serveur*, fd_set*);
+void	actualize_unaff		(serveur*, fd_set*, fd_set*);
+void	actualize_waiting	(serveur*, fd_set*, fd_set*);
+void	actualize_IA		(serveur*, fd_set*, fd_set*);
+void	push_monitor		(serveur*, clients*, fd_set*, fd_set*);
+void	actualizeBuffering	(teams*, fd_set*, fd_set *);
 
 /* teams */
 teams*	getTeamById(serveur*, char*);
+
+/* waiting */
+wclients* del_waiting(serveur* this, wclients* node);
+
+void	iaAvance	(serveur* this, iaClients* ia, char*);
+void	iaDroite	(serveur* this, iaClients* ia, char*);
+void	iaGauche	(serveur* this, iaClients* ia, char*);
+void	iaVoir		(serveur* this, iaClients* ia, char*);
+void	iaInventaire	(serveur* this, iaClients* ia, char*);
+void	iaPrend		(serveur* this, iaClients* ia, char*);
+void	iaPose		(serveur* this, iaClients* ia, char*);
+void	iaExpulse	(serveur* this, iaClients* ia, char*);
+void	iaBroadcast	(serveur* this, iaClients* ia, char*);
+void	iaIncantation	(serveur* this, iaClients* ia, char*);
+void	iaFork		(serveur* this, iaClients* ia, char*);
+void	iaConnect_nbr	(serveur* this, iaClients* ia, char*);
 
 #endif

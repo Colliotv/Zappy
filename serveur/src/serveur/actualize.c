@@ -60,7 +60,7 @@ static int	fetchFDS(serveur* this, fd_set *rd, fd_set *wr) {
       max = tmax;
   tmax = fetchTeam(this->teams, rd, wr);
   if (tmax > max)
-    tmax = max;
+    max = tmax;
   return (max);
 }
 
@@ -84,5 +84,5 @@ void	actualize(serveur* this) {
   actualize_unaff(this, &rd, &wr);
   actualize_waiting(this, &rd, &wr);
   actualize_IA(this, &rd, &wr);
-  push_monitor(this->monitor, &rd, &wr);
+  push_monitor(this, this->monitor, &rd, &wr);
 }

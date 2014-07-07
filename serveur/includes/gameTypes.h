@@ -9,11 +9,12 @@
 typedef int _port;
 
 typedef enum eOrientation{
+  minOrientation = -1,
   haut = 0,
-  bas,
-  gauche,
-  droite,
-  maxOrientation
+  gauche = 1,
+  bas = 2,
+  droite = 3,
+  maxOrientation,
 }	orientation;
 
 typedef struct s_position{
@@ -22,7 +23,8 @@ typedef struct s_position{
 } position;
 
 typedef enum etime{
-  READY,
+  waiting = -1,
+  READY = 0,
   pAvance = 7,
   pRotation = 7,
   pVoir = 7,

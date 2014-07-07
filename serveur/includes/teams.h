@@ -7,8 +7,6 @@
 # include "gameTypes.h"
 # include "circularBuffer.h"
 
-# define REQUEST "avance|droite|gauche|voir|inventaire|prend|pose|inventaire|expulse|broadcast|incantation|fork|connect_nbr"
-
 typedef struct s_iaClients{
   struct s_iaClients*	next;
   /* cmds */
@@ -18,8 +16,9 @@ typedef struct s_iaClients{
   gtime			pause;
 
   /* vars */
-  bool			stash[ressourceLength];
-  life			_life;
+  int			num;
+  int			stash[ressourceLength];
+  int			lvl;
   orientation		_o;
   position		_p;
 } iaClients;
