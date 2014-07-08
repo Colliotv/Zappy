@@ -120,13 +120,13 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
-			if (msg_recu.find("ok") != -1):
-				while(msg_recu.find("niveau actuel") == -1):
+			if (msg_recu.find("elevation en cours") != -1):
+				while (msg_recu.find("niveau actuel") == -1):
 					msg_recu = self.connexion.recv(1024).decode()
 					self.listMsgRecv.insert(0, msg_recu)
 					self.nbMsg += 1
-					self.lvl += 1
-					return(self.lvl)
+				self.lvl += 1
+				return(self.lvl)
 		return -1
 
 	def expulse(self):

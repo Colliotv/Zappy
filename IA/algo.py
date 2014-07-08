@@ -211,7 +211,7 @@ def checkIncantation(ia):
 			emptyCase(ia)
 			poseObjet(ia)
 			ia.incantation()
-			#print(ia.lvl)
+			print("ialvl : ", ia.lvl)
 		else:
 			#print(ia.lvl)
 			checkCalled(ia)
@@ -224,6 +224,7 @@ def checkIncantation(ia):
 	else:
 		checkCalled(ia)
 		print("RAB DES AUTRES")
+		print(ia.lvl)
 		while i != len(ia.dictionnaireLvl[ia.lvl]):
 			findResources(ia, ia.dictionnaireLvl[ia.lvl][i])
 			i += 1
