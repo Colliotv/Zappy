@@ -34,9 +34,16 @@ typedef enum etime{
   pBroadcast = 7,
   pIncatation = 300,
   pFork = 42,
-  uLife = 1260,
+  pBirth = 600,
+  uLife = 126,
 }		gtime;
 
+typedef enum estate{
+  egg = 0,
+  unaffected,
+  alive,
+} state;
+  
 typedef struct sLife{
   gtime	time;
   int	amount;

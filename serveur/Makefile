@@ -19,7 +19,7 @@ ERROR	= src/err/lerror.c
 BUFFER	= src/circularBuffer/factory.c
 
 #### IA CMD ####
-CMDS	= src/cmds/movement.c src/cmds/voir.c src/cmds/ressource.c src/cmds/take.c src/cmds/expulse.c src/cmds/broadcast.c
+CMDS	= src/cmds/movement.c src/cmds/voir.c src/cmds/ressource.c src/cmds/take.c src/cmds/expulse.c src/cmds/broadcast.c src/cmds/fork.c src/cmds/connect_nbr.c src/cmds/incantation.c src/cmds/incantaionPlayerTest.c src/cmds/incantationRessourceTest.c
 
 #### SERVER ####
 SERVER	= src/serveur/factory.c src/serveur/destroy.c src/serveur/actualize.c src/serveur/unaff.c src/serveur/client.c src/serveur/waiting.c src/serveur/manageTeam.c src/serveur/iaManagement.c src/serveur/monitor.c src/serveur/iaBuffering.c src/serveur/treating.c

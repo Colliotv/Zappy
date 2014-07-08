@@ -72,7 +72,7 @@ void	actualizeBuffering	(teams*, fd_set*, fd_set *);
 teams*	getTeamById(serveur*, char*);
 
 /* waiting */
-wclients* del_waiting(serveur* this, wclients* node);
+wclients* del_waiting(serveur* this, wclients* node, bool);
 
 void	iaAvance	(serveur* this, iaClients* ia, char*);
 void	iaDroite	(serveur* this, iaClients* ia, char*);
@@ -86,5 +86,9 @@ void	iaBroadcast	(serveur* this, iaClients* ia, char*);
 void	iaIncantation	(serveur* this, iaClients* ia, char*);
 void	iaFork		(serveur* this, iaClients* ia, char*);
 void	iaConnect_nbr	(serveur* this, iaClients* ia, char*);
+
+/* incantation */
+bool	testForPlayer(serveur* this, iaClients* ia);
+bool	testForRessource(serveur* this, iaClients* ia, int*);
 
 #endif

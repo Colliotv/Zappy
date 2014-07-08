@@ -7,6 +7,9 @@
 # include "gameTypes.h"
 # include "circularBuffer.h"
 
+# define DEPLET_TIME 126
+# define EGG_TIME    
+
 typedef struct s_iaClients{
   struct s_iaClients*	next;
   /* cmds */
@@ -17,6 +20,8 @@ typedef struct s_iaClients{
 
   /* vars */
   int			num;
+  state			state;
+  gtime			depletingNut;
   int			stash[ressourceLength];
   int			lvl;
   orientation		_o;

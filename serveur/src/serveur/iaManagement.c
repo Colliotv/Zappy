@@ -19,12 +19,13 @@ static int	push_in_waiting(serveur* this, wclients* node) {
     return (push_in_waiting(this, node));
   ia->iaClient = node->_.client;
   ia->rdBuffer = node->_.rdBuffer;
+  ia->state = alive;
   team->unaff_size -= 1;
   asprintf(&sending, "%d\n", team->unaff_size);
   pushNode(ia->wrBuffer, sending);
   asprintf(&sending, "%d %d\n", this->size.x, this->size.y);
   pushNode(ia->wrBuffer, sending);
-  return (push_in_waiting(this, del_waiting(this, node)));
+  return (push_in_waiting(this, del_waiting(this, node, false)));
 }
 
 void	actualize_IA(serveur* this, fd_set* rd, fd_set* wr) {

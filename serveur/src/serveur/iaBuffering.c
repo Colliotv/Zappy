@@ -12,7 +12,7 @@ static iaClients* delete_iaClient(teams* team, iaClients* node) {
   destroyBuffer(node->rdBuffer, true);
   destroyBuffer(node->wrBuffer, true);
   nn = team->list;
-  while (nn && nn->next != node)
+  while (nn && nn != node && nn->next != node)
     nn = nn->next;
   if (nn == team->list)
     team->list = node->next;
@@ -38,10 +38,11 @@ static int	actualizeByIa(teams* team, iaClients* node,
       pushNode(node->rdBuffer, k);
   }
   if (FD_ISSET(node->iaClient, wr) && node->wrBuffer->size) {
-    k = popNode(node->wrBuffer);
-    if (write(node->iaClient, k, strlen(k)) <= 0)
-      return (actualizeByIa(team, delete_iaClient(team, node), rd, wr));
-    free(k);
+    while ((k = popNode(node->wrBuffer)) != NULL)
+      if (write(node->iaClient, k, strlen(k)) <= 0)
+	return (actualizeByIa(team, delete_iaClient(team, node), rd, wr));
+      else
+	free(k);
   }
   return (actualizeByIa(team, node->next, rd, wr));
 }
