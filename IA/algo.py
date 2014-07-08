@@ -200,11 +200,11 @@ def checkIncantation(ia):
 			emptyCase(ia)
 			poseObjet(ia)
 			ia.incantation()
-			print(ia.lvl)
+			#print(ia.lvl)
 		else:
-			print(ia.lvl)
+			#print(ia.lvl)
 			checkCalled(ia)
-			print(ia.reached)
+			print("reached =", ia.reached)
 			if (ia.reached != 0):
 				callOthers(ia)
 			if (ia.reached == 1):
@@ -234,14 +234,14 @@ def checkCalled(ia):
 		if ia.listMsgRecv[0][:8] == "message ":
 			if ia.listMsgRecv[0][10:14] == "stop" and int(ia.listMsgRecv[0][15]) == ia.lvl:
 				case = int(ia.listMsgRecv[0][8])
-				if getCloser(ia, case) == 1:
-					ia.reached = 1
-					return 0;
-				ia.listMsgRecv.remove(ia.listMsgRecv[0])
 				if checkNourriture(ia) == -1:
 					while ia.food < 10:
 						checkNourriture(ia)
 						findResources(ia, "nourriture")
+				if getCloser(ia, case) == 1:
+					ia.reached = 1
+					return 0;
+				ia.listMsgRecv.remove(ia.listMsgRecv[0])
 				if (ia.reached == 0):
 					while ia.reached != 1:
 						checkCalled(ia)
