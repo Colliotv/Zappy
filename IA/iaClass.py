@@ -149,9 +149,11 @@ class iaClass:
 		msg_recu = "v"
 		while msg_recu.find("{") == -1:
 			msg_recu = self.connexion.recv(1024).decode()
-			if (msg_recu.find("message") == -1):
+			if (msg_recu.find("message") != -1):
 				find = msg_recu.find("message")
 				self.listMsgRecv.insert(0, msg_recu)
+				# print("CATCH")
+				# print("--> " + msg_recu)
 				if msg_recu.find("stop") != -1 and msg_recu.find(str(self.lvl)) != -1:
 					self.reached = 0
 					

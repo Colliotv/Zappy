@@ -216,6 +216,7 @@ def checkIncantation(ia):
 			#print(ia.lvl)
 			checkCalled(ia)
 			print("reached =", ia.reached)
+			ia.inventaire()
 			if (ia.reached != 0):
 				callOthers(ia)
 			if (ia.reached == 1):
