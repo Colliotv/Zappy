@@ -57,20 +57,20 @@ class iaClass:
 	def avance(self):
 		self.connexion.send(b"avance\n")
 		msg_recu = ""
-		while (msg_recu != "ok\n"):
+		while (msg_recu.find("ok") == -1):
 			msg_recu = self.connexion.recv(1024).decode()
 
 	def droite(self):
 		self.connexion.send(b"droite\n")
 		msg_recu = ""
-		while (msg_recu != "ok\n"):
+		while (msg_recu.find("ok") == -1):
 			msg_recu = self.connexion.recv(1024).decode()
 			self.nbMsg += 1
 
 	def gauche(self):
 		self.connexion.send(b"gauche\n")
 		msg_recu = ""
-		while (msg_recu != "ok\n"):
+		while (msg_recu.find("ok") == -1):
 			msg_recu = self.connexion.recv(1024).decode()
 			self.nbMsg += 1
 
@@ -78,7 +78,7 @@ class iaClass:
 		prend = "prend " + objet + '\n'
 		self.connexion.send(prend.encode())
 		msg_recu = ""
-		while (msg_recu != "ok\n" and msg_recu != "ko\n"):
+		while (msg_recu.find("ok") == -1 and msg_recu.find("ko") == -1):
 			msg_recu = self.connexion.recv(1024).decode()		
 			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
@@ -90,7 +90,7 @@ class iaClass:
 		pose = "pose " + objet + '\n'
 		self.connexion.send(pose.encode())
 		msg_recu = ""
-		while (msg_recu != "ok\n" and msg_recu != "ko\n"):
+		while (msg_recu.find("ok") == -1 and msg_recu.find("ko") == -1):
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
@@ -98,7 +98,7 @@ class iaClass:
 	def expulse(self):
 		self.connexion.send(b"expulse\n")
 		msg_recu = ""
-		while (msg_recu != "ok\n" and msg_recu != "ko\n"):
+		while (msg_recu.find("ok") == -1 and msg_recu.find("ko") == -1):
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
@@ -108,7 +108,7 @@ class iaClass:
 		broadcast = "broadcast " + msg + '\n'
 		self.connexion.send(broadcast.encode())
 		msg_recu = ""
-		while (msg_recu != "ok\n"):
+		while (msg_recu.find("ok") == -1):
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
@@ -116,12 +116,12 @@ class iaClass:
 	def incantation(self):
 		self.connexion.send("incantation\n".encode())
 		msg_recu = ""
-		while (msg_recu != "elevation en cours\n" and msg_recu != "ko"):
+		while (msg_recu.find("elevation en cours") == -1 and msg_recu.find("ko") == -1):
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
-			if (msg_recu != "ko"):
-				while(msg_recu[:15] != "niveau actuel :"):
+			if (msg_recu.find("ok") != -1):
+				while(msg_recu.find("niveau actuel") == -1):
 					msg_recu = self.connexion.recv(1024).decode()
 					self.listMsgRecv.insert(0, msg_recu)
 					self.nbMsg += 1
@@ -132,7 +132,7 @@ class iaClass:
 	def expulse(self):
 		self.connexion.send(b"expulse\n")
 		msg_recu = ""
-		while (msg_recu != "ok\n"):
+		while (msg_recu.find("ok") == -1):
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
@@ -140,18 +140,19 @@ class iaClass:
 	def voir(self):
 		self.connexion.send(b"voir\n")
 		msg_recu = "v"
-		while (msg_recu[0] != '{'):
+		while (msg_recu.find("{") == -1):
 			msg_recu = self.connexion.recv(1024).decode()
 		self.listVoir = msg_recu.split(',')
 
 	def inventaire(self):
 		self.connexion.send(b"inventaire\n")
 		msg_recu = "v"
-		while msg_recu[0] != '{':
+		while msg_recu.find("{") == -1:
 			msg_recu = self.connexion.recv(1024).decode()
-			if (msg_recu[:8] == "message "):
+			if (msg_recu.find("message") == -1):
+				find = msg_recu.find("message")
 				self.listMsgRecv.insert(0, msg_recu)
-				if msg_recu[10:14] == "stop" and int(msg_recu[15]) == self.lvl:
+				if msg_recu.find("stop") != -1 and msg_recu.find(str(self.lvl)) != -1:
 					self.reached = 0
 					
 		self.listInventaire = msg_recu.split(',')
@@ -166,7 +167,7 @@ class iaClass:
 	def fork(self):
 		self.connexion.send(b"fork\n")
 		msg_recu = ""
-		while (msg_recu != "ok"):
+		while (msg_recu.find("ok") == -1):
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.insert(0, msg_recu)
 			self.nbMsg += 1
