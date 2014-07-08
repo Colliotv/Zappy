@@ -307,6 +307,9 @@ void  Rendering(GLFWwindow* window)
   objectList[218].thystame = 2;
   objectList[121].thystame = 2;
   objectList[78].thystame = 2;
+  playerList[25].nb = 1;
+  playerList[190].nb = 2;
+  playerList[300].nb = 3;
 
   while(!glfwWindowShouldClose(window))
   {
@@ -331,6 +334,14 @@ void  Rendering(GLFWwindow* window)
       groundObj.Draw(CurFrame);
       glTranslatef(-60.5f * objectList[n].pos_x,-60.5f * objectList[n].pos_y,0.0f);
       glScalef(1.0/1.0, 1.0/1.0, 1.0/1.0);
+      if (playerList[n].nb > 0)
+      {
+        glTranslatef(60.5f * objectList[n].pos_x,60.5f * objectList[n].pos_y,30.0f);
+        // glScalef(1.0, 1.0, 1.0);
+        playerObj.Draw(CurFrame);
+        // glScalef(1.0/1.0, 1.0/1.0, 1.0/1.0);
+        glTranslatef(-60.5f * objectList[n].pos_x,-60.5f * objectList[n].pos_y,-30.0f);
+      }      
       if (objectList[n].linemate > 0)
       {
         glTranslatef(60.5f * objectList[n].pos_x,60.5f * objectList[n].pos_y,30.0f);
