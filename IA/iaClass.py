@@ -12,12 +12,22 @@ class iaClass:
 		self.connexion = 0
 		self.mode = ""
 		self.food = 10
+		self.connectNbr = 0
 		self.listlvl2 = [1, "linemate"]
 		self.listlvl3 = [2, "linemate", "deraumere", "sibur"]
 		self.listlvl4 = [2, "linemate", "linemate", "sibur", "phiras", "phiras"]
 		self.listlvl5 = [4, "linemate", "deraumere", "sibur", "sibur", "phiras"]
 		self.listlvl6 = [4, "linemate", "deraumere", "deraumere", "sibur", "mendiane", "mendiane", "mendiane"]
-		self.listNbPlayers = [1, 2, 2, 4, 4]
+		self.listlvl7 = [6, "linemate", "deraumere", "deraumere", "sibur", "sibur", "sibur", "phiras"]
+		self.listlvl8 = [6, "linemate", "linemate", "deraumere", "deraumere", "sibur", "sibur", "mendiane", "mendiane", "phiras", "phiras", "thystame"]
+		self.dictionnaireLvl = {}
+		self.listNbPlayers = [1, 2, 2, 4, 4, 6, 6]
+		self.linemate = 0
+		self.deraumere = 0
+		self.sibur = 0
+		self.mendiane = 0
+		self.phiras = 0
+		self.thystame = 0
 
 	def connect(self, serv, port):
 		try:
@@ -32,6 +42,15 @@ class iaClass:
 		t = 0
 		self.team = team + '\n'
 		self.connexion.send(self.team.encode())
+		self.connectNbr = int(self.connexion.send(b"connect_nbr\n"))
+		self.dictionnaireLvl[1] = self.listlvl2
+		self.dictionnaireLvl[2] = self.listlvl3
+		self.dictionnaireLvl[3] = self.listlvl4
+		self.dictionnaireLvl[4] = self.listlvl5
+		self.dictionnaireLvl[5] = self.listlvl6
+		self.dictionnaireLvl[6] = self.listlvl7
+		self.dictionnaireLvl[7] = self.listlvl8
+		
 
 	def avance(self):
 		self.connexion.send(b"avance\n")
@@ -113,7 +132,7 @@ class iaClass:
 					msg_recu = self.connexion.recv(1024).decode()
 					self.listMsgRecv.insert(0, msg_recu)
 					self.nbMsg += 1
-					self.lvl = int(msg_recu[17:len(msg_recu)])
+					self.lvl += 1
 					return(self.lvl)
 		return -1
 
@@ -139,3 +158,10 @@ class iaClass:
 			msg_recu = self.connexion.recv(1024).decode()
 			self.listMsgRecv.insert(0, msg_recu)
 		self.listInventaire = msg_recu.split(',')
+		self.linemate = int(self.listInventaire[1][8:])
+		self.deraumere = int(self.listInventaire[2][10:])
+		self.sibur = int(self.listInventaire[3][6:])
+		self.mendiane = int(self.listInventaire[4][8:])
+		self.phiras = int(self.listInventaire[5][7:])
+		self.thystame = int(self.listInventaire[6][9:len(self.listInventaire[6])-2])
+		
