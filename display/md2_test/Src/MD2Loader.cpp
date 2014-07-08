@@ -100,23 +100,23 @@ int MD2Obj::Load(char *filename)
   memcpy(&Head,data,68);
 
 		// Dump info about object
-  cout<<"ID - "<<data[0]<<data[1]<<data[2]<<data[3]<<"\n";
-  cout<<"Version - "<<Head.Version<<"\n";   
-  cout<<"Tex Width - "<<Head.TexWidth<<"\n";
-  cout<<"Tex Height - "<<Head.TexHeight<<"\n";
-  cout<<"Frame Size - "<<Head.FrameSize<<"\n";
-  cout<<"Textures - "<<Head.nTextures<<"\n";
-  cout<<"Vertices - "<<Head.nVertices<<"\n";
-  cout<<"UVs - "<<Head.nTexCoords<<"\n";
-  cout<<"Faces - "<<Head.nTriangles<<"\n";
-  cout<<"GL cmds - "<<Head.nGLCmd<<"\n";
-  cout<<"Frames - "<<Head.nFrames<<"\n";
-  cout<<"Skin Offset - "<<Head.TexOffset<<"\n";
-  cout<<"UV Offset - "<<Head.UVOffset<<"\n";
-  cout<<"Face Offset - "<<Head.FaceOffset<<"\n";
-  cout<<"Frame Offset - "<<Head.FrameOffset<<"\n";
-  cout<<"GL Offset - "<<Head.GLCmdOffset<<"\n";
-  cout<<"Filesize - "<<Head.EOFOffset<<"\n";
+  // cout<<"ID - "<<data[0]<<data[1]<<data[2]<<data[3]<<"\n";
+  // cout<<"Version - "<<Head.Version<<"\n";   
+  // cout<<"Tex Width - "<<Head.TexWidth<<"\n";
+  // cout<<"Tex Height - "<<Head.TexHeight<<"\n";
+  // cout<<"Frame Size - "<<Head.FrameSize<<"\n";
+  // cout<<"Textures - "<<Head.nTextures<<"\n";
+  // cout<<"Vertices - "<<Head.nVertices<<"\n";
+  // cout<<"UVs - "<<Head.nTexCoords<<"\n";
+  // cout<<"Faces - "<<Head.nTriangles<<"\n";
+  // cout<<"GL cmds - "<<Head.nGLCmd<<"\n";
+  // cout<<"Frames - "<<Head.nFrames<<"\n";
+  // cout<<"Skin Offset - "<<Head.TexOffset<<"\n";
+  // cout<<"UV Offset - "<<Head.UVOffset<<"\n";
+  // cout<<"Face Offset - "<<Head.FaceOffset<<"\n";
+  // cout<<"Frame Offset - "<<Head.FrameOffset<<"\n";
+  // cout<<"GL Offset - "<<Head.GLCmdOffset<<"\n";
+  // cout<<"Filesize - "<<Head.EOFOffset<<"\n";
 
 
 		// A few checks to ensure this is an MD2 file
@@ -182,13 +182,10 @@ int MD2Obj::Load(char *filename)
 				}
 
 
-		// Extract and convert info from file
-				cout << "*********avant name **************\n";
 		// Read first texture name
 		 if(Head.nTextures>0)
 				{
 				 memcpy(TexName,&data[Head.TexOffset],64);
-					cout<<"Texture Name - "<<TexName<<"\n";
 				}
 
 		// Read face data
@@ -244,7 +241,6 @@ int MD2Obj::Load(char *filename)
 									&frame[FrameLoop].Norm[ItemLoop]);
 							}
 				}
-				cout << "*********apres name **************\n";
   return MD2_OK;
  }
 

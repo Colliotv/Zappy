@@ -8,7 +8,7 @@
 #include    "../../md2_test/Src/Framework.h"
 
 GLFWwindow* InitWindow(int ScrX, int ScrY);
-void    Rendering(GLFWwindow* window);
+void    Rendering(sf::RenderWindow &window);
 
 void    buttonSwitcher(int dir, Menu &menu)
 {
@@ -46,19 +46,19 @@ void    buttonSwitcher(int dir, Menu &menu)
 
 void    exec_game(sf::RenderWindow &window)
 {
-    window.close();
-    Rendering(InitWindow(1200, 800));
+    // window.close();
+    Rendering(window);
     _exit(0);
 }
 
 void    exec_menu()
 {
-     sf::RenderWindow window(sf::VideoMode(1200, 800), "Zappy");
+    sf::RenderWindow window(sf::VideoMode(1200, 800), "Zappy", sf::Style::Default, sf::ContextSettings(32));
     Menu    menu;
 
-    menu.music.play();
-    while (window.isOpen())
-    {
+   // menu.music.play();
+   while (window.isOpen())
+   {
         sf::Event event;
 
         while (window.pollEvent(event))
