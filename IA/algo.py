@@ -178,6 +178,7 @@ def takeAll(ia):
 
 def emptyCase(ia):
 	while ia.listVoir[0] != "{ joueur":
+	while ia.listVoir[0].find("nourriture") != -1 and ia.listBoir[0].find("linemate") != -1 and ia.listBoir[0].find("deraumere") != -1 and ia.listVoir[0].find("sibur") != -1 and ia.listVoir[0].find("mendiane") and ia.listVoir[0].find("phiras") != -1 and ia.listVoir[0].find("thystame") != -1:
 		ia.voir()
 		takeAll(ia)
 	return 0
