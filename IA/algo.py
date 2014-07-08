@@ -223,6 +223,7 @@ def checkIncantation(ia):
 
 	else:
 		checkCalled(ia)
+		print("RAB DES AUTRES")
 		while i != len(ia.dictionnaireLvl[ia.lvl]):
 			findResources(ia, ia.dictionnaireLvl[ia.lvl][i])
 			i += 1
