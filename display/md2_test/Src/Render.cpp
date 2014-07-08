@@ -18,7 +18,7 @@ using namespace std;
   float move_Y = 1.0;
   float move_Z = 1.0;
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+void key_callback(GLFWwindow* window, int key, int, int action, int)
 {
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     glfwSetWindowShouldClose(window, GL_TRUE);
@@ -85,21 +85,53 @@ std::vector<square> createList(float size_x, float size_y)
   return (objectList);
 }
 
+std::vector<player> refreshPlayers(float size_x, float size_y)
+{
+  std::vector<player> playerList;
+  player buff;
+  float x = 0.0f;
+  float y = 0.0f;
+
+  while (x < size_x)
+  {
+    y = 0.0f;
+    while (y < size_y)
+    {
+      buff.pos_x = x;
+      buff.pos_y = y;
+      buff.nb = -1;
+      buff.team = -1;
+      buff.food = 0;
+      buff.linemate = 0;
+      buff.deraumere = 0;
+      buff.sibur = 0;
+      buff.mendiane = 0;
+      buff.phiras = 0;
+      buff.thystame = 0;
+      playerList.push_back(buff);
+      y++;
+    }
+    x++;
+  }
+  return (playerList);
+}
+
 void  Rendering(GLFWwindow* window)
 {
-  MD2Obj ground;
-  MD2Obj player;
-  MD2Obj linemate;
-  MD2Obj phiras;
-  MD2Obj deraumere;
-  MD2Obj sibur;
-  MD2Obj mendiane;
-  MD2Obj thystame;
+  MD2Obj groundObj;
+  MD2Obj playerObj;
+  MD2Obj linemateObj;
+  MD2Obj phirasObj;
+  MD2Obj deraumereObj;
+  MD2Obj siburObj;
+  MD2Obj mendianeObj;
+  MD2Obj thystameObj;
 
   GLuint textures[8];
   float ViewRotate=0.0f;
   long Time1,Time2,Ticks,NextFrame;
-  int Frames,CurFrame=0, n;
+  int Frames,CurFrame=0;
+  unsigned int n;
   char Text[256];
   GLfloat Ambient[]  = { 0.9f,  0.9f,  0.9f, 10.0f};
   GLfloat Diffuse[]  = { 10.0f,  10.0f,  10.0f, 10.0f};
@@ -107,128 +139,129 @@ void  Rendering(GLFWwindow* window)
   glGenTextures(8,textures);
   char File[256];
   std::vector<square> objectList;
+  std::vector<player> playerList;
 
   memset(File, 0, 256);
   strcpy(File, "md2_test/Obj/Ground.md2");
-  if (ground.Load(File))
+  if (groundObj.Load(File))
   {
     RunLevel = 0;
     cout << "Unable to load Object!\n";
     return;
   }
-  Frames = ground.GetFrameCount();
+  Frames = groundObj.GetFrameCount();
   strcpy(Text,"md2_test/Obj/");
-  strcat(Text,ground.GetTexName());
+  strcat(Text,groundObj.GetTexName());
   if(LoadTexture(Text,textures[0]))
-    ground.SetTexture(textures[0]);
-  LoadTexture("md2_test/Obj/Grass.tga" ,textures[0]);
-  ground.SetTexture(textures[0]);
+    groundObj.SetTexture(textures[0]);
+  LoadTexture((char *)"md2_test/Obj/Grass.tga" ,textures[0]);
+  groundObj.SetTexture(textures[0]);
 
   memset(File, 0, 256);
   strcpy(File, "md2_test/Obj/WalkMech.md2");
-  if (ground.Load(File))
+  if (playerObj.Load(File))
   {
     RunLevel = 0;
     cout << "Unable to load Object!\n";
     return;
   }
-  Frames = ground.GetFrameCount();
+  Frames = playerObj.GetFrameCount();
   strcpy(Text,"md2_test/Obj/");
-  strcat(Text,ground.GetTexName());
+  strcat(Text,playerObj.GetTexName());
   if(LoadTexture(Text,textures[7]))
-    ground.SetTexture(textures[7]);
-  LoadTexture("md2_test/Obj/GenericMech.tga" ,textures[7]);
-  ground.SetTexture(textures[7]);
+    playerObj.SetTexture(textures[7]);
+  LoadTexture((char *)"md2_test/Obj/GenericMech.tga" ,textures[7]);
+  playerObj.SetTexture(textures[7]);
 
   memset(File, 0, 256);
   strcpy(File, "md2_test/Obj/Ground.md2");
-  if (linemate.Load(File))
+  if (linemateObj.Load(File))
   {
     RunLevel = 0;
     cout << "Unable to load Object!\n";
     return;
   }
   strcpy(Text,"md2_test/Obj/");
-  strcat(Text,linemate.GetTexName());
+  strcat(Text,linemateObj.GetTexName());
   if(LoadTexture(Text,textures[1]))
-    linemate.SetTexture(textures[1]);
-  LoadTexture("md2_test/Obj/Green.tga" ,textures[1]);
-  linemate.SetTexture(textures[1]);
+    linemateObj.SetTexture(textures[1]);
+  LoadTexture((char *)"md2_test/Obj/Green.tga" ,textures[1]);
+  linemateObj.SetTexture(textures[1]);
 
   memset(File, 0, 256);
   strcpy(File, "md2_test/Obj/Ground.md2");
-  if (phiras.Load(File))
+  if (phirasObj.Load(File))
   {
     RunLevel = 0;
     cout << "Unable to load Object!\n";
     return;
   }
   strcpy(Text,"md2_test/Obj/");
-  strcat(Text,phiras.GetTexName());
+  strcat(Text,phirasObj.GetTexName());
   if(LoadTexture(Text,textures[2]))
-    phiras.SetTexture(textures[2]);
-  LoadTexture("md2_test/Obj/Red.tga" ,textures[2]);
-  phiras.SetTexture(textures[2]);
+    phirasObj.SetTexture(textures[2]);
+  LoadTexture((char *)"md2_test/Obj/Red.tga" ,textures[2]);
+  phirasObj.SetTexture(textures[2]);
 
   memset(File, 0, 256);
   strcpy(File, "md2_test/Obj/Ground.md2");
-  if (deraumere.Load(File))
+  if (deraumereObj.Load(File))
   {
     RunLevel = 0;
     cout << "Unable to load Object!\n";
     return;
   }
   strcpy(Text,"md2_test/Obj/");
-  strcat(Text,deraumere.GetTexName());
+  strcat(Text,deraumereObj.GetTexName());
   if(LoadTexture(Text,textures[3]))
-    deraumere.SetTexture(textures[3]);
-  LoadTexture("md2_test/Obj/Blue.tga" ,textures[3]);
-  deraumere.SetTexture(textures[3]);
+    deraumereObj.SetTexture(textures[3]);
+  LoadTexture((char *)"md2_test/Obj/Blue.tga" ,textures[3]);
+  deraumereObj.SetTexture(textures[3]);
 
   memset(File, 0, 256);
   strcpy(File, "md2_test/Obj/Ground.md2");
-  if (sibur.Load(File))
+  if (siburObj.Load(File))
   {
     RunLevel = 0;
     cout << "Unable to load Object!\n";
     return;
   }
   strcpy(Text,"md2_test/Obj/");
-  strcat(Text,sibur.GetTexName());
+  strcat(Text,siburObj.GetTexName());
   if(LoadTexture(Text,textures[4]))
-    sibur.SetTexture(textures[4]);
-  LoadTexture("md2_test/Obj/Yellow.tga" ,textures[4]);
-  sibur.SetTexture(textures[4]);
+    siburObj.SetTexture(textures[4]);
+  LoadTexture((char *)"md2_test/Obj/Yellow.tga" ,textures[4]);
+  siburObj.SetTexture(textures[4]);
 
   memset(File, 0, 256);
   strcpy(File, "md2_test/Obj/Ground.md2");
-  if (mendiane.Load(File))
+  if (mendianeObj.Load(File))
   {
     RunLevel = 0;
     cout << "Unable to load Object!\n";
     return;
   }
   strcpy(Text,"md2_test/Obj/");
-  strcat(Text,mendiane.GetTexName());
+  strcat(Text,mendianeObj.GetTexName());
   if(LoadTexture(Text,textures[5]))
-    mendiane.SetTexture(textures[5]);
-  LoadTexture("md2_test/Obj/Orange.tga" ,textures[5]);
-  mendiane.SetTexture(textures[5]);
+    mendianeObj.SetTexture(textures[5]);
+  LoadTexture((char *)"md2_test/Obj/Orange.tga" ,textures[5]);
+  mendianeObj.SetTexture(textures[5]);
 
   memset(File, 0, 256);
   strcpy(File, "md2_test/Obj/Ground.md2");
-  if (thystame.Load(File))
+  if (thystameObj.Load(File))
   {
     RunLevel = 0;
     cout << "Unable to load Object!\n";
     return;
   }
   strcpy(Text,"md2_test/Obj/");
-  strcat(Text,thystame.GetTexName());
+  strcat(Text,thystameObj.GetTexName());
   if(LoadTexture(Text,textures[6]))
-    thystame.SetTexture(textures[6]);
-  LoadTexture("md2_test/Obj/Pink.tga" ,textures[6]);
-  thystame.SetTexture(textures[6]);
+    thystameObj.SetTexture(textures[6]);
+  LoadTexture((char *)"md2_test/Obj/Pink.tga" ,textures[6]);
+  thystameObj.SetTexture(textures[6]);
 
   glClearColor(0.2f,0.2f,0.2f,1.0f);
 
@@ -249,6 +282,7 @@ void  Rendering(GLFWwindow* window)
   NextFrame=Time1 + FRAMEDELAY;
 
   objectList = createList(20.0, 20.0);
+  playerList = refreshPlayers(20.0, 20.0);
   objectList[0].linemate = 2;
   objectList[25].linemate = 2;
   objectList[225].linemate = 2;
@@ -294,14 +328,14 @@ void  Rendering(GLFWwindow* window)
     {
       glScalef(1.0, 1.0, 1.0);
       glTranslatef(60.5f * objectList[n].pos_x,60.5f * objectList[n].pos_y,0.0f);
-      ground.Draw(CurFrame);
+      groundObj.Draw(CurFrame);
       glTranslatef(-60.5f * objectList[n].pos_x,-60.5f * objectList[n].pos_y,0.0f);
       glScalef(1.0/1.0, 1.0/1.0, 1.0/1.0);
       if (objectList[n].linemate > 0)
       {
         glTranslatef(60.5f * objectList[n].pos_x,60.5f * objectList[n].pos_y,30.0f);
         glScalef(0.1, 0.1, 0.1);
-        linemate.Draw(CurFrame);
+        linemateObj.Draw(CurFrame);
         glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
         glTranslatef(-60.5f * objectList[n].pos_x,-60.5f * objectList[n].pos_y,-30.0f);
       }      
@@ -309,7 +343,7 @@ void  Rendering(GLFWwindow* window)
       {
         glTranslatef(60.5f * objectList[n].pos_x,60.5f * objectList[n].pos_y,30.0f);
         glScalef(0.1, 0.1, 0.1);
-        phiras.Draw(CurFrame);
+        phirasObj.Draw(CurFrame);
         glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
         glTranslatef(-60.5f * objectList[n].pos_x,-60.5f * objectList[n].pos_y,-30.0f);
       }      
@@ -317,7 +351,7 @@ void  Rendering(GLFWwindow* window)
       {
         glTranslatef(60.5f * objectList[n].pos_x,60.5f * objectList[n].pos_y,30.0f);
         glScalef(0.1, 0.1, 0.1);
-        deraumere.Draw(CurFrame);
+        deraumereObj.Draw(CurFrame);
         glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
         glTranslatef(-60.5f * objectList[n].pos_x,-60.5f * objectList[n].pos_y,-30.0f);
       }      
@@ -325,7 +359,7 @@ void  Rendering(GLFWwindow* window)
       {
         glTranslatef(60.5f * objectList[n].pos_x,60.5f * objectList[n].pos_y,30.0f);
         glScalef(0.1, 0.1, 0.1);
-        sibur.Draw(CurFrame);
+        siburObj.Draw(CurFrame);
         glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
         glTranslatef(-60.5f * objectList[n].pos_x,-60.5f * objectList[n].pos_y,-30.0f);
       }      
@@ -333,7 +367,7 @@ void  Rendering(GLFWwindow* window)
       {
         glTranslatef(60.5f * objectList[n].pos_x,60.5f * objectList[n].pos_y,30.0f);
         glScalef(0.1, 0.1, 0.1);
-        mendiane.Draw(CurFrame);
+        mendianeObj.Draw(CurFrame);
         glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
         glTranslatef(-60.5f * objectList[n].pos_x,-60.5f * objectList[n].pos_y,-30.0f);
       }      
@@ -341,7 +375,7 @@ void  Rendering(GLFWwindow* window)
       {
         glTranslatef(60.5f * objectList[n].pos_x,60.5f * objectList[n].pos_y,30.0f);
         glScalef(0.1, 0.1, 0.1);
-        thystame.Draw(CurFrame);
+        thystameObj.Draw(CurFrame);
         glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
         glTranslatef(-60.5f * objectList[n].pos_x,-60.5f * objectList[n].pos_y,-30.0f);
       }      

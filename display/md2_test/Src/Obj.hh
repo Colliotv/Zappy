@@ -4,8 +4,10 @@
 
 #include	<string>
 
-struct players
+struct player
 {
+	int	pos_x;
+	int	pos_y;
 	int nb;
 	std::string team;
 	int food;
