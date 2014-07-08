@@ -190,23 +190,28 @@ def poseObjet(ia):
 
 def checkIncantation(ia):
 	i = 1
-	checkCalled(ia)
 	if checkInventaire(ia) == 0:
 		if nbPlayerOnCase(ia) == int(ia.dictionnaireLvl[ia.lvl][0]):
 			if (checkNourriture(ia) == -1):
 				while ia.food < 20:
 					checkNourriture(ia)
 					findResources(ia, "nourriture")
+			checkCalled(ia)
 			emptyCase(ia)
 			poseObjet(ia)
 			ia.incantation()
 			print(ia.lvl)
 		else:
 			print(ia.lvl)
-			callOthers(ia)
-			checkIncantation(ia)
+			checkCalled(ia)
+			print(ia.reached)
+			if (ia.reached != 0):
+				callOthers(ia)
+			if (ia.reached == 1):
+				return 0
 
 	else:
+		checkCalled(ia)
 		while i != len(ia.dictionnaireLvl[ia.lvl]):
 			findResources(ia, ia.dictionnaireLvl[ia.lvl][i])
 			i += 1
@@ -220,13 +225,7 @@ def algo(ia):
 			while ia.food < 20:
 				checkNourriture(ia)
 				findResources(ia, "nourriture")
-		ia.reached = 0
 		checkIncantation(ia)
-		checkCalled(ia)
-		# while ia.mode == "search":
-		# 	if findResources(ia, "linemate") == 1:
-		# 		ia.mode = "findOther"
-		#checkIncantation(ia)
 	return 0
 
 def checkCalled(ia):
@@ -246,5 +245,4 @@ def checkCalled(ia):
 				if (ia.reached == 0):
 					while ia.reached != 1:
 						checkCalled(ia)
-
 	return -1

@@ -8,6 +8,7 @@ def callOthers(ia):
 	i = 0
 	msg = "stop " + str(ia.lvl)
 	while nbPlayers != ia.dictionnaireLvl[ia.lvl][0]:
+		ia.voir()
 		for fullCase in ia.listVoir:
 			splitCase = fullCase.split(' ')
 			for item in splitCase:
