@@ -177,8 +177,19 @@ def takeAll(ia):
 	ia.prend("thystame")
 
 def emptyCase(ia):
-	while ia.listVoir[0].find("nourriture") != -1 and ia.listBoir[0].find("linemate") != -1 and ia.listBoir[0].find("deraumere") != -1 and ia.listVoir[0].find("sibur") != -1 and ia.listVoir[0].find("mendiane") and ia.listVoir[0].find("phiras") != -1 and ia.listVoir[0].find("thystame") != -1:
+	ia.voir()
+	while 42:
+		if ia.listVoir[0].find("nourriture") == -1 and ia.listVoir[0].find("linemate") == -1 and ia.listVoir[0].find("deraumere") == -1 and ia.listVoir[0].find("sibur") == -1 and ia.listVoir[0].find("mendiane") and ia.listVoir[0].find("phiras") == -1 and ia.listVoir[0].find("thystame") == -1:
+			return 0
 		ia.voir()
+		print(ia.listVoir[0])
+		print(ia.listVoir[0].find("nourriture"))
+		print(ia.listVoir[0].find("linemate"))
+		print(ia.listVoir[0].find("deraumere"))
+		print(ia.listVoir[0].find("sibur"))
+		print(ia.listVoir[0].find("mendiane"))
+		print(ia.listVoir[0].find("phiras"))
+		print(ia.listVoir[0].find("thystame"))
 		takeAll(ia)
 	return 0
 
