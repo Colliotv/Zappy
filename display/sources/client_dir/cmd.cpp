@@ -60,7 +60,7 @@ char  *CutCmd(char cmd[4096], int i)
 {
   // char  *new_cmd;
   // int   j;
-
+  i++;
 //  new_cmd = malloc(sizeof(*new_cmd) * 258);
 //  new_cmd = new (char);
   // if (new_cmd == NULL)
@@ -76,7 +76,7 @@ char  *CutCmd(char cmd[4096], int i)
   // }
   // new_cmd[j] = '\0';
 //  return new_cmd;
-  return NULL;
+  return cmd;
 }
 
 void	ParseCmd(char cmd[4096], char **nickname)

@@ -44,9 +44,9 @@ void    buttonSwitcher(int dir, Menu &menu)
     }
 }
 
-void    exec_game()
+void    exec_game(sf::RenderWindow &window)
 {
-    // window.close();
+    window.close();
     Rendering(InitWindow(1200, 800));
     _exit(0);
 }
@@ -54,12 +54,17 @@ void    exec_game()
 void    exec_menu()
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     sf::RenderWindow window(sf::VideoMode(1200, 800), "Zappy");
     Menu    menu;
 =======
      // sf::RenderWindow window(sf::VideoMode(1200, 800), "Zappy");
     // Menu    menu;
 >>>>>>> a97ab559803ea7a49e7619517db3a206b2f38313
+=======
+     sf::RenderWindow window(sf::VideoMode(1200, 800), "Zappy");
+    Menu    menu;
+>>>>>>> 9cad8d3f4ce87c2208c051d458f1222f1d00688e
 
     menu.music.play();
     while (window.isOpen())
@@ -67,6 +72,9 @@ void    exec_menu()
         sf::Event event;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9cad8d3f4ce87c2208c051d458f1222f1d00688e
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
@@ -108,6 +116,7 @@ void    exec_menu()
         window.draw(menu.textHost);
         window.display();
     }
+<<<<<<< HEAD
 =======
     //     while (window.pollEvent(event))
     //     {
@@ -151,6 +160,8 @@ void    exec_menu()
     //     window.display();
     // }
 >>>>>>> a97ab559803ea7a49e7619517db3a206b2f38313
+=======
+>>>>>>> 9cad8d3f4ce87c2208c051d458f1222f1d00688e
 }
 
 int main()

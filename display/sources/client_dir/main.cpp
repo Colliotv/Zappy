@@ -8,48 +8,31 @@
 ** Last update Sun Apr 27 17:13:52 2014 Kiril
 */
 
-#include 	"client.h"
 #include  <iostream>
+#include <string>
+#include <iostream>
+#include <sstream>
+#include <vector>
+#include  "client.h"
+#include  "Game.hh"
 
-void	isset_server(int *len, int cs, char (*buff)[4096])
+void	isset_standard(char (*buff)[4096], int cs, int *len)
 {
   char	*buffer;
 
   buffer = *buff;
-  *len = read(cs, buffer, 4096);
-  if (*len > 0)
-    {
-      buffer[*len] = 0;
-      write(1, buffer, strlen(buffer));
-    }
-}
-
-void	isset_standard(char **nickname, char (*buff)[4096], int cs, int *len)
-{
-  char	*buffer;
-
-  buffer = *buff;
-  if (*nickname == NULL)
-    std::cout << "TOTO~>\n";
-//    PutStr(1, "ANONYMOUS~>");
-  else
-    {
-      write(1, *nickname, strlen(*nickname));
-//      PutStr(1, "~>");
-      std::cout << "TOTO~>\n";
-    }
   *len = read(0, buffer, 4096);
   if (*len > 0)
-    {
-      buffer[*len] = 0;
-      if (strncmp(buffer, "/", 1) == 0)
-	{
-	  ParseCmd(buffer, nickname);
-	}
-      write(cs, buffer, strlen(buffer));
-    }
-  else if (*len == 0)
-    close(cs);
+  {
+    buffer[*len] = 0;
+   //  if (strncmp(buffer, "/", 1) == 0)
+   //  {
+   //   ParseCmd(buffer, nickname);
+   // }
+   write(cs, buffer, strlen(buffer));
+ }
+ else if (*len == 0)
+  close(cs);
 }
 
 void	ClientRead(int cs)
@@ -57,9 +40,9 @@ void	ClientRead(int cs)
   char		buffer[4096];
   int		len;
   fd_set	rdfs;
-  char		*nickname;
+  Game    parser;
 
-  nickname = NULL;
+  parser.initMap();
   while (42)
     {
       FD_ZERO(&rdfs);
@@ -73,9 +56,9 @@ void	ClientRead(int cs)
        return;
      }
      if (FD_ISSET(0, &rdfs))
-       isset_standard(&nickname, &buffer, cs, &len);
+       isset_standard(&buffer, cs, &len);
      if (FD_ISSET(cs, &rdfs))
-       isset_server(&len, cs, &buffer);
+       parser.isset_server(cs);
    }
  }
 
@@ -87,15 +70,10 @@ int	connect_server()
   int		key;
   int		len;
 
-//  if ((arg = malloc(sizeof(*arg) * 2)) == NULL)
-//    exit(EXIT_FAILURE);
-  std::cout << "connect_server\n";
   arg = new (char*);
   key = 0;
   while (key != 1)
     {
-//      PutStr(1, "ANONYMOUS~>");
-      std::cout << "boucle\n";
       len = read(0, buff, 4096);
       if (len > 0)
       {
@@ -114,15 +92,13 @@ int	connect_server()
  return (cs);
 }
 
+
 int   ConnectClientGraToServer(std::string   port)
 {
   int	cs;
-
-  std::cout << port << "\n";
-  std::cout << "avant\n";
   cs = connect_server();
-  std::cout << "apres\n";
   if (cs != EXIT_FAILURE)
     ClientRead(cs);
   return (EXIT_SUCCESS);
+  port.clear();
 }

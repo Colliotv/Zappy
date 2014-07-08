@@ -6,7 +6,7 @@
 int RunLevel = 1;
 bool Keys[GLFW_KEY_LAST] = {false};
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void key_callback(GLFWwindow* window, int key, int, int action, int);
 
 GLFWwindow* InitWindow(int ScrX, int ScrY)
 {
