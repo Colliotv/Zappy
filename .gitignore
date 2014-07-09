@@ -6,6 +6,11 @@
 #unginore folder
 !*/
 
+#unignore IA
+!*.py
+!*.sh
+
+
 #unignore compile
 !*.cpp
 !*.cc
@@ -23,8 +28,11 @@
 !*.tga
 !*.FBX
 !*.jpg
+!*.png
+!*.wav
 !*.md2
 !*.max
+!*.otf
 
 #unignore auteur
 !auteur

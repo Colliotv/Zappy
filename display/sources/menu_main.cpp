@@ -9,7 +9,6 @@
 #include    "Game.hh"
 
 GLFWwindow* InitWindow(int ScrX, int ScrY);
-void    Rendering(sf::RenderWindow &window);
 
 void    buttonSwitcher(int dir, Menu &menu)
 {
@@ -45,12 +44,27 @@ void    buttonSwitcher(int dir, Menu &menu)
     }
 }
 
-void    exec_game(sf::RenderWindow &window)
+void    exec_game(sf::RenderWindow &window, std::string ip, std::string hostname)
 {
-    window.close();
-    Rendering(window);
-    _exit(0);
+    int fd;
+    Game    parser;
+
+    std::cout << "[" << ip << "]" << "{" << hostname << "}\n";
+//    fd = ConnectClientGraToServer(ip, hostname);
+//      int   cs;
+//  fd = connect_server(ip, hostname);
+//  if (cs != EXIT_FAILURE)
+
+    // if (my_connect(&fd, (char *)hostname.c_str(), (char *)ip.c_str()) == EXIT_SUCCESS)
+    // {
+    //     parser.ClientRead(fd);
+        window.close();
+        // parser.initMap();
+        parser.Rendering(window/*, fd*/);
+        _exit(0);
+    // }
 }
+
 
 void    exec_menu()
 {
@@ -74,7 +88,7 @@ void    exec_menu()
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                     buttonSwitcher(1, menu);
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && menu.button == 3)
-                    exec_game(window);
+                    exec_game(window, menu.ip, menu.hostname);
             }
             if (event.type == sf::Event::TextEntered)
             {

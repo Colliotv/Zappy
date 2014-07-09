@@ -5,6 +5,11 @@
 #include	<vector>
 #include	<map>
 #include <GLFW/glfw3.h>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/OpenGL.hpp>
+#include <SFML/System/Vector2.hpp>
+#include "MD2Loader.h"
 
 
 #define DEAD 0;
@@ -33,8 +38,8 @@ struct player
 
 struct square
 {
-	int	pos_x;
-	int	pos_y;
+	float	pos_x;
+	float	pos_y;
 	int	food;
 	int	linemate;
 	int	deraumere;
@@ -52,14 +57,16 @@ class Game
 	int                 sgt;
 	int                 size_map_x;
 	int                 size_map_y;
+	int                 map_ready = 0;
 
 public:
 	Game();
 	~Game();
 	void  initMap();
 	void	isset_server(int fd);
-	void  Rendering(GLFWwindow* window, int fd);
+	void  Rendering(sf::RenderWindow &/*, int*/);
 	void	ClientRead(int cs);
+	void    drawObjects(MD2Obj *modelList, int &CurFrame);
 
 	void    cmdMszSizeMap(std::stringstream &);
 	void    cmdBctContentCase(std::stringstream &);

@@ -49,7 +49,7 @@ bool LoadTexture(char *TexName, GLuint TexHandle)
 
 std::vector<square> createList(float size_x, float size_y)
 {
-  std::vector<square> objectList;
+  std::vector<square> v_player;
   square buff;
   float x = 0.0f;
   float y = 0.0f;
@@ -68,12 +68,12 @@ std::vector<square> createList(float size_x, float size_y)
       buff.mendiane = 0;
       buff.phiras = 0;
       buff.thystame = 0;
-      objectList.push_back(buff);
+      v_player.push_back(buff);
       y++;
     }
     x++;
   }
-  return (objectList);
+  return (v_player);
 }
 
 std::vector<player> refreshPlayers(float size_x, float size_y)
@@ -162,93 +162,104 @@ void loadObj(MD2Obj &object, char *pathMod, char *pathText)
   object.SetTexture(texture);
 }
 
-void  drawObjects(std::vector<square> objectList, std::vector<player> playerList, MD2Obj *modelList, int &CurFrame)
+void  Game::drawObjects(MD2Obj *modelList, int &CurFrame)
 {
   unsigned int n = 0;
 
-  while (n < playerList.size())
+  while (n < v_player.size())
   {
-    if (playerList[n].nb > 0)
+    if (v_player[n].nb > 0)
     {
-      glTranslatef(60.0f * playerList[n].pos_x,60.0f * playerList[n].pos_y,30.0f);
+      glTranslatef(60.0f * v_player[n].pos_x,60.0f * v_player[n].pos_y,30.0f);
         // glScalef(1.0, 1.0, 1.0);
       modelList[1].Draw(CurFrame);
         // glScalef(1.0/1.0, 1.0/1.0, 1.0/1.0);
-      glTranslatef(-60.0f * playerList[n].pos_x,-60.0f * playerList[n].pos_y,-30.0f);      
+      glTranslatef(-60.0f * v_player[n].pos_x,-60.0f * v_player[n].pos_y,-30.0f);      
     }
     n++;
   }
   n = 0;
-  while (n < objectList.size())
+  while (n < v_square.size())
   {
     glScalef(1.0, 1.0, 1.0);
-    glTranslatef(60.0f * objectList[n].pos_x,60.0f * objectList[n].pos_y,0.0f);
+    glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,0.0f);
     modelList[0].Draw(CurFrame);
-    glTranslatef(-60.0f * objectList[n].pos_x,-60.0f * objectList[n].pos_y,0.0f);
+    glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,0.0f);
     glScalef(1.0/1.0, 1.0/1.0, 1.0/1.0);
-    if (objectList[n].linemate > 0)
+    while (n < v_square.size())
     {
-      glTranslatef(60.0f * objectList[n].pos_x,60.0f * objectList[n].pos_y,30.0f);
-      glTranslatef(20.0f, 5.0f, 0.0f);
-      glScalef(0.1, 0.1, 0.1);
-      modelList[2].Draw(CurFrame);
-      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-      glTranslatef(-20.0f, -5.0f, -0.0f);
-      glTranslatef(-60.0f * objectList[n].pos_x,-60.0f * objectList[n].pos_y,-30.0f);
-    }      
-    if (objectList[n].phiras > 0)
-    {
-      glTranslatef(60.0f * objectList[n].pos_x,60.0f * objectList[n].pos_y,30.0f);
-      glScalef(0.1, 0.1, 0.1);
-      modelList[3].Draw(CurFrame);
-      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-      glTranslatef(-60.0f * objectList[n].pos_x,-60.0f * objectList[n].pos_y,-30.0f);
+      if (v_square[n].food != -1)
+      {
+        glScalef(1.0, 1.0, 1.0);
+        glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,0.0f);
+        modelList[0].Draw(CurFrame);
+        glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,0.0f);
+        glScalef(1.0/1.0, 1.0/1.0, 1.0/1.0);
+      }    
+      if (v_square[n].linemate > 0)
+      {
+        glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
+        glTranslatef(20.0f, 5.0f, 0.0f);
+        glScalef(0.1, 0.1, 0.1);
+        modelList[2].Draw(CurFrame);
+        glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+        glTranslatef(-20.0f, -5.0f, -0.0f);
+        glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
+      }      
+      if (v_square[n].phiras > 0)
+      {
+        glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
+        glScalef(0.1, 0.1, 0.1);
+        modelList[3].Draw(CurFrame);
+        glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+        glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
+      }
+      if (v_square[n].deraumere > 0)
+      {
+        glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
+        glTranslatef(10.0f, -10.0f, 0.0f);
+        glScalef(0.1, 0.1, 0.1);
+        modelList[4].Draw(CurFrame);
+        glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+        glTranslatef(-10.0f, 10.0f, -0.0f);
+        glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
+      }      
+      if (v_square[n].sibur > 0)
+      {
+        glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
+        glTranslatef(-20.0f, -20.0f, 0.0f);
+        glScalef(0.1, 0.1, 0.1);
+        modelList[5].Draw(CurFrame);
+        glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+        glTranslatef(20.0f, 20.0f, -0.0f);
+        glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
+      }      
+      if (v_square[n].mendiane > 0)
+      {
+        glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
+        glTranslatef(0.0f, -25.0f, 0.0f);
+        glScalef(0.1, 0.1, 0.1);
+        modelList[6].Draw(CurFrame);
+        glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+        glTranslatef(0.0f, 25.0f, 0.0f);
+        glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
+      }      
+      if (v_square[n].thystame > 0)
+      {
+        glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
+        glTranslatef(-15.0f, -5.0f, 0.0f);
+        glScalef(0.1, 0.1, 0.1);
+        modelList[7].Draw(CurFrame);
+        glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+        glTranslatef(15.0f, 5.0f, 0.0f);
+        glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
+      }      
+      n++;
     }
-    if (objectList[n].deraumere > 0)
-    {
-      glTranslatef(60.0f * objectList[n].pos_x,60.0f * objectList[n].pos_y,30.0f);
-      glTranslatef(10.0f, -10.0f, 0.0f);
-      glScalef(0.1, 0.1, 0.1);
-      modelList[4].Draw(CurFrame);
-      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-      glTranslatef(-10.0f, 10.0f, -0.0f);
-      glTranslatef(-60.0f * objectList[n].pos_x,-60.0f * objectList[n].pos_y,-30.0f);
-    }      
-    if (objectList[n].sibur > 0)
-    {
-      glTranslatef(60.0f * objectList[n].pos_x,60.0f * objectList[n].pos_y,30.0f);
-      glTranslatef(-20.0f, -20.0f, 0.0f);
-      glScalef(0.1, 0.1, 0.1);
-      modelList[5].Draw(CurFrame);
-      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-      glTranslatef(20.0f, 20.0f, -0.0f);
-      glTranslatef(-60.0f * objectList[n].pos_x,-60.0f * objectList[n].pos_y,-30.0f);
-    }      
-    if (objectList[n].mendiane > 0)
-    {
-      glTranslatef(60.0f * objectList[n].pos_x,60.0f * objectList[n].pos_y,30.0f);
-      glTranslatef(0.0f, -25.0f, 0.0f);
-      glScalef(0.1, 0.1, 0.1);
-      modelList[6].Draw(CurFrame);
-      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-      glTranslatef(0.0f, 25.0f, 0.0f);
-      glTranslatef(-60.0f * objectList[n].pos_x,-60.0f * objectList[n].pos_y,-30.0f);
-    }      
-    if (objectList[n].thystame > 0)
-    {
-      glTranslatef(60.0f * objectList[n].pos_x,60.0f * objectList[n].pos_y,30.0f);
-      glTranslatef(-15.0f, -5.0f, 0.0f);
-      glScalef(0.1, 0.1, 0.1);
-      modelList[7].Draw(CurFrame);
-      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-      glTranslatef(15.0f, 5.0f, 0.0f);
-      glTranslatef(-60.0f * objectList[n].pos_x,-60.0f * objectList[n].pos_y,-30.0f);
-    }      
-    n++;
   }
 }
 
-void  Rendering(sf::RenderWindow &/*window*/)
+void  Game::Rendering(sf::RenderWindow &/*window, int fd*/)
 {
   Interface Iface;
   sf::Vector2<int> myVect(1200, 0);
@@ -260,9 +271,7 @@ void  Rendering(sf::RenderWindow &/*window*/)
   GLfloat Ambient[] = {0.9f,  0.9f,  0.9f, 10.0f};
   GLfloat Diffuse[] = {10.0f,  10.0f,  10.0f, 10.0f};
   GLfloat Position[] = {500.0f, 0.0f, -500.0f, 1.0f};
-  std::vector<square> objectList;
-  std::vector<player> playerList;
-  std::vector<player> playerListForInterface;
+  std::vector<player> v_playerForInterface;
   MD2Obj  modelList[8];
   float ViewRotate=0.0f;
   long Time1,Time2, Ticks, NextFrame;
@@ -298,51 +307,37 @@ void  Rendering(sf::RenderWindow &/*window*/)
   NextFrame=Time1 + FRAMEDELAY;
   Frames = modelList[1].GetFrameCount();
 
-  objectList = createList(20.0, 20.0);
-  playerList = refreshPlayers(20.0, 20.0);
-  objectList[100].linemate = 2;
-  objectList[25].linemate = 2;
-  objectList[225].linemate = 2;
-  objectList[275].linemate = 2;
-  objectList[100].phiras = 2;
-  objectList[75].phiras = 2;
-  objectList[150].phiras = 2;
-  objectList[200].phiras = 2;
-  objectList[100].deraumere = 2;
-  objectList[380].deraumere = 2;
-  objectList[36].deraumere = 2;
-  objectList[205].deraumere = 2;
-  objectList[100].sibur = 2;
-  objectList[123].sibur = 2;
-  objectList[89].sibur = 2;
-  objectList[67].sibur = 2;
-  objectList[100].mendiane = 2;
-  objectList[160].mendiane = 2;
-  objectList[395].mendiane = 2;
-  objectList[320].mendiane = 2;
-  objectList[100].thystame = 2;
-  objectList[218].thystame = 2;
-  objectList[121].thystame = 2;
-  objectList[78].thystame = 2;
-
-  // playerList[101].nb = 1;
-  // playerList[101].team = "Lesticocos";
-  // playerList[101].level = 1;
-  // playerList[190].nb = 2;
-  // playerList[190].team = "Team1";
-  // playerList[190].level = 2;
-  // playerList[300].nb = 3;
-  // playerList[300].team = "Plop";
-  // playerList[300].level = 3;
-  // playerList[350].nb = 4;
-  // playerList[350].team = "Lesticocos";
-  // playerList[350].level = 4;
-  // playerList[30].nb = 5;
-  // playerList[30].team = "Plop";
-  // playerList[30].level = 5;
+  v_square = createList(20.0, 20.0);
+  v_player = refreshPlayers(20.0, 20.0);
+  v_square[100].linemate = 2;
+  v_square[25].linemate = 2;
+  v_square[225].linemate = 2;
+  v_square[275].linemate = 2;
+  v_square[100].phiras = 2;
+  v_square[75].phiras = 2;
+  v_square[150].phiras = 2;
+  v_square[200].phiras = 2;
+  v_square[100].deraumere = 2;
+  v_square[380].deraumere = 2;
+  v_square[36].deraumere = 2;
+  v_square[205].deraumere = 2;
+  v_square[100].sibur = 2;
+  v_square[123].sibur = 2;
+  v_square[89].sibur = 2;
+  v_square[67].sibur = 2;
+  v_square[100].mendiane = 2;
+  v_square[160].mendiane = 2;
+  v_square[395].mendiane = 2;
+  v_square[320].mendiane = 2;
+  v_square[100].thystame = 2;
+  v_square[218].thystame = 2;
+  v_square[121].thystame = 2;
+  v_square[78].thystame = 2;
 
   while(window.isOpen())
   {
+    // this->ClientRead(fd);
+
     glLoadIdentity();
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
@@ -357,9 +352,9 @@ void  Rendering(sf::RenderWindow &/*window*/)
     // glRotatef(ViewRotate,0.0f,0.0f,1.0f);
 
     eventsManager(window);
-    drawObjects(objectList, playerList, modelList, CurFrame);
-    playerListForInterface = playerList;
-    Iface.drawInterface(windowControl, playerListForInterface);
+    this->drawObjects(modelList, CurFrame);
+    v_playerForInterface = this->v_player;
+    Iface.drawInterface(windowControl, v_playerForInterface);
 
     if(Time1>NextFrame)
     {
