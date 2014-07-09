@@ -21,7 +21,6 @@ void   Game::initMap()
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("plv", &Game::cmdPlvNiveau));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pin", &Game::cmdPinInventaire));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pex", &Game::cmdPexExpulse));
-  cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pbc", &Game::cmdPbcBroadcast));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pic", &Game::cmdPicIncantBegin));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pie", &Game::cmdPieIncantEnd));
 
@@ -34,8 +33,9 @@ void   Game::initMap()
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("enw", &Game::cmdEnwEggsSpawn));
 
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("eht", &Game::cmdEhtEclos));
-  cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("ebo", &Game::cmdEboEggsConnect));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("edi", &Game::cmdEdiDead));
+  cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("ebo", &Game::cmdEboEggsConnect));
+  cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("seg", &Game::cmdSegVictory));
 }
 
 void Game::cmdMszSizeMap(std::stringstream &iss)
@@ -52,7 +52,7 @@ void Game::cmdMszSizeMap(std::stringstream &iss)
     y = 0;
     while (y < size_map_y)
     {
-    	std::cout << "msz x[" << x << "] y{" << y << "}" << i << std::endl;
+//    	std::cout << "msz x[" << x << "] y{" << y << "}" << i << std::endl;
     	buff.pos_x = x;
     	buff.pos_y = y;
     	v_square.push_back(buff);
@@ -71,10 +71,10 @@ void Game::cmdBctContentCase(std::stringstream &iss)
   // x +(y*xmax)
   iss >> x;
   iss >> y;
-  std::cout << "bct x[" << x << "] y{" << y << "}" << x + (y * this->size_map_x) << std::endl;
-//  v_square[x + (y * this->size_map_x)].pos_x = x;
-//  v_square[x + (y * this->size_map_x)].pos_y = y;
-  std::cout << "size vector " << v_square.size() << std::endl;
+//  std::cout << "bct x[" << x << "] y{" << y << "}" << x + (y * this->size_map_x) << std::endl;
+  v_square[x + (y * this->size_map_x)].pos_x = x;
+  v_square[x + (y * this->size_map_x)].pos_y = y;
+//  std::cout << "size vector " << v_square.size() << std::endl;
   iss >> v_square[x + (y * this->size_map_x)].food;
   iss >> v_square[x + (y * this->size_map_x)].linemate;
   iss >> v_square[x + (y * this->size_map_x)].deraumere;
@@ -92,11 +92,11 @@ void Game::cmdTnaNameTeam(std::stringstream &iss)
 	std::cout << "cmdTnaNameTeam\n";
 	unsigned int  i = 0;
 
-  while (i < v_square.size())
-  {
-    std::cout << v_square[i].pos_x << " " << v_square[i].pos_y << " food " << v_square[i].food << " thystame " << v_square[i].thystame << std::endl;
-    i++;
-  }
+  // while (i < v_square.size())
+  // {
+  //   std::cout << v_square[i].pos_x << " " << v_square[i].pos_y << " food " << v_square[i].food << " thystame " << v_square[i].thystame << std::endl;
+  //   i++;
+  // }
 }
 
 void Game::cmdPnwConnect(std::stringstream &iss) 
@@ -120,7 +120,7 @@ void Game::cmdPnwConnect(std::stringstream &iss)
   buff.state = ALIVE;
   v_player.push_back(buff);
   std::cout << "cmdPnwConnect ";
-  std::cout << v_player[0].nb << "|"<< v_player[0].spawn_x << " " << v_player[0].spawn_y << " " << v_player[0].orientation << " " << v_player[0].level << " " <<  v_player[0].team << std::endl;
+//  std::cout << v_player[0].nb << "|"<< v_player[0].spawn_x << " " << v_player[0].spawn_y << " " << v_player[0].orientation << " " << v_player[0].level << " " <<  v_player[0].team << std::endl;
 }
 
 void Game::cmdPpoPosition(std::stringstream &iss)
@@ -194,14 +194,6 @@ void Game::cmdPexExpulse(std::stringstream &iss)
   iss >> num_player;
   //demander position chaque joueur au server
   //actualiser l'affichage
-}
-
-void  Game::cmdPbcBroadcast(std::stringstream &iss)
-{
-  std::cout << "cmdPbcBroadcast\n";
-
-  // Afficher un point d exclamation au dessus de lui 
-
 }
 
 void Game::cmdPicIncantBegin(std::stringstream &iss) // animation Début 
@@ -383,6 +375,6 @@ void	Game::isset_server(int fd)
     }
     else
       std::cout << "DONT exist\t: ";
-    std::cout << "|" << data << "|\n";
+//    std::cout << "|" << data << "|\n";
     iss.clear();
 }

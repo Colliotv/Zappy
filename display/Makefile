@@ -11,7 +11,6 @@ SRCS    	= 	./sources/menu_main.cpp \
 				./sources/Render.cpp \
 				./sources/tga.cpp \
 				./sources/connect_main.cpp	\
-				./sources/tools.cpp \
 				./sources/create_socket.cpp \
 				./sources/Game.cpp
 

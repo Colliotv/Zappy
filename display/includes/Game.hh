@@ -5,6 +5,11 @@
 #include	<vector>
 #include	<map>
 #include <GLFW/glfw3.h>
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/OpenGL.hpp>
+#include <SFML/System/Vector2.hpp>
+#include "MD2Loader.h"
 
 
 #define DEAD 0;
@@ -58,8 +63,9 @@ public:
 	~Game();
 	void  initMap();
 	void	isset_server(int fd);
-	void  Rendering(GLFWwindow* window, int fd);
+	void  Rendering(sf::RenderWindow &, int);
 	void	ClientRead(int cs);
+	void    drawObjects(MD2Obj *modelList, int &CurFrame);
 
 	void    cmdMszSizeMap(std::stringstream &);
 	void    cmdBctContentCase(std::stringstream &);
@@ -69,7 +75,6 @@ public:
 	void cmdPlvNiveau(std::stringstream &);
 	void cmdPinInventaire(std::stringstream &);
 	void cmdPexExpulse(std::stringstream &);
-	void cmdPbcBroadcast(std::stringstream &iss);
 	void cmdPicIncantBegin(std::stringstream &);
 	void cmdPieIncantEnd(std::stringstream &);
 	void cmdPfkEggsSpawn(std::stringstream &);
