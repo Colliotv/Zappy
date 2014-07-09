@@ -5,9 +5,9 @@ class iaClass:
 	def __init__(self):
 		self.connexion = 0
 		self.food = 10
-		listBroadcast = []
-		servReturn = False
-		listVoir = []
+		self.listBroadcast = []
+		self.servReturn = False
+		self.listVoir = []
 
 	def connect(self, serv, port, team):
 		try:
@@ -49,7 +49,6 @@ class iaClass:
 		self.servReturn = False
 		for tmp in tmplist:
 			if tmp.find("{") != -1:
-				self.listInventaire = tmp.split(',')
 				self.servReturn = True
 			else:
 				self.listBroadcast.insert(0, tmp)
