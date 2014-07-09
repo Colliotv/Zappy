@@ -49,7 +49,6 @@ class iaClass:
 		self.servReturn = False
 		for tmp in tmplist:
 			if tmp.find("{") != -1:
-				self.listInventaire = tmp.split(',')
 				self.servReturn = True
 			else:
 				self.listBroadcast.insert(0, tmp)

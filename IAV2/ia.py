@@ -4,6 +4,80 @@ import os, sys
 import socket
 from iaClass import *
 
+def findResources(ia, obj):
+	ia.voir()
+	i = 0;
+	for fullCase in ia.listVoir:
+		splitCase = fullCase.split(' ')
+		for item in splitCase:
+			if (item == obj):
+				if (i == 0):
+					ia.prend(obj)
+					print("PRIS ", obj)
+					return 1
+				if (i == 1):
+					ia.avance()
+					ia.gauche()
+					ia.avance()
+					ia.prend(obj)
+					print("PRIS ", obj)
+					return 1
+				if (i == 2):
+					ia.avance()
+					ia.prend(obj)
+					print("PRIS ", obj)
+					return 1
+				if (i == 3):
+					ia.avance()
+					ia.droite()
+					ia.avance()
+					ia.prend(obj)
+					print("PRIS ", obj)
+					return 1
+				if (i == 4):
+					ia.avance()
+					ia.avance()
+					ia.gauche()
+					ia.avance()
+					ia.avance()
+					ia.prend(obj)
+					print("PRIS ", obj)
+					return 1
+				if (i == 5):
+					ia.avance()
+					ia.avance()
+					ia.gauche()
+					ia.avance()
+					ia.prend(obj)
+					print("PRIS ", obj)
+					return 1
+				if (i == 6):
+					ia.avance()
+					ia.avance()
+					ia.prend(obj)
+					print("PRIS ", obj)
+					return 1
+				if (i == 7):
+					ia.avance()
+					ia.avance()
+					ia.droite()
+					ia.avance()
+					ia.prend(obj)
+					print("PRIS ", obj)
+					return 1
+				if (i == 8):
+					ia.avance()
+					ia.avance()
+					ia.droite()
+					ia.avance()
+					ia.avance()
+					ia.prend(obj)
+					print("PRIS ", obj)
+					return 1
+		i = i + 1
+	ia.avance()
+	return -1
+
 def checkFood(ia):
 	ia.inventaire()
 	lfood = ia.listInventaire[0]
