@@ -4,6 +4,7 @@ import socket
 class iaClass:
 	def __init__(self):
 		self.connexion = 0
+		self.food = 10
 
 	def connect(self, serv, port, team):
 		try:
