@@ -10,11 +10,11 @@ Menu::Menu()
     c = 0;
     ip = "";
     hostname = "";
-	if (!font.loadFromFile("images/LCD.otf"))
+	if (!font.loadFromFile("resources/LCD.otf"))
 		std::cout << "Error : failed to load font" << std::endl;
-    if (!music.openFromFile("images/StarCraft.wav"))
+    if (!music.openFromFile("resources/StarCraft.wav"))
         std::cout << "Error : failed to load music" << std::endl;
-    if (!textureBack.loadFromFile("images/Space.jpg"))
+    if (!textureBack.loadFromFile("resources/Space.jpg"))
         std::cout << "Error : failed to load texture" << std::endl;
     spriteBack.setTexture(textureBack);
     text1.setFont(font);

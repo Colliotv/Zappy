@@ -10,10 +10,10 @@
 #include "Game.hh"
 #include <vector>
 #include <unistd.h>
-#include    <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/OpenGL.hpp>
-
+#include <SFML/System/Vector2.hpp>
 
 using namespace std;
 
@@ -88,6 +88,7 @@ std::vector<player> refreshPlayers(float size_x, float size_y)
       buff.pos_x = x;
       buff.pos_y = y;
       buff.nb = -1;
+      buff.level = -1;
       buff.team = -1;
       buff.food = 0;
       buff.linemate = 0;
@@ -116,17 +117,17 @@ void  eventsManager(sf::Window &window)
     {
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         window.close();
-      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         move_Y = move_Y - 0.1;
-      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
         move_Y = move_Y + 0.1;
-      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
         move_X = move_X - 0.1;
-      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         move_X = move_X + 0.1;
-      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add))
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add))
         move_Z = move_Z - 0.1;
-      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract))
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract))
         move_Z = move_Z + 0.1;
     }
   }
@@ -142,7 +143,7 @@ void loadObj(MD2Obj &object, char *pathMod, char *pathText)
   memset(File, 0, 256);
   strcpy(File, pathMod);
   object.Load(File);
-  strcpy(Text,"Obj/");
+  strcpy(Text,"resources/");
   strcat(Text,object.GetTexName());
   if(LoadTexture(Text,texture))
     object.SetTexture(texture);
@@ -231,27 +232,124 @@ void  drawObjects(std::vector<square> objectList, std::vector<player> playerList
   }
 }
 
+bool sortByTeam(const player &lhs, const player &rhs) {return lhs.team < rhs.team;}
+bool sortByLevel(const player &lhs, const player &rhs) {return lhs.level < rhs.level;}
+
+void eventsInterface(sf::RenderWindow &window)
+{
+  sf::Event event;
+
+  while (window.pollEvent(event))
+  {
+    if (event.type == sf::Event::KeyPressed)
+    {
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        move_Y = move_Y - 0.1;
+      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        move_Y = move_Y + 0.1;
+      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        move_X = move_X - 0.1;
+      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        move_X = move_X + 0.1;
+    }
+  }
+}
+
+void  drawInterface(sf::RenderWindow &window, std::vector<player> playerList)
+{
+  std::sort(playerList.begin(), playerList.end(), sortByLevel);
+  std::sort(playerList.begin(), playerList.end(), sortByTeam);
+  sf::RectangleShape rect;
+  sf::Font font;
+  sf::Text text;
+  std::string str;
+
+  window.clear();
+  if (!font.loadFromFile("resources/LCD.otf"))
+    std::cout << "Error : failed to load font" << std::endl;
+  rect.setSize(sf::Vector2f(280, 80));
+  rect.setFillColor(sf::Color(200, 200, 200, 128));
+  rect.setOutlineThickness(10);
+  rect.setOutlineColor(sf::Color(120, 120, 120, 128));
+  rect.setPosition(10, 10);
+  window.draw(rect);
+  rect.setPosition(10, 110);
+  window.draw(rect);
+  rect.setPosition(10, 210);
+  window.draw(rect);
+  rect.setPosition(10, 310);
+  window.draw(rect);
+  rect.setPosition(10, 410);
+  window.draw(rect);
+  rect.setPosition(10, 510);
+  window.draw(rect);
+  rect.setPosition(10, 610);
+  window.draw(rect);
+  rect.setPosition(10, 710);
+  window.draw(rect);
+  rect.setPosition(10, 810);
+
+  text.setFont(font);
+  text.setColor(sf::Color::Red);
+  text.setString("Team Zappy");
+  text.setCharacterSize(24);
+  text.setPosition(20, 20);
+  window.draw(text);
+  text.setColor(sf::Color::Green);
+  text.setString("Player 1");
+  text.setPosition(20, 120);
+  window.draw(text);
+  text.setString("Player 2");
+  text.setPosition(20, 220);
+  window.draw(text);
+  text.setString("Player 3");
+  text.setPosition(20, 320);
+  window.draw(text);
+  text.setString("Player 4");
+  text.setPosition(20, 420);
+  window.draw(text);
+  text.setString("Player 5");
+  text.setPosition(20, 520);
+  window.draw(text);
+  text.setString("Player 6");
+  text.setPosition(20, 620);
+  window.draw(text);
+  text.setString("Player 7");
+  text.setPosition(20, 720);
+  window.draw(text);
+
+  window.display();
+
+  eventsInterface(window);
+}
+
 void  Rendering(sf::RenderWindow &/*window*/)
 {
-  sf::Window window(sf::VideoMode(1200, 800), "Zappy", sf::Style::Default, sf::ContextSettings(32));
-  GLfloat Ambient[]  = {0.9f,  0.9f,  0.9f, 10.0f};
-  GLfloat Diffuse[]  = {10.0f,  10.0f,  10.0f, 10.0f};
+  sf::Vector2<int> myVect(1200, 0);
+  sf::RenderWindow windowControl(sf::VideoMode(300, 800), "Camera Control Panel");
+  windowControl.setPosition(myVect);
+  myVect.x = 0;
+  sf::RenderWindow window(sf::VideoMode(1200, 800), "Zappy", sf::Style::Default, sf::ContextSettings(32));
+  window.setPosition(myVect);
+  GLfloat Ambient[] = {0.9f,  0.9f,  0.9f, 10.0f};
+  GLfloat Diffuse[] = {10.0f,  10.0f,  10.0f, 10.0f};
   GLfloat Position[] = {500.0f, 0.0f, -500.0f, 1.0f};
   std::vector<square> objectList;
   std::vector<player> playerList;
+  std::vector<player> playerListForInterface;
   MD2Obj  modelList[8];
   float ViewRotate=0.0f;
   long Time1,Time2, Ticks, NextFrame;
   int Frames,CurFrame=0;
 
-  loadObj(modelList[0], (char *)"Obj/Ground.md2", (char *)"Obj/caisse.tga");
-  loadObj(modelList[1], (char *)"Obj/WalkMech.md2", (char *)"Obj/RedMech.tga");
-  loadObj(modelList[2], (char *)"Obj/Ground.md2", (char *)"Obj/Green.tga");
-  loadObj(modelList[3], (char *)"Obj/Ground.md2", (char *)"Obj/Blue.tga");
-  loadObj(modelList[4], (char *)"Obj/Ground.md2", (char *)"Obj/Red.tga");
-  loadObj(modelList[5], (char *)"Obj/Ground.md2", (char *)"Obj/Yellow.tga");
-  loadObj(modelList[6], (char *)"Obj/Ground.md2", (char *)"Obj/Orange.tga");
-  loadObj(modelList[7], (char *)"Obj/Ground.md2", (char *)"Obj/Pink.tga");
+  loadObj(modelList[0], (char *)"resources/Ground.md2", (char *)"resources/Grass.tga");
+  loadObj(modelList[1], (char *)"resources/WalkMech.md2", (char *)"resources/RedMech.tga");
+  loadObj(modelList[2], (char *)"resources/Ground.md2", (char *)"resources/Green.tga");
+  loadObj(modelList[3], (char *)"resources/Ground.md2", (char *)"resources/Blue.tga");
+  loadObj(modelList[4], (char *)"resources/Ground.md2", (char *)"resources/Red.tga");
+  loadObj(modelList[5], (char *)"resources/Ground.md2", (char *)"resources/Yellow.tga");
+  loadObj(modelList[6], (char *)"resources/Ground.md2", (char *)"resources/Orange.tga");
+  loadObj(modelList[7], (char *)"resources/Ground.md2", (char *)"resources/Pink.tga");
 
   glClearColor(0.2f,0.2f,0.2f,1.0f);
 
@@ -267,7 +365,7 @@ void  Rendering(sf::RenderWindow &/*window*/)
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, Ambient);
+  glLightfv(GL_LIGHT0, GL_AMBIENT, Ambient);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, Diffuse);
 
   Time1=Time2=clock();
@@ -301,8 +399,20 @@ void  Rendering(sf::RenderWindow &/*window*/)
   objectList[121].thystame = 2;
   objectList[78].thystame = 2;
   playerList[101].nb = 1;
+  playerList[101].team = "Lesticocos";
+  playerList[101].level = 1;
   playerList[190].nb = 2;
+  playerList[190].team = "Team1";
+  playerList[190].level = 2;
   playerList[300].nb = 3;
+  playerList[300].team = "Plop";
+  playerList[300].level = 3;
+  playerList[350].nb = 4;
+  playerList[350].team = "Lesticocos";
+  playerList[350].level = 4;
+  playerList[30].nb = 5;
+  playerList[30].team = "Plop";
+  playerList[30].level = 5;
 
   while(window.isOpen())
   {
@@ -321,6 +431,9 @@ void  Rendering(sf::RenderWindow &/*window*/)
 
     eventsManager(window);
     drawObjects(objectList, playerList, modelList, CurFrame);
+    playerListForInterface = playerList;
+    drawInterface(windowControl, playerListForInterface);
+
 
     if(Time1>NextFrame)
     {

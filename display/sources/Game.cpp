@@ -1,12 +1,3 @@
-/*
-** main.c for  in /home/kiril/project/PSU_2013_myirc/sources/client_dir
-** 
-** Made by Kiril
-** Login   <kiril@epitech.net>
-** 
-** Started on  Sun Apr 27 17:07:55 2014 Kiril
-** Last update Sun Apr 27 17:13:52 2014 Kiril
-*/
 
 #include  <iostream>
 #include <string>
@@ -124,12 +115,12 @@ void Game::cmdPnwConnect(std::stringstream &iss)
   iss >> buff.spawn_x;
   iss >> buff.spawn_y;
   iss >> buff.orientation;
-  iss >> buff.niveau;
+  iss >> buff.level;
   iss >> buff.team;
   buff.state = ALIVE;
   v_player.push_back(buff);
   std::cout << "cmdPnwConnect ";
-  std::cout << v_player[0].nb << "|"<< v_player[0].spawn_x << " " << v_player[0].spawn_y << " " << v_player[0].orientation << " " << v_player[0].niveau << " " <<  v_player[0].team << std::endl;
+  std::cout << v_player[0].nb << "|"<< v_player[0].spawn_x << " " << v_player[0].spawn_y << " " << v_player[0].orientation << " " << v_player[0].level << " " <<  v_player[0].team << std::endl;
 }
 
 void Game::cmdPpoPosition(std::stringstream &iss)
@@ -161,8 +152,8 @@ void Game::cmdPlvNiveau(std::stringstream &iss)
   {
     if (nb == v_player[i].nb)
     {
-      v_player[i].niveau = buff_niv;
-      std::cout << " i : " << i << " niveau : " << v_player[i].niveau << std::endl;
+      v_player[i].level = buff_niv;
+      std::cout << " i : " << i << " level : " << v_player[i].level << std::endl;
     }
     i++;
   }
@@ -256,7 +247,7 @@ void Game::cmdPieIncantEnd(std::stringstream &iss)
     if (x == v_player[i].pos_x && y == v_player[i].pos_y && result == 1)
     {
       std::cout << "player n : " << v_player[i].nb << " level++ :" <<
-      v_player[i].niveau++;
+      v_player[i].level++;
     }
     i++;
   }

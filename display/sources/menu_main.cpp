@@ -47,7 +47,7 @@ void    buttonSwitcher(int dir, Menu &menu)
 
 void    exec_game(sf::RenderWindow &window)
 {
-    // window.close();
+    window.close();
     Rendering(window);
     _exit(0);
 }
@@ -56,6 +56,7 @@ void    exec_menu()
 {
     sf::RenderWindow window(sf::VideoMode(1200, 800), "Zappy");
     Menu    menu;
+    
    // menu.music.play();
    while (window.isOpen())
    {

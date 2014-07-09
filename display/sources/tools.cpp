@@ -1,12 +1,3 @@
-/*
-** tools.c for  in /home/kiril/project/PSU_2013_myirc/sources/client_dir
-** 
-** Made by Kiril
-** Login   <kiril@epitech.net>
-** 
-** Started on  Sun Apr 27 17:10:34 2014 Kiril
-** Last update Sun Apr 27 17:10:35 2014 Kiril
-*/
 
 // #include	"client.h"
 

@@ -51,22 +51,10 @@ int TGAImg::Load(char* szFilename)
      pPalette=NULL;
     }
 
-  // Open the specified file
-    std::cout << "szFilename ------->" << szFilename << std::endl;
     fIn.open(szFilename,ios::binary);
-//    std::cout << "----> apres open " << ret_open << std::endl;
-    if (fIn)
-    {
-      cerr << "ITS OOOOOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKKKKKKKKKKKKKKKKKK\n";
-    }
-    else
-    {
-       cerr << "File could not be opened!\n"; // Report error
-       cerr << "Error code: " << strerror(errno);
-    }
     if(fIn==NULL)
     {
-      std::cout << "---------------------------->OPEN A FOIRE\n";
+      // std::cout << "---------------------------->OPEN A FOIRE\n";
       return IMG_ERR_NO_FILE;
     }
     // Get file size

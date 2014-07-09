@@ -19,7 +19,7 @@ struct player
 	int spawn_x;
 	int spawn_y;
 	int orientation;
-	int niveau; // Niveau du joueur ou de l'incatation
+	int level;
 	int food;
 	int	linemate;
 	int	deraumere;
