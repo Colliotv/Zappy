@@ -5,16 +5,15 @@ DIR		=	sources
 
 DIR_CLIENT	=	client_dir
 
-SRCS    	= 	./sources/menu/main.cpp \
-				./sources/menu/Menu.cpp \
-				./md2_test/Src/MD2Loader.cpp \
-				./md2_test/Src/Render.cpp \
-				./md2_test/Src/tga.cpp \
-				./$(DIR)/$(DIR_CLIENT)/main.cpp	\
-				./$(DIR)/$(DIR_CLIENT)/tools.cpp \
-				./$(DIR)/$(DIR_CLIENT)/create_socket.cpp \
-				./$(DIR)/$(DIR_CLIENT)/Game.cpp \
-				./$(DIR)/$(DIR_CLIENT)/cmd.cpp
+SRCS    	= 	./sources/menu_main.cpp \
+				./sources/Menu.cpp \
+				./sources/MD2Loader.cpp \
+				./sources/Render.cpp \
+				./sources/tga.cpp \
+				./sources/connect_main.cpp	\
+				./sources/tools.cpp \
+				./sources/create_socket.cpp \
+				./sources/Game.cpp
 
 
 OBJS    	= 	$(SRCS:.cpp=.o)
@@ -29,7 +28,7 @@ LIBSFLAGS	+=	-I./sfml/branches/sfml2
 LIBSFLAGS	+=	-L./sfml/trunk/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 LIBSFLAGS	+=	-lGL -lGLU  -lglfw
 LIBSFLAGS	+=	-L./GLEW/libGLEW.so.1.9.0
-LIBSFLAGS	+=	-L./includes
+LIBSFLAGS	+=	-L./includes/
 
 all: 		$(NAME)
 
