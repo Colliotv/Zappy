@@ -13,12 +13,14 @@ SRCS    	= 	./sources/menu_main.cpp \
 				./sources/connect_main.cpp	\
 				./sources/tools.cpp \
 				./sources/create_socket.cpp \
-				./sources/Game.cpp
+				./sources/Game.cpp \
+				./sources/Interface.cpp
+
 
 
 OBJS    	= 	$(SRCS:.cpp=.o)
 
-CC      	= 	g++ 
+CC      	= 	g++
 
 RM      	= 	rm -f
 

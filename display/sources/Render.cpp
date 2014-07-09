@@ -8,6 +8,7 @@
 #include "Obj.hh"
 #include "Render.h"
 #include "Game.hh"
+#include "Interface.hh"
 #include <vector>
 #include <unistd.h>
 #include <SFML/Graphics.hpp>
@@ -16,6 +17,8 @@
 #include <SFML/System/Vector2.hpp>
 
 using namespace std;
+
+  void  drawInterface(sf::RenderWindow &window, std::vector<player> playerList);
 
 #define FRAMEDELAY 70
 
@@ -77,32 +80,40 @@ std::vector<player> refreshPlayers(float size_x, float size_y)
 {
   std::vector<player> playerList;
   player buff;
-  float x = 0.0f;
-  float y = 0.0f;
 
-  while (x < size_x)
-  {
-    y = 0.0f;
-    while (y < size_y)
-    {
-      buff.pos_x = x;
-      buff.pos_y = y;
-      buff.nb = -1;
-      buff.level = -1;
-      buff.team = -1;
-      buff.food = 0;
-      buff.linemate = 0;
-      buff.deraumere = 0;
-      buff.sibur = 0;
-      buff.mendiane = 0;
-      buff.phiras = 0;
-      buff.thystame = 0;
-      playerList.push_back(buff);
-      y++;
-    }
-    x++;
-  }
+  buff.pos_x = 0;
+  buff.pos_y = 0;
+  buff.nb = 1;
+  buff.level = -1;
+  buff.team = "Plop";
+  playerList.push_back(buff);
+  buff.pos_x = 10;
+  buff.pos_y = 10;
+  buff.nb = 2;
+  buff.level = -1;
+  buff.team = "Lesticocos";
+  playerList.push_back(buff);
+  buff.pos_x = 15;
+  buff.pos_y = 10;
+  buff.nb = 3;
+  buff.level = -1;
+  buff.team = "Plop";
+  playerList.push_back(buff);
+  buff.pos_x = 10;
+  buff.pos_y = 10;
+  buff.nb = 4;
+  buff.level = -1;
+  buff.team = "Lesticocos";
+  playerList.push_back(buff);
+  buff.pos_x = 19;
+  buff.pos_y = 19;
+  buff.nb = 5;
+  buff.level = -1;
+  buff.team = "Epitech";
+  playerList.push_back(buff);
+
   return (playerList);
+
 }
 
 void  eventsManager(sf::Window &window)
@@ -155,6 +166,19 @@ void  drawObjects(std::vector<square> objectList, std::vector<player> playerList
 {
   unsigned int n = 0;
 
+  while (n < playerList.size())
+  {
+    if (playerList[n].nb > 0)
+    {
+      glTranslatef(60.0f * playerList[n].pos_x,60.0f * playerList[n].pos_y,30.0f);
+        // glScalef(1.0, 1.0, 1.0);
+      modelList[1].Draw(CurFrame);
+        // glScalef(1.0/1.0, 1.0/1.0, 1.0/1.0);
+      glTranslatef(-60.0f * playerList[n].pos_x,-60.0f * playerList[n].pos_y,-30.0f);      
+    }
+    n++;
+  }
+  n = 0;
   while (n < objectList.size())
   {
     glScalef(1.0, 1.0, 1.0);
@@ -162,14 +186,6 @@ void  drawObjects(std::vector<square> objectList, std::vector<player> playerList
     modelList[0].Draw(CurFrame);
     glTranslatef(-60.0f * objectList[n].pos_x,-60.0f * objectList[n].pos_y,0.0f);
     glScalef(1.0/1.0, 1.0/1.0, 1.0/1.0);
-    if (playerList[n].nb > 0)
-    {
-      glTranslatef(60.0f * objectList[n].pos_x,60.0f * objectList[n].pos_y,30.0f);
-        // glScalef(1.0, 1.0, 1.0);
-      modelList[1].Draw(CurFrame);
-        // glScalef(1.0/1.0, 1.0/1.0, 1.0/1.0);
-      glTranslatef(-60.0f * objectList[n].pos_x,-60.0f * objectList[n].pos_y,-30.0f);
-    }      
     if (objectList[n].linemate > 0)
     {
       glTranslatef(60.0f * objectList[n].pos_x,60.0f * objectList[n].pos_y,30.0f);
@@ -232,99 +248,9 @@ void  drawObjects(std::vector<square> objectList, std::vector<player> playerList
   }
 }
 
-bool sortByTeam(const player &lhs, const player &rhs) {return lhs.team < rhs.team;}
-bool sortByLevel(const player &lhs, const player &rhs) {return lhs.level < rhs.level;}
-
-void eventsInterface(sf::RenderWindow &window)
-{
-  sf::Event event;
-
-  while (window.pollEvent(event))
-  {
-    if (event.type == sf::Event::KeyPressed)
-    {
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        move_Y = move_Y - 0.1;
-      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        move_Y = move_Y + 0.1;
-      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        move_X = move_X - 0.1;
-      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        move_X = move_X + 0.1;
-    }
-  }
-}
-
-void  drawInterface(sf::RenderWindow &window, std::vector<player> playerList)
-{
-  std::sort(playerList.begin(), playerList.end(), sortByLevel);
-  std::sort(playerList.begin(), playerList.end(), sortByTeam);
-  sf::RectangleShape rect;
-  sf::Font font;
-  sf::Text text;
-  std::string str;
-
-  window.clear();
-  if (!font.loadFromFile("resources/LCD.otf"))
-    std::cout << "Error : failed to load font" << std::endl;
-  rect.setSize(sf::Vector2f(280, 80));
-  rect.setFillColor(sf::Color(200, 200, 200, 128));
-  rect.setOutlineThickness(10);
-  rect.setOutlineColor(sf::Color(120, 120, 120, 128));
-  rect.setPosition(10, 10);
-  window.draw(rect);
-  rect.setPosition(10, 110);
-  window.draw(rect);
-  rect.setPosition(10, 210);
-  window.draw(rect);
-  rect.setPosition(10, 310);
-  window.draw(rect);
-  rect.setPosition(10, 410);
-  window.draw(rect);
-  rect.setPosition(10, 510);
-  window.draw(rect);
-  rect.setPosition(10, 610);
-  window.draw(rect);
-  rect.setPosition(10, 710);
-  window.draw(rect);
-  rect.setPosition(10, 810);
-
-  text.setFont(font);
-  text.setColor(sf::Color::Red);
-  text.setString("Team Zappy");
-  text.setCharacterSize(24);
-  text.setPosition(20, 20);
-  window.draw(text);
-  text.setColor(sf::Color::Green);
-  text.setString("Player 1");
-  text.setPosition(20, 120);
-  window.draw(text);
-  text.setString("Player 2");
-  text.setPosition(20, 220);
-  window.draw(text);
-  text.setString("Player 3");
-  text.setPosition(20, 320);
-  window.draw(text);
-  text.setString("Player 4");
-  text.setPosition(20, 420);
-  window.draw(text);
-  text.setString("Player 5");
-  text.setPosition(20, 520);
-  window.draw(text);
-  text.setString("Player 6");
-  text.setPosition(20, 620);
-  window.draw(text);
-  text.setString("Player 7");
-  text.setPosition(20, 720);
-  window.draw(text);
-
-  window.display();
-
-  eventsInterface(window);
-}
-
 void  Rendering(sf::RenderWindow &/*window*/)
 {
+  Interface Iface;
   sf::Vector2<int> myVect(1200, 0);
   sf::RenderWindow windowControl(sf::VideoMode(300, 800), "Camera Control Panel");
   windowControl.setPosition(myVect);
@@ -398,21 +324,22 @@ void  Rendering(sf::RenderWindow &/*window*/)
   objectList[218].thystame = 2;
   objectList[121].thystame = 2;
   objectList[78].thystame = 2;
-  playerList[101].nb = 1;
-  playerList[101].team = "Lesticocos";
-  playerList[101].level = 1;
-  playerList[190].nb = 2;
-  playerList[190].team = "Team1";
-  playerList[190].level = 2;
-  playerList[300].nb = 3;
-  playerList[300].team = "Plop";
-  playerList[300].level = 3;
-  playerList[350].nb = 4;
-  playerList[350].team = "Lesticocos";
-  playerList[350].level = 4;
-  playerList[30].nb = 5;
-  playerList[30].team = "Plop";
-  playerList[30].level = 5;
+
+  // playerList[101].nb = 1;
+  // playerList[101].team = "Lesticocos";
+  // playerList[101].level = 1;
+  // playerList[190].nb = 2;
+  // playerList[190].team = "Team1";
+  // playerList[190].level = 2;
+  // playerList[300].nb = 3;
+  // playerList[300].team = "Plop";
+  // playerList[300].level = 3;
+  // playerList[350].nb = 4;
+  // playerList[350].team = "Lesticocos";
+  // playerList[350].level = 4;
+  // playerList[30].nb = 5;
+  // playerList[30].team = "Plop";
+  // playerList[30].level = 5;
 
   while(window.isOpen())
   {
@@ -432,8 +359,7 @@ void  Rendering(sf::RenderWindow &/*window*/)
     eventsManager(window);
     drawObjects(objectList, playerList, modelList, CurFrame);
     playerListForInterface = playerList;
-    drawInterface(windowControl, playerListForInterface);
-
+    Iface.drawInterface(windowControl, playerListForInterface);
 
     if(Time1>NextFrame)
     {
