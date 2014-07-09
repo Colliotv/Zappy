@@ -69,6 +69,7 @@ public:
 	void cmdPlvNiveau(std::stringstream &);
 	void cmdPinInventaire(std::stringstream &);
 	void cmdPexExpulse(std::stringstream &);
+	void cmdPbcBroadcast(std::stringstream &iss);
 	void cmdPicIncantBegin(std::stringstream &);
 	void cmdPieIncantEnd(std::stringstream &);
 	void cmdPfkEggsSpawn(std::stringstream &);

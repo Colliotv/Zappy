@@ -21,6 +21,7 @@ void   Game::initMap()
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("plv", &Game::cmdPlvNiveau));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pin", &Game::cmdPinInventaire));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pex", &Game::cmdPexExpulse));
+  cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pbc", &Game::cmdPbcBroadcast));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pic", &Game::cmdPicIncantBegin));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pie", &Game::cmdPieIncantEnd));
 
@@ -33,9 +34,8 @@ void   Game::initMap()
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("enw", &Game::cmdEnwEggsSpawn));
 
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("eht", &Game::cmdEhtEclos));
-  cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("edi", &Game::cmdEdiDead));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("ebo", &Game::cmdEboEggsConnect));
-  cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("seg", &Game::cmdSegVictory));
+  cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("edi", &Game::cmdEdiDead));
 }
 
 void Game::cmdMszSizeMap(std::stringstream &iss)
@@ -194,6 +194,14 @@ void Game::cmdPexExpulse(std::stringstream &iss)
   iss >> num_player;
   //demander position chaque joueur au server
   //actualiser l'affichage
+}
+
+void  Game::cmdPbcBroadcast(std::stringstream &iss)
+{
+  std::cout << "cmdPbcBroadcast\n";
+
+  // Afficher un point d exclamation au dessus de lui 
+
 }
 
 void Game::cmdPicIncantBegin(std::stringstream &iss) // animation Début 
