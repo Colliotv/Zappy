@@ -7,7 +7,6 @@ DIR_CLIENT	=	client_dir
 
 SRCS    	= 	./sources/menu/main.cpp \
 				./sources/menu/Menu.cpp \
-				./md2_test/Src/GLFWBase.cpp \
 				./md2_test/Src/MD2Loader.cpp \
 				./md2_test/Src/Render.cpp \
 				./md2_test/Src/tga.cpp \

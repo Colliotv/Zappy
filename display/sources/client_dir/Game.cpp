@@ -54,16 +54,19 @@ void Game::cmdMszSizeMap(std::stringstream &iss)
   square buff;
   int x = 0;
   int y = 0;
+  int i = 0;
 
   while (x < size_map_x)
   {
     y = 0;
     while (y < size_map_y)
     {
-      buff.pos_x = x;
-      buff.pos_y = y;
-      v_square.push_back(buff);
-      y++;
+    	std::cout << "msz x[" << x << "] y{" << y << "}" << i << std::endl;
+    	buff.pos_x = x;
+    	buff.pos_y = y;
+    	v_square.push_back(buff);
+    	y++;
+    	i++;
     }
     x++;
   }
@@ -77,8 +80,10 @@ void Game::cmdBctContentCase(std::stringstream &iss)
   // x +(y*xmax)
   iss >> x;
   iss >> y;
-  v_square[x + (y * this->size_map_x)].pos_x = x;
-  v_square[x + (y * this->size_map_x)].pos_y = y;
+  std::cout << "bct x[" << x << "] y{" << y << "}" << x + (y * this->size_map_x) << std::endl;
+//  v_square[x + (y * this->size_map_x)].pos_x = x;
+//  v_square[x + (y * this->size_map_x)].pos_y = y;
+  std::cout << "size vector " << v_square.size() << std::endl;
   iss >> v_square[x + (y * this->size_map_x)].food;
   iss >> v_square[x + (y * this->size_map_x)].linemate;
   iss >> v_square[x + (y * this->size_map_x)].deraumere;
@@ -368,8 +373,6 @@ void	Game::isset_server(int fd)
     std::string    data(buffer, itt);
 
     std::map<std::string, int/*void(class::*)(stringstream&)*/>::iterator    it;
-//    std::cout << "{" << data.substr(0 ,3) << "}" << std::endl;
-
     std::stringstream iss(data);   
     std::string n;
 
@@ -382,7 +385,5 @@ void	Game::isset_server(int fd)
     else
       std::cout << "DONT exist\t: ";
     std::cout << "|" << data << "|\n";
-    // iss >> chif;
-    // std::cout << "[" << n << "] {" << chif << "}"<< std::endl;
     iss.clear();
 }

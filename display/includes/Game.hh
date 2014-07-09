@@ -4,6 +4,8 @@
 #include	<string>
 #include	<vector>
 #include	<map>
+#include <GLFW/glfw3.h>
+
 
 #define DEAD 0;
 #define ALIVE 1;
@@ -56,6 +58,8 @@ public:
 	~Game();
 	void  initMap();
 	void	isset_server(int fd);
+	void  Rendering(GLFWwindow* window, int fd);
+	void	ClientRead(int cs);
 
 	void    cmdMszSizeMap(std::stringstream &);
 	void    cmdBctContentCase(std::stringstream &);
@@ -77,5 +81,11 @@ public:
 	void cmdEdiDead(std::stringstream &);
 	void cmdSegVictory(std::stringstream &);
 };
+
+int   ConnectClientGraToServer(std::string   ip, std::string hostname);
+
+void	ClientRead(int cs);
+
+int	my_connect(int	*cs, char *ip, char *hostname);
 
 #endif

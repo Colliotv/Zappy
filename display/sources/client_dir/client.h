@@ -47,7 +47,7 @@ int		ConnectToServer(t_socket *so, char *addr);
 int		PutStr(int fd, char *str);
 int	parse_command(char ***a, char *buff);
 void	ParseCmd(char cmd[4096], char **nickname);
-int	my_connect(int	*cs, char **arg);
+int	my_connect(int	*cs, char *, char *);
 
 int		ConnectClientGraToServer(std::string   port);
 
