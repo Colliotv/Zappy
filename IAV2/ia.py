@@ -26,6 +26,7 @@ def main():
 	else:
 		ia = iaClass()
 		ia.connect(sys.argv[1], sys.argv[2], sys.argv[3])
+		start(ia)
 
 if __name__ == '__main__':
 	main()
