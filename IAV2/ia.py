@@ -16,76 +16,75 @@ def findResources(ia, obj):
 					print("PRIS ", obj)
 					return 1
 				if (i == 1):
-					ia.avance()
-					ia.gauche()
-					ia.avance()
+					ia.sendCmd("avance")
+					ia.sendCmd("gauche")
+					ia.sendCmd("avance")
 					ia.prend(obj)
 					print("PRIS ", obj)
 					return 1
 				if (i == 2):
-					ia.avance()
+					ia.sendCmd("avance")
 					ia.prend(obj)
 					print("PRIS ", obj)
 					return 1
 				if (i == 3):
-					ia.avance()
-					ia.droite()
-					ia.avance()
+					ia.sendCmd("avance")
+					ia.sendCmd("droite")
+					ia.sendCmd("avance")
 					ia.prend(obj)
 					print("PRIS ", obj)
 					return 1
 				if (i == 4):
-					ia.avance()
-					ia.avance()
-					ia.gauche()
-					ia.avance()
-					ia.avance()
+					ia.sendCmd("avance")
+					ia.sendCmd("avance")
+					ia.sendCmd("gauche")
+					ia.sendCmd("avance")
+					ia.sendCmd("avance")
 					ia.prend(obj)
 					print("PRIS ", obj)
 					return 1
 				if (i == 5):
-					ia.avance()
-					ia.avance()
-					ia.gauche()
-					ia.avance()
+					ia.sendCmd("avance")
+					ia.sendCmd("avance")
+					ia.sendCmd("gauche")
+					ia.sendCmd("avance")
 					ia.prend(obj)
 					print("PRIS ", obj)
 					return 1
 				if (i == 6):
-					ia.avance()
-					ia.avance()
+					ia.sendCmd("avance")
+					ia.sendCmd("avance")
 					ia.prend(obj)
 					print("PRIS ", obj)
 					return 1
 				if (i == 7):
-					ia.avance()
-					ia.avance()
-					ia.droite()
-					ia.avance()
+					ia.sendCmd("avance")
+					ia.sendCmd("avance")
+					ia.sendCmd("droite")
+					ia.sendCmd("avance")
 					ia.prend(obj)
 					print("PRIS ", obj)
 					return 1
 				if (i == 8):
-					ia.avance()
-					ia.avance()
-					ia.droite()
-					ia.avance()
-					ia.avance()
+					ia.sendCmd("avance")
+					ia.sendCmd("avance")
+					ia.sendCmd("droite")
+					ia.sendCmd("avance")
+					ia.sendCmd("avance")
 					ia.prend(obj)
 					print("PRIS ", obj)
 					return 1
 		i = i + 1
-	ia.avance()
+	ia.sendCmd("avance")
 	return -1
 
 def checkFood(ia):
 	ia.inventaire()
-	lfood = ia.listInventaire[0]
-	ia.food = int(lfood[12:len(lfood)])
-	if ia.food < 10:
+	food = int(ia.listInventaire[0][12:len(ia.listInventaire[0])])
+	if food < 10:
 		return -1
-	else:
-		return 0
+	return 0
+
 
 def cleanList(ia, i):
 	while i != len(ia.listBroadcast):
@@ -109,33 +108,71 @@ def getCloser(ia):
 	if (pos == 0):
 		return 1
 	if (2 <= pos <= 4):
-		ia.gauche()
-		ia.avance()
+		ia.sendCmd("gauche")
+		ia.sendCmd("avance")
 		if pos == 2:
-			ia.droite()
-			ia.avance()
+			ia.sendCmd("droite")
+			ia.sendCmd("avance")
 		elif pos == 4:
-			ia.gauche()
-			ia.avance()
+			ia.sendCmd("gauche")
+			ia.sendCmd("avance")
 	elif (6 <= pos <= 8):
-		ia.droite()
-		ia.avance()
+		ia.sendCmd("droite")
+		ia.sendCmd("avance")
 		if pos == 6:
-			ia.droite()
-			ia.avance()
+			ia.sendCmd("droite")
+			ia.sendCmd("avance")
 		elif pos == 8:
-			ia.gauche()
-			ia.avance()
+			ia.sendCmd("gauche")
+			ia.sendCmd("avance")
 	else:
 		if (pos == 1):
-			ia.avance()
+			ia.sendCmd("avance")
 		else:
-			ia.droite()
-			ia.droite()
-			ia.avance()
+			ia.sendCmd("droite")
+			ia.sendCmd("droite")
+			ia.sendCmd("avance")
 	if checkCalled(ia) == 0:
 		getCloser(ia)
 	return 0
+
+def checkStone(ia):
+	ia.inventaire()
+	linemate = 0
+	deraumere = 0
+	sibur = 0
+	mendiane = 0
+	phiras = 0
+	thystame = 0
+	i = 1
+	while i != len(ia.dictionnaireLvl[ia.lvl]):
+		if ia.dictionnaireLvl[ia.lvl][i] == "linemate":
+			linemate += 1
+		if ia.dictionnaireLvl[ia.lvl][i] == "deraumere":
+			deraumere += 1
+		if ia.dictionnaireLvl[ia.lvl][i] == "sibur":
+			sibur += 1
+		if ia.dictionnaireLvl[ia.lvl][i] == "mendiane":
+			mendiane += 1
+		if ia.dictionnaireLvl[ia.lvl][i] == "phiras":
+			phiras += 1
+		if ia.dictionnaireLvl[ia.lvl][i] == "thystame":
+			thystame += 1
+		i += 1
+	print("ia.linemate", ia.linemate)
+	print("linemate", linemate)
+	if ia.linemate >= linemate and ia.deraumere >= deraumere and ia.sibur >= sibur and ia.mendiane >= mendiane and ia.phiras >= phiras and ia.thystame >= thystame:
+		return 0
+	return -1
+
+
+def getStone(ia):
+	i = 1
+	while i != len(ia.dictionnaireLvl[ia.lvl]):
+		findResources(ia, ia.dictionnaireLvl[ia.lvl][i])
+		i += 1
+	print("sortie de la boucle")
+
 
 def callOthers(ia):
 	broadcast = "broadcast come " + str(ia.lvl)
@@ -143,24 +180,64 @@ def callOthers(ia):
 		ia.sendCmd(broadcast)
 	broadcast = "broadcast stop " + str(ia.lvl)
 	ia.sendCmd(broadcast)
-	
+
+def poseStone(ia):
+	i = 1
+	while i != len(ia.dictionnaireLvl[ia.lvl]):
+		ia.pose(ia.dictionnaireLvl[ia.lvl][i])
+		i += 1
+
+def takeAll(ia):
+	ia.prend("nourriture")
+	ia.prend("linemate")
+	ia.prend("deraumere")
+	ia.prend("sibur")
+	ia.prend("mendiane")
+	ia.prend("phiras")
+	ia.prend("thystame")
+
+def emptyCase(ia):
+	ia.voir()
+	while 42:
+		ia.voir()
+		print(ia.listVoir[0])
+		if ia.listVoir[0].find("nourriture") == -1 and ia.listVoir[0].find("linemate") == -1 and ia.listVoir[0].find("deraumere") == -1 and ia.listVoir[0].find("sibur") == -1 and ia.listVoir[0].find("mendiane") and ia.listVoir[0].find("phiras") == -1 and ia.listVoir[0].find("thystame") == -1:
+			return 0
+		takeAll(ia)
+
+def checkNbPlayer(ia):
+	ia.voir()
+	i = 0
+	nbPlayer = 0
+	ia.listVoir = ia.listVoir[0].split(' ')
+	lenList = len(ia.listVoir)
+	while i != lenList:
+		if ia.listVoir[i] == "joueur":
+			nbPlayer += 1
+		i += 1
+	return nbPlayer
+
 def algo(ia):
 	while ia.lvl != 8:
 		if checkFood(ia) == -1:
 			while ia.food < 20:
 				checkFood(ia)
-				findResources("nourriture")
+				findResources(ia, "nourriture")
 		if checkCalled(ia) == 0:
 			getCloser(ia)
 		else:
 			if checkStone(ia) == 0:
+				print("jai les pierres")
+				emptyCase(ia)
+				poseStone(ia)
 				if checkNbPlayer(ia) == 0:
-					incantation(ia)
+					ia.incantation()
 				else:
 					callOthers(ia)
-					incantation(ia)
+					ia.incantation()
 			else:
-				getStone(ia, ia.listStoneLvl)
+				print("je chope les pierres")
+				getStone(ia)
 
 def main():
 	if len(sys.argv) is not 4:
@@ -168,7 +245,7 @@ def main():
 	else:
 		ia = iaClass()
 		ia.connect(sys.argv[1], sys.argv[2], sys.argv[3])
-		start(ia)
+		algo(ia)
 
 if __name__ == '__main__':
 	main()
