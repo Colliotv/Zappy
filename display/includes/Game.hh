@@ -38,8 +38,8 @@ struct player
 
 struct square
 {
-	int	pos_x;
-	int	pos_y;
+	float	pos_x;
+	float	pos_y;
 	int	food;
 	int	linemate;
 	int	deraumere;
@@ -57,6 +57,7 @@ class Game
 	int                 sgt;
 	int                 size_map_x;
 	int                 size_map_y;
+	int                 map_ready = 0;
 
 public:
 	Game();

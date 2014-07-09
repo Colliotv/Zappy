@@ -44,67 +44,6 @@ bool LoadTexture(char *TexName, GLuint TexHandle)
   return true;
 }
 
-std::vector<square> createList(float size_x, float size_y)
-{
-  std::vector<square> v_square;
-  square buff;
-  float x = 0.0f;
-  float y = 0.0f;
-
-  while (x < size_x)
-  {
-    y = 0.0f;
-    while (y < size_y)
-    {
-      buff.pos_x = x;
-      buff.pos_y = y;
-      buff.food = 0;
-      buff.linemate = 0;
-      buff.deraumere = 0;
-      buff.sibur = 0;
-      buff.mendiane = 0;
-      buff.phiras = 0;
-      buff.thystame = 0;
-      v_square.push_back(buff);
-      y++;
-    }
-    x++;
-  }
-  return (v_square);
-}
-
-std::vector<player> refreshPlayers(float size_x, float size_y)
-{
-  std::vector<player> v_player;
-  player buff;
-  float x = 0.0f;
-  float y = 0.0f;
-
-  while (x < size_x)
-  {
-    y = 0.0f;
-    while (y < size_y)
-    {
-      buff.pos_x = x;
-      buff.pos_y = y;
-      buff.nb = -1;
-      buff.level = -1;
-      buff.team = -1;
-      buff.food = 0;
-      buff.linemate = 0;
-      buff.deraumere = 0;
-      buff.sibur = 0;
-      buff.mendiane = 0;
-      buff.phiras = 0;
-      buff.thystame = 0;
-      v_player.push_back(buff);
-      y++;
-    }
-    x++;
-  }
-  return (v_player);
-}
-
 void  eventsManager(sf::Window &window)
 {
   sf::Event event;
@@ -158,11 +97,14 @@ void  Game::drawObjects(MD2Obj *modelList, int &CurFrame)
 //  std::cout << "---> " << v_square.size();
   while (n < v_square.size())
   {
-    glScalef(1.0, 1.0, 1.0);
-    glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,0.0f);
-    modelList[0].Draw(CurFrame);
-    glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,0.0f);
-    glScalef(1.0/1.0, 1.0/1.0, 1.0/1.0);
+    if (v_square[n].food != -1)
+    {
+      glScalef(1.0, 1.0, 1.0);
+      glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,0.0f);
+      modelList[0].Draw(CurFrame);
+      glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,0.0f);
+      glScalef(1.0/1.0, 1.0/1.0, 1.0/1.0);
+    }
     if (v_player.size() > 0 && v_player[n].nb > 0)
     {
       glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);

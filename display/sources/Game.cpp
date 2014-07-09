@@ -43,8 +43,8 @@ void Game::cmdMszSizeMap(std::stringstream &iss)
   iss >> size_map_x;
   iss >> size_map_y;
   square buff;
-  int x = 0;
-  int y = 0;
+  float x = 0.0f;
+  float y = 0.0f;
   int i = 0;
 
   while (x < size_map_x)
@@ -53,8 +53,15 @@ void Game::cmdMszSizeMap(std::stringstream &iss)
     while (y < size_map_y)
     {
 //    	std::cout << "msz x[" << x << "] y{" << y << "}" << i << std::endl;
-    	buff.pos_x = x;
-    	buff.pos_y = y;
+      buff.pos_x = x;
+      buff.pos_y = y;
+      buff.food = -1;
+      buff.linemate = 0;
+      buff.deraumere = 0;
+      buff.sibur = 0;
+      buff.mendiane = 0;
+      buff.phiras = 0;
+      buff.thystame = 0;
     	v_square.push_back(buff);
     	y++;
     	i++;
@@ -82,6 +89,8 @@ void Game::cmdBctContentCase(std::stringstream &iss)
   iss >> v_square[x + (y * this->size_map_x)].mendiane;
   iss >> v_square[x + (y * this->size_map_x)].phiras;
   iss >> v_square[x + (y * this->size_map_x)].thystame;
+  if (x == size_map_x - 1 && y == size_map_y - 1)
+    map_ready = 1;
 }
 
 void Game::cmdTnaNameTeam(std::stringstream &iss)
@@ -112,15 +121,21 @@ void Game::cmdPnwConnect(std::stringstream &iss)
   player  buff;
 
   iss >> buff.nb;
-  iss >> buff.spawn_x;
-  iss >> buff.spawn_y;
+  iss >> buff.pos_x;
+  iss >> buff.pos_y;
   iss >> buff.orientation;
   iss >> buff.level;
   iss >> buff.team;
   buff.state = ALIVE;
   v_player.push_back(buff);
   std::cout << "cmdPnwConnect ";
-//  std::cout << v_player[0].nb << "|"<< v_player[0].spawn_x << " " << v_player[0].spawn_y << " " << v_player[0].orientation << " " << v_player[0].level << " " <<  v_player[0].team << std::endl;
+  unsigned int i = 0;
+
+  while (i < v_player.size())
+  {
+    std::cout << "nb"<< v_player[i].nb << " x"<< v_player[i].pos_x << " y" << v_player[i].pos_y << " orien" << v_player[i].orientation << " level" << v_player[i].level << " team[" <<  v_player[i].team << "]\n";
+    i++;
+  }
 }
 
 void Game::cmdPpoPosition(std::stringstream &iss)
@@ -375,6 +390,6 @@ void	Game::isset_server(int fd)
     }
     else
       std::cout << "DONT exist\t: ";
-//    std::cout << "|" << data << "|\n";
+   std::cout << "|" << data << "|\n";
     iss.clear();
 }
