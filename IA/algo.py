@@ -182,14 +182,6 @@ def emptyCase(ia):
 		if ia.listVoir[0].find("nourriture") == -1 and ia.listVoir[0].find("linemate") == -1 and ia.listVoir[0].find("deraumere") == -1 and ia.listVoir[0].find("sibur") == -1 and ia.listVoir[0].find("mendiane") and ia.listVoir[0].find("phiras") == -1 and ia.listVoir[0].find("thystame") == -1:
 			return 0
 		ia.voir()
-		print(ia.listVoir[0])
-		print(ia.listVoir[0].find("nourriture"))
-		print(ia.listVoir[0].find("linemate"))
-		print(ia.listVoir[0].find("deraumere"))
-		print(ia.listVoir[0].find("sibur"))
-		print(ia.listVoir[0].find("mendiane"))
-		print(ia.listVoir[0].find("phiras"))
-		print(ia.listVoir[0].find("thystame"))
 		takeAll(ia)
 	return 0
 
@@ -211,11 +203,8 @@ def checkIncantation(ia):
 			emptyCase(ia)
 			poseObjet(ia)
 			ia.incantation()
-			print("ialvl : ", ia.lvl)
 		else:
-			#print(ia.lvl)
 			checkCalled(ia)
-			print("reached =", ia.reached)
 			ia.inventaire()
 			if (ia.reached != 0):
 				callOthers(ia)
@@ -224,8 +213,6 @@ def checkIncantation(ia):
 
 	else:
 		checkCalled(ia)
-		print("RAB DES AUTRES")
-		print(ia.lvl)
 		while i != len(ia.dictionnaireLvl[ia.lvl]):
 			findResources(ia, ia.dictionnaireLvl[ia.lvl][i])
 			i += 1
@@ -260,3 +247,20 @@ def checkCalled(ia):
 					while ia.reached != 1:
 						checkCalled(ia)
 	return -1
+
+def callOthers(ia):
+	nbPlayers = 1
+	i = 0
+	msg = "stop " + str(ia.lvl)
+	while nbPlayers - 1 != ia.dictionnaireLvl[ia.lvl][0]:
+		print("nb Players : ", nbPlayers)
+		print("ia.lvl:", ia.dictionnaireLvl[ia.lvl][0])
+		ia.voir()
+		for fullCase in ia.listVoir:
+			splitCase = fullCase.split(' ')
+			for item in splitCase:
+				if (i == 0):
+					if (item == "joueur"):
+						nbPlayers += 1
+			i += 1
+		ia.broadcast(msg)
