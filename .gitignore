@@ -22,6 +22,8 @@
 #unignore 3d and texture
 !*.tga
 !*.FBX
+!*.jpg
+!*.md2
 !*.max
 
 #unignore auteur
