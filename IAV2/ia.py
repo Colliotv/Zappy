@@ -87,12 +87,22 @@ def checkFood(ia):
 	else:
 		return 0
 
-def algo():
+def algo(ia):
 	while ia.lvl != 8:
 		if checkFood(ia) == -1:
 			while (ia.food < 20):
 				findResources("nourriture")
-
+		if checkCalled(ia) == 0:
+			getCloser(ia)
+		else:
+			if checkStone(ia) == 0:
+				if checkNbPlayer(ia) == 0:
+					incantation(ia)
+				else:
+					callOthers(ia)
+			else:
+				getStone(ia, ia.listStoneLvl)
+				algo(ia)
 
 def main():
 	if len(sys.argv) is not 4:

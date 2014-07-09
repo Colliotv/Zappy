@@ -5,9 +5,9 @@ class iaClass:
 	def __init__(self):
 		self.connexion = 0
 		self.food = 10
-		listBroadcast = []
-		servReturn = False
-		listVoir = []
+		self.listBroadcast = []
+		self.servReturn = False
+		self.listVoir = []
 
 	def connect(self, serv, port, team):
 		try:
