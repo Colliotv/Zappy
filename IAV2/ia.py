@@ -87,10 +87,68 @@ def checkFood(ia):
 	else:
 		return 0
 
+def cleanList(ia, i):
+	while i != len(ia.listBroadcast):
+		ia.listBroadcast.pop(i)
+		i += 1
+
+def checkCalled(ia):
+	i = 0
+	for tmp in ia.listBroadcast:
+		if tmp.find("come") != -1 and int(tmp[15]) == ia.lvl:
+			ia.myBroadcast = tmp
+			return 0
+		if tmp.find("stop") != -1 and int(tmp[15]) == ia.lvl:
+			cleanList(ia, i)
+			return -1
+		i += 1
+	return -1
+
+def getCloser(ia):
+	case = int(ia.myBroadcast[8])
+	if (pos == 0):
+		return 1
+	if (2 <= pos <= 4):
+		ia.gauche()
+		ia.avance()
+		if pos == 2:
+			ia.droite()
+			ia.avance()
+		elif pos == 4:
+			ia.gauche()
+			ia.avance()
+	elif (6 <= pos <= 8):
+		ia.droite()
+		ia.avance()
+		if pos == 6:
+			ia.droite()
+			ia.avance()
+		elif pos == 8:
+			ia.gauche()
+			ia.avance()
+	else:
+		if (pos == 1):
+			ia.avance()
+		else:
+			ia.droite()
+			ia.droite()
+			ia.avance()
+	if checkCalled(ia) == 0:
+		getCloser(ia)
+	return 0
+
+def callOthers(ia):
+	broadcast = "broadcast come " + str(ia.lvl)
+	while checkNbPlayer(ia) != 0:
+		ia.sendCmd(broadcast)
+	broadcast = "broadcast stop " + str(ia.lvl)
+	ia.sendCmd(broadcast)
+	
 def algo(ia):
 	while ia.lvl != 8:
 		if checkFood(ia) == -1:
-			while (ia.food < 20):
+			while ia.food < 20:
+				checkFood(ia)
 				findResources("nourriture")
 		if checkCalled(ia) == 0:
 			getCloser(ia)
@@ -100,9 +158,9 @@ def algo(ia):
 					incantation(ia)
 				else:
 					callOthers(ia)
+					incantation(ia)
 			else:
 				getStone(ia, ia.listStoneLvl)
-				algo(ia)
 
 def main():
 	if len(sys.argv) is not 4:

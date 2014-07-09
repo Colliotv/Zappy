@@ -8,6 +8,8 @@ class iaClass:
 		self.listBroadcast = []
 		self.servReturn = False
 		self.listVoir = []
+		self.myBroadcast = ""
+		self.lvl = 1
 
 	def connect(self, serv, port, team):
 		try:
@@ -20,6 +22,7 @@ class iaClass:
 		self.connexion.send(team.encode())
 
 	def sendCmd(self, cmd):
+		cmd += "\n"
 		self.connexion.send(cmd.encode())
 		self.servReturn = False
 		msg = connexion.recv(4096)
@@ -72,3 +75,4 @@ class iaClass:
 				self.servReturn = True
 			else:
 				self.listBroadcast.insert(0, tmp)
+		self.lvl += 1
