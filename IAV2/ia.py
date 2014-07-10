@@ -194,8 +194,8 @@ def callOthers(ia):
 	broadcast = "broadcast come " + str(ia.lvl)
 	while checkNbPlayer(ia) != 0:
 		ia.sendCmd(broadcast)
-	##broadcast = "broadcast stop " + str(ia.lvl)
-	##ia.sendCmd(broadcast)
+	broadcast = "broadcast stop " + str(ia.lvl)
+	ia.sendCmd(broadcast)
 
 def poseStone(ia):
 	i = 1
@@ -230,7 +230,7 @@ def checkNbPlayer(ia):
 		if ia.listVoir[i].find("joueur") != -1:
 			nbPlayer += 1
 		i += 1
-	if (nbPlayer == ia.listNbPlayer[ia.lvl-1]):
+	if (nbPlayer >= ia.listNbPlayer[ia.lvl-1]):
 		return 0
 	return -1
 

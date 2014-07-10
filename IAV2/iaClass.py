@@ -69,7 +69,7 @@ class iaClass:
 			msg = self.connexion.recv(4096).decode()
 			tmplist = msg.split('\n')
 			for tmp in tmplist:
-				if tmp.find("{") != -1:
+				if tmp.find("{ ") != -1:
 					self.listVoir = tmp.split(',')
 					b = True
 				else:
@@ -83,7 +83,7 @@ class iaClass:
 			msg = self.connexion.recv(4096).decode()
 			tmplist = msg.split('\n')
 			for tmp in tmplist:
-				if tmp.find("{") != -1:
+				if tmp.find("{n") != -1:
 					self.listInventaire = tmp.split(',')
 					self.linemate = int(self.listInventaire[1][8:])
 					self.deraumere = int(self.listInventaire[2][10:])
@@ -106,6 +106,8 @@ class iaClass:
 			for tmp in tmplist:
 				if tmp == "elevation en cours":
 					b = True
+				elif tmp == "ko":
+					return -1
 				else:
 					if len(tmp) > 1:
 						self.listBroadcast.insert(0, tmp)
