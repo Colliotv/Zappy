@@ -259,7 +259,7 @@ void  Game::drawObjects(MD2Obj *modelList, int &CurFrame)
   }
 }
 
-void  Game::Rendering(sf::RenderWindow &/*window, int fd*/)
+void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
 {
   Interface Iface;
   sf::Vector2<int> myVect(1200, 0);
@@ -307,36 +307,36 @@ void  Game::Rendering(sf::RenderWindow &/*window, int fd*/)
   NextFrame=Time1 + FRAMEDELAY;
   Frames = modelList[1].GetFrameCount();
 
-  v_square = createList(20.0, 20.0);
-  v_player = refreshPlayers(20.0, 20.0);
-  v_square[100].linemate = 2;
-  v_square[25].linemate = 2;
-  v_square[225].linemate = 2;
-  v_square[275].linemate = 2;
-  v_square[100].phiras = 2;
-  v_square[75].phiras = 2;
-  v_square[150].phiras = 2;
-  v_square[200].phiras = 2;
-  v_square[100].deraumere = 2;
-  v_square[380].deraumere = 2;
-  v_square[36].deraumere = 2;
-  v_square[205].deraumere = 2;
-  v_square[100].sibur = 2;
-  v_square[123].sibur = 2;
-  v_square[89].sibur = 2;
-  v_square[67].sibur = 2;
-  v_square[100].mendiane = 2;
-  v_square[160].mendiane = 2;
-  v_square[395].mendiane = 2;
-  v_square[320].mendiane = 2;
-  v_square[100].thystame = 2;
-  v_square[218].thystame = 2;
-  v_square[121].thystame = 2;
-  v_square[78].thystame = 2;
+  // v_square = createList(20.0, 20.0);
+  // v_player = refreshPlayers(20.0, 20.0);
+  // v_square[100].linemate = 2;
+  // v_square[25].linemate = 2;
+  // v_square[225].linemate = 2;
+  // v_square[275].linemate = 2;
+  // v_square[100].phiras = 2;
+  // v_square[75].phiras = 2;
+  // v_square[150].phiras = 2;
+  // v_square[200].phiras = 2;
+  // v_square[100].deraumere = 2;
+  // v_square[380].deraumere = 2;
+  // v_square[36].deraumere = 2;
+  // v_square[205].deraumere = 2;
+  // v_square[100].sibur = 2;
+  // v_square[123].sibur = 2;
+  // v_square[89].sibur = 2;
+  // v_square[67].sibur = 2;
+  // v_square[100].mendiane = 2;
+  // v_square[160].mendiane = 2;
+  // v_square[395].mendiane = 2;
+  // v_square[320].mendiane = 2;
+  // v_square[100].thystame = 2;
+  // v_square[218].thystame = 2;
+  // v_square[121].thystame = 2;
+  // v_square[78].thystame = 2;
 
   while(window.isOpen())
   {
-    // this->ClientRead(fd);
+    this->ClientRead(fd);
 
     glLoadIdentity();
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);

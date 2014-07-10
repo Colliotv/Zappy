@@ -64,7 +64,7 @@ public:
 	~Game();
 	void  initMap();
 	void	isset_server(int fd);
-	void  Rendering(sf::RenderWindow &/*, int*/);
+	void  Rendering(sf::RenderWindow &, int);
 	void	ClientRead(int cs);
 	void    drawObjects(MD2Obj *modelList, int &CurFrame);
 
