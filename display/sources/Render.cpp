@@ -84,48 +84,104 @@ std::vector<player> refreshPlayers()
   buff.pos_x = 0;
   buff.pos_y = 0;
   buff.nb = 1;
+  buff.food = 22;
+  buff.linemate = 2;
+  buff.deraumere = 32;
+  buff.sibur = 1;
+  buff.mendiane = 92;
+  buff.phiras = 52;
+  buff.thystame = 0;
   buff.level = -1;
   buff.team = "Plop";
   playerList.push_back(buff);
   buff.pos_x = 10;
   buff.pos_y = 10;
   buff.nb = 2;
+  buff.food = 2;
+  buff.linemate = 2;
+  buff.deraumere = 3;
+  buff.sibur = 1;
+  buff.mendiane = 9;
+  buff.phiras = 5;
+  buff.thystame = 0;
   buff.level = -1;
   buff.team = "Lesticocos";
   playerList.push_back(buff);
   buff.pos_x = 15;
   buff.pos_y = 10;
   buff.nb = 3;
+  buff.food = 2;
+  buff.linemate = 2;
+  buff.deraumere = 3;
+  buff.sibur = 1;
+  buff.mendiane = 9;
+  buff.phiras = 5;
+  buff.thystame = 0;
   buff.level = -1;
   buff.team = "Plop";
   playerList.push_back(buff);
   buff.pos_x = 10;
   buff.pos_y = 10;
   buff.nb = 4;
+  buff.food = 2;
+  buff.linemate = 2;
+  buff.deraumere = 3;
+  buff.sibur = 1;
+  buff.mendiane = 9;
+  buff.phiras = 5;
+  buff.thystame = 0;
   buff.level = -1;
   buff.team = "Lesticocos";
   playerList.push_back(buff);
   buff.pos_x = 19;
   buff.pos_y = 19;
   buff.nb = 5;
+  buff.food = 2;
+  buff.linemate = 2;
+  buff.deraumere = 3;
+  buff.sibur = 1;
+  buff.mendiane = 9;
+  buff.phiras = 5;
+  buff.thystame = 0;
   buff.level = -1;
   buff.team = "Plop";
   playerList.push_back(buff);
   buff.pos_x = 19;
   buff.pos_y = 19;
   buff.nb = 6;
+  buff.food = 2;
+  buff.linemate = 2;
+  buff.deraumere = 3;
+  buff.sibur = 1;
+  buff.mendiane = 9;
+  buff.phiras = 5;
+  buff.thystame = 0;
   buff.level = -1;
   buff.team = "Epitech";
   playerList.push_back(buff);
   buff.pos_x = 19;
   buff.pos_y = 19;
   buff.nb = 7;
+  buff.food = 2;
+  buff.linemate = 2;
+  buff.deraumere = 3;
+  buff.sibur = 1;
+  buff.mendiane = 9;
+  buff.phiras = 5;
+  buff.thystame = 0;
   buff.level = -1;
   buff.team = "Epitech";
   playerList.push_back(buff);
   buff.pos_x = 19;
   buff.pos_y = 19;
   buff.nb = 8;
+  buff.food = 2;
+  buff.linemate = 2;
+  buff.deraumere = 3;
+  buff.sibur = 1;
+  buff.mendiane = 9;
+  buff.phiras = 5;
+  buff.thystame = 0;
   buff.level = -1;
   buff.team = "Lesticocos";
   playerList.push_back(buff);
@@ -202,12 +258,12 @@ void  Game::drawObjects(MD2Obj *modelList, int &CurFrame)
     glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,0.0f);
     modelList[0].Draw(CurFrame);
     glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,0.0f);
-    // if (v_square[n].food > 0)
+    // if (v_square[n].food != -1)
     // {
     //   glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,0.0f);
-    //   glScalef(0.1, 0.1, 0.1);
-    //   modelList[8].Draw(CurFrame);
-    //   glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+    //   // glScalef(0.1, 0.1, 0.1);
+    //   modelList[0].Draw(CurFrame);
+    //   // glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
     //   glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,0.0f);
     // }
     if (v_square[n].linemate > 0)
@@ -219,7 +275,7 @@ void  Game::drawObjects(MD2Obj *modelList, int &CurFrame)
       glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
       glTranslatef(-20.0f, -5.0f, -0.0f);
       glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
-    }      
+    }
     if (v_square[n].phiras > 0)
     {
       glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
@@ -298,6 +354,7 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   loadObj(modelList[5], (char *)"resources/Ground.md2", (char *)"resources/Yellow.tga");
   loadObj(modelList[6], (char *)"resources/Ground.md2", (char *)"resources/Orange.tga");
   loadObj(modelList[7], (char *)"resources/Ground.md2", (char *)"resources/Pink.tga");
+  // loadObj(modelList[8], (char *)"resources/exclamation.md2", (char *)"resources/Yellow.tga");
 
   glClearColor(0.2f,0.2f,0.2f,1.0f);
 
@@ -347,6 +404,8 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   v_square[121].thystame = 2;
   v_square[78].thystame = 2;
 
+
+
   while(window.isOpen())
   {
     // this->ClientRead(fd);
@@ -365,6 +424,14 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
     // glRotatef(ViewRotate,0.0f,0.0f,1.0f);
 
     eventsManager(window);
+
+  // glTranslatef(100.0f, 100.0f, 50.0f);
+  // // glScalef(0.1, 0.1, 0.1);
+  // modelList[8].Draw(CurFrame);
+  // // glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+  // glTranslatef(-100.0f, -100.0f, -50.0f);
+
+    
     this->drawObjects(modelList, CurFrame);
     v_playerForInterface = this->v_player;
     Iface.drawInterface(windowControl, v_playerForInterface);

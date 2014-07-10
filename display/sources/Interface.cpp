@@ -139,16 +139,23 @@ void  Interface::drawText(sf::RenderWindow &window, std::vector<player> playerLi
 
   text.setColor(sf::Color::Red);
   text.setString(curTeam);
-  text.setPosition(90, 20);
+  text.setPosition(100, 20);
+  window.draw(text);
+  text.setString("Fo  Li  De  Si  Me  Ph  Th");
+  text.setPosition(20, 55);
   window.draw(text);
   n = 100;
   text.setColor(sf::Color::Green);
-  while (playerList[m].team != curTeam && m < playerList.size())
+  while (m < playerList.size() && playerList[m].team != curTeam)
     m++;
-  while (n < 800 && m < playerList.size() && playerList[m].team == curTeam)
+  while (m < playerList.size() && n < 800 && playerList[m].team == curTeam)
   {
     text.setString("Player  " + std::to_string(playerList[m].nb));
     text.setPosition(20, n + 20);
+    window.draw(text);
+    text.setString(std::to_string(playerList[m].food) + "  " + std::to_string(playerList[m].linemate) + "  " + std::to_string(playerList[m].deraumere) + "  " + 
+      std::to_string(playerList[m].sibur) + "  " + std::to_string(playerList[m].mendiane) + "  " + std::to_string(playerList[m].phiras) + "  " + std::to_string(playerList[m].thystame));
+    text.setPosition(20, n + 55);
     window.draw(text);
     n+=100;
     m++;
