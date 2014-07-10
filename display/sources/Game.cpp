@@ -62,6 +62,7 @@ void Game::cmdMszSizeMap(std::stringstream &iss)
       buff.mendiane = 0;
       buff.phiras = 0;
       buff.thystame = 0;
+      buff.egg = 0;
     	v_square.push_back(buff);
     	y++;
     	i++;
@@ -215,11 +216,36 @@ void Game::cmdPinInventaire(std::stringstream &iss)
 void Game::cmdPexExpulse(std::stringstream &iss)
 {
   std::cout << "cmdPexExpulse\n";
-  int  num_player;
+  int  nb_player;
+  int x;
+  int y;
+  std::vector<player>::iterator it = v_player.begin();
 
-  iss >> num_player;
-  //demander position chaque joueur au server
-  //actualiser l'affichage
+  iss >> nb_player;
+  while (it != v_player.end())
+  {
+    if (it->nb == nb_player)
+    {
+      x = it->pos_x;
+      y = it->pos_y;
+      break;
+    }
+    else
+      it++;
+  }
+  it = v_player.begin();
+  while (it != v_player.end())
+  {
+    if (it->pos_x == x && it->pos_y == y)
+    {
+      std::cout << "*** \n";
+      char *str;
+      asprintf(&str, "ppo %d\n", it->nb);
+      write(fd_server, str, strlen(str));
+    }
+    else
+      it++;
+  }
 }
 
 void Game::cmdPicIncantBegin(std::stringstream &iss) // animation Début 
@@ -355,7 +381,7 @@ void Game::cmdPgtGetResource(std::stringstream &iss)
 	iss >> num_player;
 	iss >> num_resource;
   unsigned int i = 0;
-  std::cout << "cmdPgtGetResource num_player :" << num_player << " num_resource : " << num_resource << "\n";
+  std::cout << "cmdPgtGetResource num_player :" << num_player << " num_resource : " << num_resource << " ";
   while (i < v_player.size())
   {
     if (v_player[i].nb == num_player)
@@ -410,15 +436,18 @@ void Game::cmdPdiPlayerDead(std::stringstream &iss)
 
   iss >> nb_player;
   i = 0;
-  std::cout << "cmdPdiPlayerDead\n";
-  while (i < v_player.size())
+  std::cout << "cmdPdiPlayerDead  ";
+  std::vector<player>::iterator it = v_player.begin();
+  while ( it != v_player.end() )
   {
-    if (nb_player == v_player[i].nb)
+    if ( it->nb == nb_player )
     {
-      v_player[i].state = DEAD;
-      std::cout << "*** player num " << v_player[i].nb << " state : " << v_player[i].state << std::endl;
+      std::cout << "***player delete\n";
+      it = v_player.erase(it); // Will return next valid iterator
+      break;
     }
-    i++;
+    else
+      it++;
   }
 }
 
@@ -433,7 +462,9 @@ void Game::cmdEnwEggsSpawn(std::stringstream &iss)
 	iss >> num_player;
 	iss >> x;
 	iss >> y;
+  v_square[x + (y * this->size_map_x)].egg++;
 	std::cout << "cmdEnwEggsSpawn\n";
+
 }
 
 void Game::cmdEhtEclos(std::stringstream &iss)
@@ -464,7 +495,7 @@ void Game::cmdSegVictory(std::stringstream &iss)
 {
 	std::string   name_team;
 	iss >> name_team;
-  std::cout << "cmdSegVictory\n";
+  std::cout << "cmdSegVictory equipe " << name_team << " gagne\n";
 }
 
 void	Game::isset_server(int fd)
@@ -490,7 +521,7 @@ void	Game::isset_server(int fd)
     std::string n;
 
     iss >> n;
-    std::cout << "command[" << data << "]~>";
+    std::cout << "\ncommand[" << data << "]~>";
     if (cmd.find(n) != cmd.end())
     {
       std::cout << "EXIST\t: ";

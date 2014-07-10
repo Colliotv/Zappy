@@ -62,6 +62,7 @@ std::vector<square> createList(float size_x, float size_y)
       buff.pos_x = x;
       buff.pos_y = y;
       buff.food = 0;
+      buff.egg = 0;
       buff.linemate = 0;
       buff.deraumere = 0;
       buff.sibur = 0;
