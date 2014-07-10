@@ -40,6 +40,7 @@ struct square
 {
 	float	pos_x;
 	float	pos_y;
+	int egg;
 	int	food;
 	int	linemate;
 	int	deraumere;
@@ -66,7 +67,7 @@ public:
 	void	isset_server(int fd);
 	void  Rendering(sf::RenderWindow &, int);
 	void	ClientRead(int cs);
-	void    drawObjects(MD2Obj *modelList, int &CurFrame);
+	void    drawList(MD2Obj *modelList, int &CurFrame);
 
 	void    cmdMszSizeMap(std::stringstream &);
 	void    cmdBctContentCase(std::stringstream &);

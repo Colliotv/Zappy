@@ -6,11 +6,14 @@
 #unginore folder
 !*/
 
+<<<<<<< HEAD
 #unignore IA
 !*.py
 !*.sh
 
 
+=======
+>>>>>>> 8617471f864fbcf1f087e4cc64cf205ddef2b782
 #unignore compile
 !*.cpp
 !*.cc
@@ -23,16 +26,29 @@
 #unignore gdl_libs
 !*.a
 !*.so
+<<<<<<< HEAD
+=======
+!libfbxsdk.a
+!libfbxsdk.so
+!libgdl_gl.a
+!libGLEW.a
+!libSDL2.a
+!libSDL2main.a
+>>>>>>> 8617471f864fbcf1f087e4cc64cf205ddef2b782
 
 #unignore 3d and texture
 !*.tga
 !*.FBX
+<<<<<<< HEAD
 !*.jpg
 !*.png
 !*.wav
 !*.md2
 !*.max
 !*.otf
+=======
+!*.max
+>>>>>>> 8617471f864fbcf1f087e4cc64cf205ddef2b782
 
 #unignore auteur
 !auteur

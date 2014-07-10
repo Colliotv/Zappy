@@ -236,94 +236,46 @@ void loadObj(MD2Obj &object, char *pathMod, char *pathText)
   object.SetTexture(texture);
 }
 
-void  Game::drawObjects(MD2Obj *modelList, int &CurFrame)
+void  drawObject(MD2Obj &model, float Tx, float Ty, float Tz, float Sx, float Sy, float Sz, int &CurFrame)
+{
+  glTranslatef(Tx, Ty, Tz);
+  glScalef(Sx, Sy, Sz);
+  model.Draw(CurFrame);
+  glScalef(1.0f/Sx, 1.0f/Sy, 1.0f/Sz);
+  glTranslatef(-Tx, -Ty, -Tz);
+}
+
+void  Game::drawList(MD2Obj *modelList, int &CurFrame)
 {
   unsigned int n = 0;
 
-  while (n < v_player.size())
-  {
+  while (n++ < v_player.size())
     if (v_player[n].nb > 0)
-    {
-      glTranslatef(60.0f * v_player[n].pos_x,60.0f * v_player[n].pos_y,30.0f);
-        // glScalef(1.0, 1.0, 1.0);
-      modelList[1].Draw(CurFrame);
-        // glScalef(1.0/1.0, 1.0/1.0, 1.0/1.0);
-      glTranslatef(-60.0f * v_player[n].pos_x,-60.0f * v_player[n].pos_y,-30.0f);      
-    }
-    n++;
-  }
+      drawObject(modelList[1], 60.0f * v_player[n].pos_x, 60.0f * v_player[n].pos_y, 30.0f, 1.0f, 1.0f, 1.0f, CurFrame);        
   n = 0;
   while (n < v_square.size())
   {
-    glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,0.0f);
-    modelList[0].Draw(CurFrame);
-    glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,0.0f);
-    // if (v_square[n].food != -1)
-    // {
-    //   glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,0.0f);
-    //   // glScalef(0.1, 0.1, 0.1);
-    //   modelList[0].Draw(CurFrame);
-    //   // glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-    //   glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,0.0f);
-    // }
+    drawObject(modelList[0], 60.0f * v_square[n].pos_x, 60.0f * v_square[n].pos_y, 0.0f, 1.0f, 1.0f, 1.0f, CurFrame);        
+    glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
+    glScalef(0.1, 0.1, 0.1);
     if (v_square[n].linemate > 0)
-    {
-      glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
-      glTranslatef(20.0f, 5.0f, 0.0f);
-      glScalef(0.1, 0.1, 0.1);
-      modelList[2].Draw(CurFrame);
-      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-      glTranslatef(-20.0f, -5.0f, -0.0f);
-      glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
-    }
+      drawObject(modelList[2], 250.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, CurFrame);
     if (v_square[n].phiras > 0)
-    {
-      glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
-      glScalef(0.1, 0.1, 0.1);
-      modelList[3].Draw(CurFrame);
-      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-      glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
-    }
+      drawObject(modelList[3], 200.0f, -200.0f, 0.0f, 1.0f, 1.0f, 1.0f, CurFrame);
     if (v_square[n].deraumere > 0)
-    {
-      glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
-      glTranslatef(10.0f, -10.0f, 0.0f);
-      glScalef(0.1, 0.1, 0.1);
-      modelList[4].Draw(CurFrame);
-      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-      glTranslatef(-10.0f, 10.0f, -0.0f);
-      glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
-    }      
+      drawObject(modelList[4], 100.0f, -325.0f, 0.0f, 1.0f, 1.0f, 1.0f, CurFrame);
     if (v_square[n].sibur > 0)
-    {
-      glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
-      glTranslatef(-20.0f, -20.0f, 0.0f);
-      glScalef(0.1, 0.1, 0.1);
-      modelList[5].Draw(CurFrame);
-      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-      glTranslatef(20.0f, 20.0f, -0.0f);
-      glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
-    }      
+      drawObject(modelList[5], -150.0f, -175.0f, 0.0f, 1.0f, 1.0f, 1.0f, CurFrame);
     if (v_square[n].mendiane > 0)
-    {
-      glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
-      glTranslatef(0.0f, -25.0f, 0.0f);
-      glScalef(0.1, 0.1, 0.1);
-      modelList[6].Draw(CurFrame);
-      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-      glTranslatef(0.0f, 25.0f, 0.0f);
-      glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
-    }      
+      drawObject(modelList[6], 0.0f, -100.0f, 0.0f, 1.0f, 1.0f, 1.0f, CurFrame);
     if (v_square[n].thystame > 0)
-    {
-      glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
-      glTranslatef(-15.0f, -5.0f, 0.0f);
-      glScalef(0.1, 0.1, 0.1);
-      modelList[7].Draw(CurFrame);
-      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-      glTranslatef(15.0f, 5.0f, 0.0f);
-      glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
-    }      
+      drawObject(modelList[7], -75.0f, -300.0f, 0.0f, 1.0f, 1.0f, 1.0f, CurFrame);
+    glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+    if (v_square[n].egg > 0)
+      drawObject(modelList[8], -10.0f, 0.0f, 0.0f, 8.0f, 8.0f, 8.0f, CurFrame);
+    if (v_square[n].food > 0)
+      drawObject(modelList[9], 10.0f, 0.0f, 0.0f, 10.0f, 10.0f, 10.0f, CurFrame);
+    glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
     n++;
   }
 }
@@ -341,7 +293,7 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   GLfloat Diffuse[] = {10.0f,  10.0f,  10.0f, 10.0f};
   GLfloat Position[] = {500.0f, 0.0f, -500.0f, 1.0f};
   std::vector<player> v_playerForInterface;
-  MD2Obj  modelList[8];
+  MD2Obj  modelList[10];
   float ViewRotate=0.0f;
   long Time1,Time2, Ticks, NextFrame;
   int Frames,CurFrame=0;
@@ -354,6 +306,8 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   loadObj(modelList[5], (char *)"resources/Ground.md2", (char *)"resources/Yellow.tga");
   loadObj(modelList[6], (char *)"resources/Ground.md2", (char *)"resources/Orange.tga");
   loadObj(modelList[7], (char *)"resources/Ground.md2", (char *)"resources/Pink.tga");
+  loadObj(modelList[8], (char *)"resources/techlab.md2", (char *)"resources/techlab_diffuse.tga");
+  loadObj(modelList[9], (char *)"resources/nuclear.md2", (char *)"resources/barrel02_D.tga");
 
   glClearColor(0.2f,0.2f,0.2f,1.0f);
 
@@ -402,6 +356,8 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   v_square[218].thystame = 2;
   v_square[121].thystame = 2;
   v_square[78].thystame = 2;
+  v_square[100].egg = 2;
+  v_square[100].food = 2;
 
   while(window.isOpen())
   {
@@ -422,7 +378,7 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
 
     eventsManager(window);
 
-    this->drawObjects(modelList, CurFrame);
+    this->drawList(modelList, CurFrame);
     v_playerForInterface = this->v_player;
     Iface.drawInterface(windowControl, v_playerForInterface);
 
