@@ -76,7 +76,7 @@ std::vector<square> createList(float size_x, float size_y)
   return (v_player);
 }
 
-std::vector<player> refreshPlayers(float size_x, float size_y)
+std::vector<player> refreshPlayers()
 {
   std::vector<player> playerList;
   player buff;
@@ -109,7 +109,25 @@ std::vector<player> refreshPlayers(float size_x, float size_y)
   buff.pos_y = 19;
   buff.nb = 5;
   buff.level = -1;
+  buff.team = "Plop";
+  playerList.push_back(buff);
+  buff.pos_x = 19;
+  buff.pos_y = 19;
+  buff.nb = 6;
+  buff.level = -1;
   buff.team = "Epitech";
+  playerList.push_back(buff);
+  buff.pos_x = 19;
+  buff.pos_y = 19;
+  buff.nb = 7;
+  buff.level = -1;
+  buff.team = "Epitech";
+  playerList.push_back(buff);
+  buff.pos_x = 19;
+  buff.pos_y = 19;
+  buff.nb = 8;
+  buff.level = -1;
+  buff.team = "Lesticocos";
   playerList.push_back(buff);
 
   return (playerList);
@@ -181,81 +199,76 @@ void  Game::drawObjects(MD2Obj *modelList, int &CurFrame)
   n = 0;
   while (n < v_square.size())
   {
-    glScalef(1.0, 1.0, 1.0);
     glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,0.0f);
     modelList[0].Draw(CurFrame);
     glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,0.0f);
-    glScalef(1.0/1.0, 1.0/1.0, 1.0/1.0);
-    while (n < v_square.size())
+    // if (v_square[n].food > 0)
+    // {
+    //   glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,0.0f);
+    //   glScalef(0.1, 0.1, 0.1);
+    //   modelList[8].Draw(CurFrame);
+    //   glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+    //   glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,0.0f);
+    // }
+    if (v_square[n].linemate > 0)
     {
-      if (v_square[n].food != -1)
-      {
-        glScalef(1.0, 1.0, 1.0);
-        glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,0.0f);
-        modelList[0].Draw(CurFrame);
-        glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,0.0f);
-        glScalef(1.0/1.0, 1.0/1.0, 1.0/1.0);
-      }    
-      if (v_square[n].linemate > 0)
-      {
-        glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
-        glTranslatef(20.0f, 5.0f, 0.0f);
-        glScalef(0.1, 0.1, 0.1);
-        modelList[2].Draw(CurFrame);
-        glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-        glTranslatef(-20.0f, -5.0f, -0.0f);
-        glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
-      }      
-      if (v_square[n].phiras > 0)
-      {
-        glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
-        glScalef(0.1, 0.1, 0.1);
-        modelList[3].Draw(CurFrame);
-        glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-        glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
-      }
-      if (v_square[n].deraumere > 0)
-      {
-        glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
-        glTranslatef(10.0f, -10.0f, 0.0f);
-        glScalef(0.1, 0.1, 0.1);
-        modelList[4].Draw(CurFrame);
-        glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-        glTranslatef(-10.0f, 10.0f, -0.0f);
-        glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
-      }      
-      if (v_square[n].sibur > 0)
-      {
-        glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
-        glTranslatef(-20.0f, -20.0f, 0.0f);
-        glScalef(0.1, 0.1, 0.1);
-        modelList[5].Draw(CurFrame);
-        glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-        glTranslatef(20.0f, 20.0f, -0.0f);
-        glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
-      }      
-      if (v_square[n].mendiane > 0)
-      {
-        glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
-        glTranslatef(0.0f, -25.0f, 0.0f);
-        glScalef(0.1, 0.1, 0.1);
-        modelList[6].Draw(CurFrame);
-        glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-        glTranslatef(0.0f, 25.0f, 0.0f);
-        glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
-      }      
-      if (v_square[n].thystame > 0)
-      {
-        glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
-        glTranslatef(-15.0f, -5.0f, 0.0f);
-        glScalef(0.1, 0.1, 0.1);
-        modelList[7].Draw(CurFrame);
-        glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-        glTranslatef(15.0f, 5.0f, 0.0f);
-        glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
-      }      
-      n++;
+      glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
+      glTranslatef(20.0f, 5.0f, 0.0f);
+      glScalef(0.1, 0.1, 0.1);
+      modelList[2].Draw(CurFrame);
+      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+      glTranslatef(-20.0f, -5.0f, -0.0f);
+      glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
+    }      
+    if (v_square[n].phiras > 0)
+    {
+      glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
+      glScalef(0.1, 0.1, 0.1);
+      modelList[3].Draw(CurFrame);
+      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+      glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
     }
+    if (v_square[n].deraumere > 0)
+    {
+      glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
+      glTranslatef(10.0f, -10.0f, 0.0f);
+      glScalef(0.1, 0.1, 0.1);
+      modelList[4].Draw(CurFrame);
+      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+      glTranslatef(-10.0f, 10.0f, -0.0f);
+      glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
+    }      
+    if (v_square[n].sibur > 0)
+    {
+      glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
+      glTranslatef(-20.0f, -20.0f, 0.0f);
+      glScalef(0.1, 0.1, 0.1);
+      modelList[5].Draw(CurFrame);
+      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+      glTranslatef(20.0f, 20.0f, -0.0f);
+      glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
+    }      
+    if (v_square[n].mendiane > 0)
+    {
+      glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
+      glTranslatef(0.0f, -25.0f, 0.0f);
+      glScalef(0.1, 0.1, 0.1);
+      modelList[6].Draw(CurFrame);
+      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+      glTranslatef(0.0f, 25.0f, 0.0f);
+      glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
+    }      
+    if (v_square[n].thystame > 0)
+    {
+      glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
+      glTranslatef(-15.0f, -5.0f, 0.0f);
+      glScalef(0.1, 0.1, 0.1);
+      modelList[7].Draw(CurFrame);
+      glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+      glTranslatef(15.0f, 5.0f, 0.0f);
+      glTranslatef(-60.0f * v_square[n].pos_x,-60.0f * v_square[n].pos_y,-30.0f);
+    }      
+    n++;
   }
 }
 
@@ -308,7 +321,7 @@ void  Game::Rendering(sf::RenderWindow &/*window, int fd*/)
   Frames = modelList[1].GetFrameCount();
 
   v_square = createList(20.0, 20.0);
-  v_player = refreshPlayers(20.0, 20.0);
+  v_player = refreshPlayers();
   v_square[100].linemate = 2;
   v_square[25].linemate = 2;
   v_square[225].linemate = 2;

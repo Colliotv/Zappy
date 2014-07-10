@@ -14,12 +14,20 @@ class Interface
 		sf::Text text;
 		std::string str;
 		std::string curTeam;
-		std::string curPlay;
+		int curPlay;
+		int	curPos;
 
 		Interface();
 		~Interface();
+		void eventsInterface(sf::RenderWindow &window, std::vector<player> playerList);
 		void drawInterface(sf::RenderWindow &window, std::vector<player> playerList);
-		void eventsInterface(sf::RenderWindow &window);
+		void nextPlay(std::vector<player> playerList);
+		void prevPlay(std::vector<player> playerList);
+		void nextTeam(std::vector<player> playerList);
+		void prevTeam(std::vector<player> playerList);
+		void initInterface(sf::RenderWindow &window, std::vector<player> playerList);
+		void moveCursor(sf::RenderWindow &window);
+		void drawText(sf::RenderWindow &window, std::vector<player> playerList);
 };
 
 #endif
