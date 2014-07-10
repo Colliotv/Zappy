@@ -2,7 +2,7 @@
 #include  "Interface.hh"
 
 bool sortByTeam(const player &lhs, const player &rhs) {return lhs.team < rhs.team;}
-bool sortByLevel(const player &lhs, const player &rhs) {return lhs.level < rhs.level;}
+bool sortByLevel(const player &lhs, const player &rhs) {return lhs.level > rhs.level;}
 
 Interface::Interface()
 {
@@ -150,7 +150,7 @@ void  Interface::drawText(sf::RenderWindow &window, std::vector<player> playerLi
     m++;
   while (m < playerList.size() && n < 800 && playerList[m].team == curTeam)
   {
-    text.setString("Player  " + std::to_string(playerList[m].nb));
+    text.setString("Player  " + std::to_string(playerList[m].nb) + "    lvl  " + std::to_string(playerList[m].level));
     text.setPosition(20, n + 20);
     window.draw(text);
     text.setString(std::to_string(playerList[m].food) + "  " + std::to_string(playerList[m].linemate) + "  " + std::to_string(playerList[m].deraumere) + "  " + 

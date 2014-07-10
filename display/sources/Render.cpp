@@ -91,7 +91,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 92;
   buff.phiras = 52;
   buff.thystame = 0;
-  buff.level = -1;
+  buff.level = 1;
   buff.team = "Plop";
   playerList.push_back(buff);
   buff.pos_x = 10;
@@ -104,7 +104,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
-  buff.level = -1;
+  buff.level = 3;
   buff.team = "Lesticocos";
   playerList.push_back(buff);
   buff.pos_x = 15;
@@ -117,7 +117,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
-  buff.level = -1;
+  buff.level = 4;
   buff.team = "Plop";
   playerList.push_back(buff);
   buff.pos_x = 10;
@@ -130,7 +130,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
-  buff.level = -1;
+  buff.level = 2;
   buff.team = "Lesticocos";
   playerList.push_back(buff);
   buff.pos_x = 19;
@@ -143,7 +143,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
-  buff.level = -1;
+  buff.level = 1;
   buff.team = "Plop";
   playerList.push_back(buff);
   buff.pos_x = 19;
@@ -156,7 +156,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
-  buff.level = -1;
+  buff.level = 2;
   buff.team = "Epitech";
   playerList.push_back(buff);
   buff.pos_x = 19;
@@ -169,7 +169,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
-  buff.level = -1;
+  buff.level = 7;
   buff.team = "Epitech";
   playerList.push_back(buff);
   buff.pos_x = 19;
@@ -182,7 +182,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
-  buff.level = -1;
+  buff.level = 6;
   buff.team = "Lesticocos";
   playerList.push_back(buff);
 
@@ -354,7 +354,6 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   loadObj(modelList[5], (char *)"resources/Ground.md2", (char *)"resources/Yellow.tga");
   loadObj(modelList[6], (char *)"resources/Ground.md2", (char *)"resources/Orange.tga");
   loadObj(modelList[7], (char *)"resources/Ground.md2", (char *)"resources/Pink.tga");
-  // loadObj(modelList[8], (char *)"resources/exclamation.md2", (char *)"resources/Yellow.tga");
 
   glClearColor(0.2f,0.2f,0.2f,1.0f);
 
@@ -404,8 +403,6 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   v_square[121].thystame = 2;
   v_square[78].thystame = 2;
 
-
-
   while(window.isOpen())
   {
     // this->ClientRead(fd);
@@ -425,13 +422,6 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
 
     eventsManager(window);
 
-  // glTranslatef(100.0f, 100.0f, 50.0f);
-  // // glScalef(0.1, 0.1, 0.1);
-  // modelList[8].Draw(CurFrame);
-  // // glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
-  // glTranslatef(-100.0f, -100.0f, -50.0f);
-
-    
     this->drawObjects(modelList, CurFrame);
     v_playerForInterface = this->v_player;
     Iface.drawInterface(windowControl, v_playerForInterface);
