@@ -6,6 +6,14 @@
 #include "lerror.h"
 #include "serveur.h"
 
+static void	addUnaff(serveur* this, iaClients* ia) {
+  teams*	team;
+
+  team = getTeam(this->teams, ia);
+  team->unaff_size += 1;
+  team->size += 1;
+}
+
 void	iaFork		(serveur* this, iaClients* ia, char* i) {
   iaClients* node;
 
@@ -29,4 +37,6 @@ void	iaFork		(serveur* this, iaClients* ia, char* i) {
   bzero(node->stash, sizeof(node->stash));
   (node->stash)[nourriture] = 3;
   ia->pause = pFork;
+  addUnaff(this, ia);
+  pushNode(ia->wrBuffer, strdup("ok\n"));
 }

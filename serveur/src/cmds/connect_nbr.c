@@ -6,7 +6,7 @@
 #include "lerror.h"
 #include "serveur.h"
 
-static teams* getTeam(teams* node, iaClients* ia) {
+teams* getTeam(teams* node, iaClients* ia) {
   iaClients* i;
 
   if (!node)

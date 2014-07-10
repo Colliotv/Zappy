@@ -12,7 +12,7 @@
 typedef struct s_serveur serveur;
 
 # define NTREAT 12
-# define REQUEST "avance|droite|gauche|voir |inventaire|prend|pose|expulse|broadcast |incantation|fork|connect_nbr"
+# define REQUEST "avance|droite|gauche|voir|inventaire|prend |pose |expulse|broadcast |incantation|fork|connect_nbr"
 typedef void	(*_treating_)(serveur*, iaClients*, char*);
 
 typedef struct s_clients{
@@ -32,7 +32,7 @@ typedef struct s_wclients{
 
 typedef struct s_serveur{
   /*	time		*/
-  gtime		time;
+  double	time;
   _fd		serv;
 
   /*	unaffected Clients	*/
@@ -61,6 +61,7 @@ void	include_treatement(serveur*);
 
 void	actualize(serveur*);
 /* refresh */
+iaClients* delete_iaClient(teams* team, iaClients* node);
 void	addClient		(serveur*, fd_set*);
 void	actualize_unaff		(serveur*, fd_set*, fd_set*);
 void	actualize_waiting	(serveur*, fd_set*, fd_set*);
@@ -70,6 +71,7 @@ void	actualizeBuffering	(teams*, fd_set*, fd_set *);
 
 /* teams */
 teams*	getTeamById(serveur*, char*);
+teams*  getTeam(teams*, iaClients*);
 
 /* waiting */
 wclients* del_waiting(serveur* this, wclients* node, bool);

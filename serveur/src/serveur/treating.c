@@ -36,8 +36,9 @@ void	include_treatement(serveur* this) {
 
   itt = 0;
   s = strdup(REQUEST);
-  while (((this->cmds)[itt] = strsep(&s, "|")) != NULL) {
-    (this->treat)[itt] = gettreat(itt);
-    itt++;
-  }
+  while (itt < NTREAT && ((this->cmds)[itt] = strsep(&s, "|")) != NULL)
+    {
+      (this->treat)[itt] = gettreat(itt);
+      itt++;
+    }
 }

@@ -93,5 +93,5 @@ void	iaVoir		(serveur* this, iaClients* ia, char* ign) {
     i += 1;
   }
   ia->pause = 7;
-  pushNode(ia->wrBuffer, r);
+  pushNode(ia->wrBuffer, rs);
 }

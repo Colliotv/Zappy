@@ -28,7 +28,7 @@ struct args{
   int	Y;
   struct nameNode*	names;
   int	nByTeams;
-  int	time;
+  double	time;
 };
 
 enum argsType {

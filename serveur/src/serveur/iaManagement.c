@@ -32,4 +32,5 @@ void	actualize_IA(serveur* this, fd_set* rd, fd_set* wr) {
   if (this->waiting)
     push_in_waiting(this, this->waiting);
   actualizeBuffering(this->teams, rd, wr);
+  iaProcess(this, this->teams);
 }

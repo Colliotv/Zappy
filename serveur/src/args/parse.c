@@ -16,7 +16,7 @@ static void	fillin(struct args* this,
   if (opt == nByTeams)
     this->nByTeams = atoi(args[*itt]);
   if (opt == atime)
-    this->time = atoi(args[*itt]);  
+    this->time = atof(args[*itt]);  
   if (opt == names) {
     while (*itt < this->ac && strncmp(args[*itt], "-", 1)) {
       struct nameNode* next;

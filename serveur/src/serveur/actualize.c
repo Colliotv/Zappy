@@ -85,4 +85,5 @@ void	actualize(serveur* this) {
   actualize_waiting(this, &rd, &wr);
   actualize_IA(this, &rd, &wr);
   push_monitor(this, this->monitor, &rd, &wr);
+  printf("plop\n");
 }

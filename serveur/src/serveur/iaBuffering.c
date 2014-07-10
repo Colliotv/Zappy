@@ -6,7 +6,12 @@
 #include "serveur.h"
 #include "get_line.h"
 
-static iaClients* delete_iaClient(teams* team, iaClients* node) {
+static iaClients* disable_iaClient(iaClients* node) {
+  node->iaClient = -1;
+  return (node->next);
+}
+
+iaClients* delete_iaClient(teams* team, iaClients* node) {
   iaClients* nn;
 
   destroyBuffer(node->rdBuffer, true);
@@ -33,14 +38,14 @@ static int	actualizeByIa(teams* team, iaClients* node,
     return (actualizeByIa(team, node->next, rd, wr));
   if (FD_ISSET(node->iaClient, rd) && node->rdBuffer->size < 10) {
     if ((k = _get_socket(node->iaClient)) == NULL)
-      return (actualizeByIa(team, delete_iaClient(team, node), rd, wr));
+      return (actualizeByIa(team, disable_iaClient(node), rd, wr));
     else
       pushNode(node->rdBuffer, k);
   }
   if (FD_ISSET(node->iaClient, wr) && node->wrBuffer->size) {
     while ((k = popNode(node->wrBuffer)) != NULL)
       if (write(node->iaClient, k, strlen(k)) <= 0)
-	return (actualizeByIa(team, delete_iaClient(team, node), rd, wr));
+	return (actualizeByIa(team, disable_iaClient(node), rd, wr));
       else
 	free(k);
   }
