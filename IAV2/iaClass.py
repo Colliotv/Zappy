@@ -17,6 +17,7 @@ class iaClass:
 		self.listlvl6 = [4, "linemate", "deraumere", "deraumere", "sibur", "mendiane", "mendiane", "mendiane"]
 		self.listlvl7 = [6, "linemate", "deraumere", "deraumere", "sibur", "sibur", "sibur", "phiras"]
 		self.listlvl8 = [6, "linemate", "linemate", "deraumere", "deraumere", "sibur", "sibur", "mendiane", "mendiane", "phiras", "phiras", "thystame"]
+		self.listNbPlayer = [1, 2, 2, 4, 4, 6, 6]
 		self.dictionnaireLvl = {}
 		self.listInventaire = []
 		self.linemate = 0
@@ -49,88 +50,95 @@ class iaClass:
 		cmd += "\n"
 		self.connexion.send(cmd.encode())
 		self.servReturn = False
-		msg = self.connexion.recv(4096).decode()
-		tmplist = msg.split('\n')
-		for tmp in tmplist:
-			if tmp == "ok" or tmp == "ko":
-				self.servReturn = True
-			else:
-				self.listBroadcast.insert(0, tmp)
+		b = False
+		while b != True:
+			msg = self.connexion.recv(4096).decode()
+			tmplist = msg.split('\n')
+			for tmp in tmplist:
+				if tmp == "ok" or tmp == "ko":
+					b = True
+				else:
+					self.listBroadcast.insert(0, tmp)
+		
 	
 	def voir(self):
 		self.connexion.send(b"voir\n")
-		msg = self.connexion.recv(4096).decode()
-		tmplist = msg.split('\n')
-		self.servReturn = False
-		for tmp in tmplist:
-			if tmp.find("{") != -1:
-				self.listVoir = tmp.split(',')
-				self.servReturn = True
-			else:
-				self.listBroadcast.insert(0, tmp)
+		b = False
+		while b != True:
+			msg = self.connexion.recv(4096).decode()
+			tmplist = msg.split('\n')
+			for tmp in tmplist:
+				if tmp.find("{") != -1:
+					self.listVoir = tmp.split(',')
+					b = True
+				else:
+					self.listBroadcast.insert(0, tmp)
 
 	def inventaire(self):
 		self.connexion.send(b"inventaire\n")
-		msg = self.connexion.recv(4096).decode()
-		tmplist = []
-		tmplist = msg.split('\n')
-		self.servReturn = False
-		for tmp in tmplist:
-			if tmp.find("{") != -1:
-				self.listInventaire = tmp.split(',')
-				self.linemate = int(self.listInventaire[1][8:])
-				self.deraumere = int(self.listInventaire[2][10:])
-				self.sibur = int(self.listInventaire[3][6:])
-				self.mendiane = int(self.listInventaire[4][8:])
-				self.phiras = int(self.listInventaire[5][7:])
-				self.thystame = int(self.listInventaire[6][9:10])
-				self.servReturn = True
+		b = False
+		while b != True:
+			msg = self.connexion.recv(4096).decode()
+			tmplist = msg.split('\n')
+			for tmp in tmplist:
+				if tmp.find("{") != -1:
+					self.listInventaire = tmp.split(',')
+					self.linemate = int(self.listInventaire[1][8:])
+					self.deraumere = int(self.listInventaire[2][10:])
+					self.sibur = int(self.listInventaire[3][6:])
+					self.mendiane = int(self.listInventaire[4][8:])
+					self.phiras = int(self.listInventaire[5][7:])
+					self.thystame = int(self.listInventaire[6][9:10])
+					b = True
 			else:
 				self.listBroadcast.insert(0, tmp)
 
 	def incantation(self):
 		self.connexion.send(b"incantation\n")
-		msg = self.connexion.recv(4096).decode()
-		tmplist = msg.split('\n')
-		self.servReturn = False
-		for tmp in tmplist:
-			if tmp == "elevation en cours":
-				c = 1
-			elif tmp == "ko":
-				return -1
-			else:
-				self.listBroadcast.insert(0, tmp)
-		msg = self.connexion.recv(4096).decode()
-		tmplist = msg.split('\n')
-		for tmp in tmplist:
-			if tmp.find("niveau actuel") != -1 and c == 1:
-				self.servReturn = True
-			else:
-				self.listBroadcast.insert(0, tmp)
-		self.lvl += 1
+		b = False
+		c = 0
+		while b != True:
+			msg = self.connexion.recv(4096).decode()
+			tmplist = msg.split('\n')
+			for tmp in tmplist:
+				if tmp == "elevation en cours":
+					b = True
+				else:
+					self.listBroadcast.insert(0, tmp)
+		b = False
+		while b != True:
+			msg = self.connexion.recv(4096).decode()
+			tmplist = msg.split('\n')
+			for tmp in tmplist:
+				if tmp.find("niveau actuel") != -1:
+					self.lvl += 1
+					b = True
+				else:
+					self.listBroadcast.insert(0, tmp)
+
 
 	def pose(self, obj):
 		pose = "pose " + obj + '\n'
 		self.connexion.send(pose.encode())
-		msg = self.connexion.recv(4096).decode()
-		tmplist = msg.split('\n')
-		self.servReturn = False
-		for tmp in tmplist:
-			if tmp.find("ok") != -1:
-				self.servReturn = True
-			else:
-				self.listBroadcast.insert(0, tmp)
+		b = False
+		while b != True:
+			msg = self.connexion.recv(4096).decode()
+			tmplist = msg.split('\n')
+			for tmp in tmplist:
+				if tmp.find("ok") != -1:
+					b = True
+				else:
+					self.listBroadcast.insert(0, tmp)
 
 	def prend(self, obj):
 		pose = "prend " + obj + '\n'
 		self.connexion.send(pose.encode())
-		msg = self.connexion.recv(4096).decode()
-		tmplist = msg.split('\n')
-		self.servReturn = False
-		for tmp in tmplist:
-			if tmp.find("ok") != -1:
-				self.servReturn = True
-			if tmp.find("ko") != -1:
-				print("PAS DE LINEMATE SUR LA CASE")
-			else:
-				self.listBroadcast.insert(0, tmp)
+		b = False
+		while b != True:
+			msg = self.connexion.recv(4096).decode()
+			tmplist = msg.split('\n')
+			for tmp in tmplist:
+				if tmp.find("ok") != -1 or tmp.find("ko") != -1:
+					b = True
+				else:
+					self.listBroadcast.insert(0, tmp)
