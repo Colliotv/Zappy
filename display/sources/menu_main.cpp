@@ -54,15 +54,15 @@ void    exec_game(sf::RenderWindow &window, std::string ip, std::string hostname
 //      int   cs;
 //  fd = connect_server(ip, hostname);
 //  if (cs != EXIT_FAILURE)
-
-    // if (my_connect(&fd, (char *)hostname.c_str(), (char *)ip.c_str()) == EXIT_SUCCESS)
-    // {
-    //     parser.ClientRead(fd);
+    
+    if (my_connect(&fd, (char *)hostname.c_str(), (char *)ip.c_str()) == EXIT_SUCCESS)
+    {
+        parser.ClientRead(fd);
         window.close();
-        // parser.initMap();
+        parser.initMap();
         parser.Rendering(window, fd);
         _exit(0);
-    // }
+    }
 }
 
 

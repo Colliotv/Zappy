@@ -47,6 +47,7 @@ struct square
 	int	mendiane;
 	int	phiras;
 	int	thystame;
+	int egg;
 };
 
 class Game
@@ -55,6 +56,7 @@ class Game
 	std::vector<square> v_square;
 	std::vector<player> v_player;
 	int                 sgt;
+	int                 fd_server;
 	int                 size_map_x;
 	int                 size_map_y;
 	int                 map_ready = 0;

@@ -62,6 +62,7 @@ int	my_connect(int	*cs, char *ip, char *hostname)
       return (EXIT_FAILURE);
     }
   *cs = so.s;
+  
   write(so.s, "GRAPHIC\n", strlen("GRAPHIC\n"));
   return (EXIT_SUCCESS);
 }

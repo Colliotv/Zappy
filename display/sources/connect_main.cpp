@@ -41,10 +41,12 @@ void	Game::ClientRead(int cs)
 
   tv.tv_sec = 0;
   tv.tv_usec = 0;
-
+  fd_server = cs;
   FD_ZERO(&rdfs);
   FD_SET(0, &rdfs);
   FD_SET(cs, &rdfs);
+  
+  fd_server = cs;
   memset(buffer, 0, 4096);
   if (select(cs + 1, &rdfs, NULL, NULL, &tv) == -1)
   {
@@ -57,35 +59,3 @@ void	Game::ClientRead(int cs)
   if (FD_ISSET(cs, &rdfs))
    this->isset_server(cs);
  }
-
-// int	connect_server(std::string   ip, std::string hostname)
-// {
-//   int		cs;
-//   char		buff[4096];
-//   char		**arg;
-//   int		key;
-//   int		len;
-
-//   arg = new (char*);
-//   key = 0;
-//   len = 1;
-// //  buff = strcat(ip.c_str(), hostname.c_str());
-//   while (key != 1)
-//     {
-// //      len = read(0, buff, 4096);
-//       if (len > 0)
-//       {
-//        if (strncmp("/server", buff, 7) == 0)
-//        {
-//         if (parse_command(&arg, buff) != -1)
-//         {
-//           printf("CONNECT\n");
-//           key = my_connect(&cs, (char *)ip.c_str(), (char *)hostname.c_str());
-//         }
-//       }
-//       else
-//        printf("%s\nUse: /server _host_[:_port_]\n", ERROR);
-//    }
-//  }
-//  return (cs);
-// }
