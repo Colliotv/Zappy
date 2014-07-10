@@ -58,7 +58,8 @@ class iaClass:
 				if tmp == "ok" or tmp == "ko":
 					b = True
 				else:
-					self.listBroadcast.insert(0, tmp)
+					if len(tmp) > 1:
+						self.listBroadcast.insert(0, tmp)
 		
 	
 	def voir(self):
@@ -72,7 +73,8 @@ class iaClass:
 					self.listVoir = tmp.split(',')
 					b = True
 				else:
-					self.listBroadcast.insert(0, tmp)
+					if len(tmp) > 1:
+						self.listBroadcast.insert(0, tmp)
 
 	def inventaire(self):
 		self.connexion.send(b"inventaire\n")
@@ -91,7 +93,8 @@ class iaClass:
 					self.thystame = int(self.listInventaire[6][9:10])
 					b = True
 			else:
-				self.listBroadcast.insert(0, tmp)
+				if len(tmp) > 1:
+					self.listBroadcast.insert(0, tmp)
 
 	def incantation(self):
 		self.connexion.send(b"incantation\n")
@@ -104,7 +107,8 @@ class iaClass:
 				if tmp == "elevation en cours":
 					b = True
 				else:
-					self.listBroadcast.insert(0, tmp)
+					if len(tmp) > 1:
+						self.listBroadcast.insert(0, tmp)
 		b = False
 		while b != True:
 			msg = self.connexion.recv(4096).decode()
@@ -114,7 +118,8 @@ class iaClass:
 					self.lvl += 1
 					b = True
 				else:
-					self.listBroadcast.insert(0, tmp)
+					if len(tmp) > 1:
+						self.listBroadcast.insert(0, tmp)
 
 
 	def pose(self, obj):
@@ -128,7 +133,8 @@ class iaClass:
 				if tmp.find("ok") != -1:
 					b = True
 				else:
-					self.listBroadcast.insert(0, tmp)
+					if len(tmp) > 1:
+						self.listBroadcast.insert(0, tmp)
 
 	def prend(self, obj):
 		pose = "prend " + obj + '\n'
@@ -141,4 +147,5 @@ class iaClass:
 				if tmp.find("ok") != -1 or tmp.find("ko") != -1:
 					b = True
 				else:
-					self.listBroadcast.insert(0, tmp)
+					if len(tmp) > 1:
+						self.listBroadcast.insert(0, tmp)

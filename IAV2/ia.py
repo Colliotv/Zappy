@@ -19,16 +19,19 @@ def findResources(ia, obj):
 					ia.sendCmd("gauche")
 					ia.sendCmd("avance")
 					ia.prend(obj)
+					print("PRIS " + obj)
 					return 1
 				if (i == 2):
 					ia.sendCmd("avance")
 					ia.prend(obj)
+					print("PRIS " + obj)
 					return 1
 				if (i == 3):
 					ia.sendCmd("avance")
 					ia.sendCmd("droite")
 					ia.sendCmd("avance")
 					ia.prend(obj)
+					print("PRIS " + obj)
 					return 1
 				if (i == 4):
 					ia.sendCmd("avance")
@@ -37,6 +40,7 @@ def findResources(ia, obj):
 					ia.sendCmd("avance")
 					ia.sendCmd("avance")
 					ia.prend(obj)
+					print("PRIS " + obj)
 					return 1
 				if (i == 5):
 					ia.sendCmd("avance")
@@ -44,11 +48,13 @@ def findResources(ia, obj):
 					ia.sendCmd("gauche")
 					ia.sendCmd("avance")
 					ia.prend(obj)
+					print("PRIS " + obj)
 					return 1
 				if (i == 6):
 					ia.sendCmd("avance")
 					ia.sendCmd("avance")
 					ia.prend(obj)
+					print("PRIS " + obj)
 					return 1
 				if (i == 7):
 					ia.sendCmd("avance")
@@ -56,6 +62,7 @@ def findResources(ia, obj):
 					ia.sendCmd("droite")
 					ia.sendCmd("avance")
 					ia.prend(obj)
+					print("PRIS " + obj)
 					return 1
 				if (i == 8):
 					ia.sendCmd("avance")
@@ -64,6 +71,7 @@ def findResources(ia, obj):
 					ia.sendCmd("avance")
 					ia.sendCmd("avance")
 					ia.prend(obj)
+					print("PRIS " + obj)
 					return 1
 		i = i + 1
 	ia.sendCmd("avance")
@@ -86,7 +94,9 @@ def cleanList(ia, i):
 def checkCalled(ia):
 	i = 0
 
+	ia.voir()
 	for tmp in ia.listBroadcast:
+		print(tmp)
 		if tmp.find("come") != -1 and int(tmp[15]) == ia.lvl:
 			ia.myBroadcast = tmp
 			return 0
@@ -94,45 +104,56 @@ def checkCalled(ia):
 			cleanList(ia, i)
 			return -1
 		i += 1
-	return -2
+	return -1
 
 def getCloser(ia):
 	ia.voir()
 	pos = int(ia.myBroadcast[8])
-	print(pos)
+	print("pos =", pos)
 	if (pos == 0):
 		print("ARRRIVEEEEEE")
 		return 1
 	if (2 <= pos <= 4):
 		ia.sendCmd("gauche")
 		ia.sendCmd("avance")
+		print("gauche avance")
 		if pos == 2:
 			ia.sendCmd("droite")
 			ia.sendCmd("avance")
+			print("droite avance")
 		elif pos == 4:
 			ia.sendCmd("gauche")
 			ia.sendCmd("avance")
+			print("gauche avance")
 	elif (6 <= pos <= 8):
 		ia.sendCmd("droite")
 		ia.sendCmd("avance")
+		print("droite avance")
 		if pos == 6:
 			ia.sendCmd("droite")
 			ia.sendCmd("avance")
+			print("droite avance")
 		elif pos == 8:
 			ia.sendCmd("gauche")
 			ia.sendCmd("avance")
+			print("gauche avance")
 	else:
 		if (pos == 1):
+			ia.voir()
+			ia.inventaire()
 			ia.sendCmd("avance")
+			print("avance")
 		else:
 			ia.sendCmd("droite")
 			ia.sendCmd("droite")
 			ia.sendCmd("avance")
-	print("checkCalled", checkCalled(ia))
-	if checkCalled(ia) != -2:
+			print("droite droite avance")
+	ia.myBroadcast = ""
+	ia.listBroadcast.clear()
+	if checkCalled(ia) == 0:
 		ia.voir()
 		getCloser(ia)
-	return 0
+	return 1
 
 def checkStone(ia):
 	ia.inventaire()
@@ -231,6 +252,8 @@ def algo(ia):
 				else:
 					if checkCalled(ia) != 0:
 						callOthers(ia)
+					else:
+						getCloser(ia)
 					ia.incantation()
 					continue
 			else:
