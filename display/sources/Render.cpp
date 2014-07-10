@@ -272,7 +272,7 @@ void  Game::drawObjects(MD2Obj *modelList, int &CurFrame)
   }
 }
 
-void  Game::Rendering(sf::RenderWindow &/*window, int fd*/)
+void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
 {
   Interface Iface;
   sf::Vector2<int> myVect(1200, 0);
