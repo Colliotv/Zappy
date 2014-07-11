@@ -34,6 +34,7 @@ static clients*	deleteMonitor(serveur* this, clients* monitor) {
     pre = pre->next;
   if (!pre)
     return (monitor);
+  return (NULL);/* wut a relire */
 }
 
 static bool	getrd(serveur* this, clients* node, fd_set *rd) {
@@ -52,15 +53,15 @@ static bool	getrd(serveur* this, clients* node, fd_set *rd) {
 static bool     pushwr(clients* node, fd_set* wr) {
   char* k;
 
-  printf("plop i'm an unread monitor\n");
   if (!FD_ISSET(node->client, wr))
     return (true);
-  printf("plop i'm an READED monitor\n");
   while ((k = popNode(node->rdBuffer)) != NULL)
-    if (write(node->client, k, strlen(k)) <= 0)
-      return (false);
-    else
+    {
+      if (write(node->client, k, strlen(k)) <= 0)
+	return (false);
+      printf("pushed Message To Client[%d], %s", node->client, k);
       free(k);
+    }
   return (true);
 }
 

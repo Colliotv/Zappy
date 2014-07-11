@@ -4,18 +4,22 @@
 #include "lerror.h"
 #include "serveur.h"
 #include "get_line.h"
+#include "monitor.h"
 
 static bool	treat_node(serveur* this,
 			   clients* node, char* msg, clients* prev)
 {
-  clients* next;
-
-  next = node->next;
+  if (!prev)
+    this->unaffecteds = node->next;
+  else
+    prev->next = node->next;
   if (!strcmp(msg, "GRAPHIC\n"))
     {
-      printf("i'm a recognised monitor\n");
       node->next = this->monitor;
       this->monitor = node;
+      calcCmd(this, node, cmdTeam);
+      calcCmd(this, node, cmdMap);
+      calcCmd(this, node, cmdMapSize);
       free(msg);
     }
   else
@@ -27,10 +31,6 @@ static bool	treat_node(serveur* this,
       this->waiting = (wclients*)node;
       printf("new node for team[%s]\n", msg);
     }
-  if (!prev)
-    this->unaffecteds = next;
-  else
-    prev->next = next;
   return (true);
 }
 

@@ -32,7 +32,7 @@ void	calcCmd(serveur* this, clients* monitor, char* k) {
   if (!strncmp("plv ", k, strlen("plv ")))
     avertPlayerLevel(this, monitor, k);
   if (!strncmp("pin ", k, strlen("pin ")))
-    avertPlayerInventaire();
+    avertPlayerInventaire(this, monitor, k);
 }
 
 void	avertMonitorByCmd(serveur* this, char* k) {

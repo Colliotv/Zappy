@@ -19,7 +19,7 @@ ERROR	= src/err/lerror.c
 BUFFER	= src/circularBuffer/factory.c
 
 ####MONITOR ####
-MONITOR	= src/monitor/cmds.c
+MONITOR	= src/monitor/cmds.c src/monitor/avertCase.c src/monitor/avertTeam.c src/monitor/avertPlayer.c
 
 #### IA CMD ####
 CMDS	= src/cmds/movement.c src/cmds/voir.c src/cmds/ressource.c src/cmds/take.c src/cmds/expulse.c src/cmds/broadcast.c src/cmds/fork.c src/cmds/connect_nbr.c src/cmds/incantation.c src/cmds/incantaionPlayerTest.c src/cmds/incantationRessourceTest.c

@@ -36,6 +36,7 @@ char*	getRessourceOnMap(char* ressource) {
 }
 
 ressource getRessourceId(char* ressource) {
+  printf("ressource %s", ressource);
   if (!strcmp(ressource, "nourriture\n"))
     return (nourriture);
   if (!strcmp(ressource, "linemate\n"))

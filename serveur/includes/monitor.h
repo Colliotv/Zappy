@@ -2,7 +2,13 @@
 # define __MONITOR_H__
 
 typedef struct s_serveur serveur;
-void	avertMonitor(serveur*, char*, ... );
+typedef struct s_clients clients;
+void	avertMonitor	(serveur*, char*, ... );
+void	avertThisMonitor(clients*, char*, ... );
+
+void	calcCmd			(serveur*, clients*, char*);
+void	avertMonitorByCmd	(serveur*, char*);
+
 
 # define mSizeMap(x, y) "msz %d %d\n", x, y
 # define mCaseMap(x, y, nourriture, i1, i2, i3, i4, i5, i6) "bct %d %d %d %d %d %d %d %d %d\n", x, y, nourriture, i1, i2, i3, i4, i5, i6
@@ -25,5 +31,12 @@ void	avertMonitor(serveur*, char*, ... );
 # define cmdTeam "tna\n"
 # define cmdMap "mct\n"
 # define cmdMapSize "msz\n"
+
+void	avertCase		(serveur*, clients*, char*);
+void	avertMap		(serveur*, clients*);
+void	avertTeam		(serveur*, clients*);
+void	avertPlayerPosition	(serveur*, clients*, char*);
+void	avertPlayerLevel	(serveur*, clients*, char*);
+void	avertPlayerInventaire	(serveur*, clients*, char*);
 
 #endif
