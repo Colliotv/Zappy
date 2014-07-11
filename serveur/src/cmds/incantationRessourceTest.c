@@ -24,7 +24,7 @@ static	void	fillRequired(int* ressource, int lvl) {
   ressource[phiras] =
     (lvl == 3 || lvl == 7)	? (2) :
     (lvl == 4 || lvl == 6)	? (1) : (0);
-  ressource[thystane] =
+  ressource[thystame] =
     (lvl == 7)			? (1) : (0);
 }
 

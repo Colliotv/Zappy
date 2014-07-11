@@ -54,5 +54,5 @@ void	avertPlayerInventaire(serveur* this, clients* monitor, char* k) {
 				(ia->stash)[nourriture], (ia->stash)[linemate],
 				(ia->stash)[deraumere], (ia->stash)[sibur],
 				(ia->stash)[mendiane], (ia->stash)[phiras],
-				(ia->stash)[thystane]));
+				(ia->stash)[thystame]));
 }

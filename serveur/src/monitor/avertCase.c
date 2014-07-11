@@ -17,7 +17,7 @@ void	avertCase(serveur* this, clients* monitor, char* k) {
 		   mCaseMap(p.x, p.y,
 			    r[nourriture], r[linemate], r[deraumere],
 			    r[sibur], r[mendiane], r[phiras],
-			    r[thystane]
+			    r[thystame]
 			    ));
 }
 
@@ -37,7 +37,7 @@ void	avertMap(serveur* this, clients* monitor) {
 			   mCaseMap(p.x, p.y,
 				    r[nourriture], r[linemate], r[deraumere],
 				    r[sibur], r[mendiane], r[phiras],
-				    r[thystane]));
+				    r[thystame]));
 	  p.y += 1;
 	}
       p.x += 1;

@@ -21,10 +21,10 @@ void	iaPrend		(serveur* this, iaClients* ia, char* i) {
 				      (ia->stash)[nourriture], (ia->stash)[linemate],
 				      (ia->stash)[deraumere], (ia->stash)[sibur],
 				      (ia->stash)[mendiane], (ia->stash)[phiras],
-				      (ia->stash)[thystane]));
+				      (ia->stash)[thystame]));
       avertMonitor(this, mCaseMap(ia->_p.x, ia->_p.y,
 				  r[nourriture], r[linemate], r[deraumere],
-				  r[sibur], r[mendiane], r[phiras], r[thystane]
+				  r[sibur], r[mendiane], r[phiras], r[thystame]
 				  ));
       pushNode(ia->wrBuffer, strdup("ok\n"));
     }
@@ -47,10 +47,10 @@ void	iaPose		(serveur* this, iaClients* ia, char* i) {
 				      (ia->stash)[nourriture], (ia->stash)[linemate],
 				      (ia->stash)[deraumere], (ia->stash)[sibur],
 				      (ia->stash)[mendiane], (ia->stash)[phiras],
-				      (ia->stash)[thystane]));
+				      (ia->stash)[thystame]));
       avertMonitor(this, mCaseMap(ia->_p.x, ia->_p.y,
 				  r[nourriture], r[linemate], r[deraumere],
-				  r[sibur], r[mendiane], r[phiras], r[thystane]
+				  r[sibur], r[mendiane], r[phiras], r[thystame]
 				  ));
     }
   else
