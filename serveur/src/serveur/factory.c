@@ -57,8 +57,13 @@ static void	fillMap(serveur* this, int pond) {
   int	i;
 
   i = 0;
+  (void)pond;
   while (i < this->size.y * this->size.x * ressourceLength) {
-    (this->ressources)[i] = random() % (pond * (1 + 10 * !(i %   ressourceLength == nourriture)));
+    (this->ressources)[i] = 0;
+    if ((i % ressourceLength) == nourriture)
+      (this->ressources)[i] = random() % 10;
+    else
+      (this->ressources)[i] = random() % 3;
     i++;
   }
   include_treatement(this);
