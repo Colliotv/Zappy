@@ -5,6 +5,7 @@
 
 #include "lerror.h"
 #include "serveur.h"
+#include "monitor.h"
 
 static void	addUnaff(serveur* this, iaClients* ia) {
   teams*	team;
@@ -32,6 +33,7 @@ void	iaFork		(serveur* this, iaClients* ia, char* i) {
   iaClients* node;
 
   (void)i;
+  avertMonitor(this, mBegFork(ia->num));
   if ((node = malloc(sizeof(iaClients))) == NULL)
     lerror(MEMORY_ERROR(sizeof(iaClients)));
   node->next = ia->next;
@@ -44,4 +46,5 @@ void	iaFork		(serveur* this, iaClients* ia, char* i) {
   ia->pause = pFork;
   addUnaff(this, ia);
   pushNode(ia->wrBuffer, strdup("ok\n"));
+  avertMonitor(this, mEndFork(node->num, ia->num, ia->_p.x, ia->_p.y));
 }

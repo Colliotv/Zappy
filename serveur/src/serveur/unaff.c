@@ -13,6 +13,7 @@ static bool	treat_node(serveur* this,
   next = node->next;
   if (!strcmp(msg, "GRAPHIC\n"))
     {
+      printf("i'm a recognised monitor\n");
       node->next = this->monitor;
       this->monitor = node;
       free(msg);

@@ -18,6 +18,9 @@ ERROR	= src/err/lerror.c
 #### BUFFER ####
 BUFFER	= src/circularBuffer/factory.c
 
+####MONITOR ####
+MONITOR	= src/monitor/cmds.c
+
 #### IA CMD ####
 CMDS	= src/cmds/movement.c src/cmds/voir.c src/cmds/ressource.c src/cmds/take.c src/cmds/expulse.c src/cmds/broadcast.c src/cmds/fork.c src/cmds/connect_nbr.c src/cmds/incantation.c src/cmds/incantaionPlayerTest.c src/cmds/incantationRessourceTest.c
 
@@ -27,7 +30,7 @@ SERVER	= src/serveur/factory.c src/serveur/destroy.c src/serveur/actualize.c src
 ####  MAIN  ####
 MAIN	= src/main/main.c
 ###############
-SRC = $(ARGUES) $(SOCKRD) $(ERROR) $(BUFFER) $(CMDS) $(SERVER) $(MAIN)
+SRC = $(ARGUES) $(MONITOR) $(SOCKRD) $(ERROR) $(BUFFER) $(CMDS) $(SERVER) $(MAIN)
 
 FLAGS	= -W -Wall -Wextra $(INC)              -g3
 CFLAGS	= $(FLAGS)

@@ -10,6 +10,7 @@
 
 void	avertMonitor(serveur* this, char* s, ... ) {
   clients* monitor;
+  va_list cpy;
   va_list ap;
   char*	si;
 
@@ -17,7 +18,8 @@ void	avertMonitor(serveur* this, char* s, ... ) {
   va_start(ap, s);
   while (monitor)
     {
-      asprintf(&si, s, ap);
+      va_copy(cpy, ap);
+      vasprintf(&si, s, ap);
       pushNode(monitor->rdBuffer, si);
       monitor = monitor->next;
     }
@@ -32,7 +34,6 @@ static clients*	deleteMonitor(serveur* this, clients* monitor) {
     pre = pre->next;
   if (!pre)
     return (monitor);
-
 }
 
 static bool	getrd(serveur* this, clients* node, fd_set *rd) {
@@ -43,7 +44,7 @@ static bool	getrd(serveur* this, clients* node, fd_set *rd) {
   k = _get_socket(node->client);
   if (k == NULL)
     return (false);
-  //  calcCmd(this, node, k);
+  calcCmd(this, node, k);
   free(k);
   return (true);
 }
@@ -51,8 +52,10 @@ static bool	getrd(serveur* this, clients* node, fd_set *rd) {
 static bool     pushwr(clients* node, fd_set* wr) {
   char* k;
 
+  printf("plop i'm an unread monitor\n");
   if (!FD_ISSET(node->client, wr))
     return (true);
+  printf("plop i'm an READED monitor\n");
   while ((k = popNode(node->rdBuffer)) != NULL)
     if (write(node->client, k, strlen(k)) <= 0)
       return (false);
@@ -67,7 +70,7 @@ void	push_monitor(serveur* this, clients* node, fd_set* rd, fd_set* wr) {
   if (!node)
     return ;
   oui = getrd(this, node, rd);
-  if (!oui)
+  if (oui)
     oui = pushwr(node, wr);
   if (!oui)
     push_monitor(this, deleteMonitor(this, node), rd, wr);
