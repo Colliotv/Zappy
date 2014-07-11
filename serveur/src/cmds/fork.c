@@ -40,7 +40,7 @@ void	iaFork		(serveur* this, iaClients* ia, char* i) {
   this->num += 1;
   iaForkInit(this, node, ia);
   bzero(node->stash, sizeof(node->stash));
-  (node->stash)[nourriture] = 3;
+  (node->stash)[nourriture] = 10;
   ia->pause = pFork;
   addUnaff(this, ia);
   pushNode(ia->wrBuffer, strdup("ok\n"));

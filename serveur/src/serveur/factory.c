@@ -24,7 +24,7 @@ static iaClients*	addIaClient(serveur* this , struct args* arg, int n, iaClients
   node->pause = 0;
   node->depletingNut = DEPLET_TIME;
   bzero(node->stash, sizeof(node->stash));
-  (node->stash)[nourriture] = 3;
+  (node->stash)[nourriture] = 10;
   node->lvl = 1;
   node->_o = random() % maxOrientation;
   node->_p.x = random() % arg->X;
