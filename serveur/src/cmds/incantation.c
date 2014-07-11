@@ -35,6 +35,21 @@ static void	depletRessource(int *stash, int *r){
   }
 }
 
+static void	avertMonitorForEach(serveur* this, teams* team, position* p, int lvl) {
+  iaClients*	ia;
+
+  if (!team)
+    return ;
+  ia = team->list;
+  while (ia)
+    {
+      if (ia->lvl == lvl && ia->_p.x == p->x && ia->_p.y == p->y)
+	avertMonitor(this, mLvlPlayer(ia->num, ia->lvl));
+      ia = ia->next;
+    }
+  avertMonitorForEach(this, team->next, p, lvl);
+}
+
 void	iaIncantation	(serveur* this, iaClients* ia, char* i) {
   int	ressource[ressourceLength];
 
@@ -49,5 +64,6 @@ void	iaIncantation	(serveur* this, iaClients* ia, char* i) {
       ia->pause = 300;
     }
   avertMonitor(this, mIncantEPlayer(ia->_p.x, ia->_p.y));
+  avertMonitorForEach(this, this->teams, &(ia->_p), ia->lvl);
   pushNode(ia->wrBuffer, strdup("ko\n"));
 }

@@ -9,30 +9,50 @@
 
 void	iaPrend		(serveur* this, iaClients* ia, char* i) {
   ressource n;
+  char*	r;
 
-  n = getRessourceId(i + strlen("voir "));
-  if (n != -1 && (GET_SQUARE(this, ia->_p.x, ia->_p.y))[n])
+  n = getRessourceId(i + strlen("prend "));
+  if (n != -1 && (r = GET_SQUARE(this, ia->_p.x, ia->_p.y))[n])
     {
       (GET_SQUARE(this, ia->_p.x, ia->_p.y))[n] -= 1;
       ia->stash[n] += 1;
-      pushNode(ia->wrBuffer, strdup("ok\n"));
       avertMonitor(this, mPrendPlayer(ia->num, n));
+      avertMonitor(this, mStashPlayer(ia->num, ia->_p.x, ia->_p.y,
+				      (ia->stash)[nourriture], (ia->stash)[linemate],
+				      (ia->stash)[deraumere], (ia->stash)[sibur],
+				      (ia->stash)[mendiane], (ia->stash)[phiras],
+				      (ia->stash)[thystane]));
+      avertMonitor(this, mCaseMap(ia->_p.x, ia->_p.y,
+				  r[nourriture], r[linemate], r[deraumere],
+				  r[sibur], r[mendiane], r[phiras], r[thystane]
+				  ));
+      pushNode(ia->wrBuffer, strdup("ok\n"));
     }
   else
-      pushNode(ia->wrBuffer, strdup("ko\n"));
+    pushNode(ia->wrBuffer, strdup("ko\n"));
 }
 
 void	iaPose		(serveur* this, iaClients* ia, char* i) {
   ressource n;
+  char*	r;
 
-  n = getRessourceId(i + strlen("voir "));
+  n = getRessourceId(i + strlen("pose "));
   if (n != -1 && (ia->stash)[n])
     {
-      (GET_SQUARE(this, ia->_p.x, ia->_p.y))[n] += 1;
+      (r = GET_SQUARE(this, ia->_p.x, ia->_p.y))[n] += 1;
       ia->stash[n] -= 1;
       pushNode(ia->wrBuffer, strdup("ok\n"));
       avertMonitor(this, mPosePlayer(ia->num, n));
+      avertMonitor(this, mStashPlayer(ia->num, ia->_p.x, ia->_p.y,
+				      (ia->stash)[nourriture], (ia->stash)[linemate],
+				      (ia->stash)[deraumere], (ia->stash)[sibur],
+				      (ia->stash)[mendiane], (ia->stash)[phiras],
+				      (ia->stash)[thystane]));
+      avertMonitor(this, mCaseMap(ia->_p.x, ia->_p.y,
+				  r[nourriture], r[linemate], r[deraumere],
+				  r[sibur], r[mendiane], r[phiras], r[thystane]
+				  ));
     }
   else
-      pushNode(ia->wrBuffer, strdup("ko\n"));
+    pushNode(ia->wrBuffer, strdup("ko\n"));
 }

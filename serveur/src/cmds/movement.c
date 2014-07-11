@@ -34,6 +34,7 @@ void	iaDroite	(serveur* this, iaClients* ia, char* i) {
     ia->_o = haut;
   ia->pause = 7;
   pushNode(ia->wrBuffer, strdup("ok\n"));
+  avertMonitor(this, mPositionPlayer(ia->num, ia->_p.x, ia->_p.y, ia->_o));
 }
 
 void	iaGauche	(serveur* this, iaClients* ia, char* i) {
@@ -44,4 +45,5 @@ void	iaGauche	(serveur* this, iaClients* ia, char* i) {
     ia->_o = haut;
   ia->pause = 7;
   pushNode(ia->wrBuffer, strdup("ok\n"));
+  avertMonitor(this, mPositionPlayer(ia->num, ia->_p.x, ia->_p.y, ia->_o));
 }
