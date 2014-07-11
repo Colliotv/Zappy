@@ -11,7 +11,7 @@ void	iaPrend		(serveur* this, iaClients* ia, char* i) {
   ressource n;
   char*	r;
 
-  n = getRessourceId(i + strlen("voir "));
+  n = getRessourceId(i + strlen("prend "));
   if (n != -1 && (r = GET_SQUARE(this, ia->_p.x, ia->_p.y))[n])
     {
       (GET_SQUARE(this, ia->_p.x, ia->_p.y))[n] -= 1;
@@ -26,6 +26,7 @@ void	iaPrend		(serveur* this, iaClients* ia, char* i) {
 				  r[nourriture], r[linemate], r[deraumere],
 				  r[sibur], r[mendiane], r[phiras], r[thystane]
 				  ));
+      pushNode(ia->wrBuffer, strdup("ok\n"));
     }
   else
     pushNode(ia->wrBuffer, strdup("ko\n"));
@@ -35,7 +36,7 @@ void	iaPose		(serveur* this, iaClients* ia, char* i) {
   ressource n;
   char*	r;
 
-  n = getRessourceId(i + strlen("voir "));
+  n = getRessourceId(i + strlen("pose "));
   if (n != -1 && (ia->stash)[n])
     {
       (r = GET_SQUARE(this, ia->_p.x, ia->_p.y))[n] += 1;
