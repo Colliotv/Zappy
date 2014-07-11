@@ -149,6 +149,7 @@ def getCloser(ia):
 			ia.sendCmd("droite")
 			ia.sendCmd("avance")
 			#print("droite droite avance")
+	print("ICI")
 	ia.myBroadcast = ""
 	ia.listBroadcast.clear()
 	if checkCalled(ia) == 0:
@@ -188,6 +189,9 @@ def getStone(ia):
 	i = 1
 	while i != len(ia.dictionnaireLvl[ia.lvl]):
 		findResources(ia, ia.dictionnaireLvl[ia.lvl][i])
+		# if checkCalled(ia) == 0:
+		# 	getCloser(ia)
+		# 	return 0
 		i += 1
 
 
@@ -198,11 +202,12 @@ def callOthers(ia):
 		print("J'APPELLE")
 		ia.sendCmd(broadcast)
 		i += 1
-	# i = 0
-	# while i != 10:
+	i = 0
 	broadcast = "broadcast stop " + str(ia.lvl)
-	ia.sendCmd(broadcast)
-		#i += 1
+	while i != 25:
+		print("ENVOIE STOP")
+		ia.sendCmd(broadcast)
+		i += 1
 
 def poseStone(ia):
 	i = 1
@@ -255,20 +260,14 @@ def algo(ia):
 				emptyCase(ia)
 				poseStone(ia)
 				if checkNbPlayer(ia) == 0:
-					print("avant 1")
 					ia.incantation()
-					print("apres 1")
 				else:
 					if checkCalled(ia) != 0:
 						callOthers(ia)
-						print("avant 2")
-						ia.incantation()
-						print("apres 2")
+						if checkNbPlayer(ia) == 0:
+							ia.incantation()
 					else:
 						getCloser(ia)
-					# print("avant 2")
-					# ia.incantation()
-					# print("apres 2")
 			else:
 				getStone(ia)
 
