@@ -29,7 +29,7 @@ static void	seeForPlayer(teams* node, iaClients* ignored, position *p, char** r)
   if (!node)
     return ;
   _node = node->list;
-  while (!_node)
+  while (_node)
     {
       asprintf(r, "%s player", rs = *r);
       free(rs);
