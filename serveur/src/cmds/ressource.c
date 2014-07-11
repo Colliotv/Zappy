@@ -28,8 +28,8 @@ char*	getRessourceOnMap(char* ressource) {
     r = addS(r, " mendiane");
   if (ressource[phiras])
     r = addS(r, " phiras");
-  if (ressource[thystane])
-    r = addS(r, " thystane");
+  if (ressource[thystame])
+    r = addS(r, " thystame");
   if (ressource[nourriture])
     r = addS(r, " nourriture");
   return (r);
@@ -47,8 +47,8 @@ ressource getRessourceId(char* ressource) {
     return (mendiane);
   if (!strcmp(ressource, "phiras\n"))
     return (phiras);
-  if (!strcmp(ressource, "thystane\n"))
-    return (thystane);
+  if (!strcmp(ressource, "thystame\n"))
+    return (thystame);
   if (!strcmp(ressource, "deraumere\n"))
     return (deraumere);
   return (-1);
@@ -60,14 +60,14 @@ void	iaInventaire	(serveur* this, iaClients* ia, char* i) {
   (void)this;
   (void)i;
   asprintf(&s, "{nourriture %d, linemate %d, deraumere %d \
-, sibur %d, mendiane %d, phiras %d, thystane %d}\n",
+, sibur %d, mendiane %d, phiras %d, thystame %d}\n",
 	   (ia->stash)[nourriture],
 	   (ia->stash)[linemate],
 	   (ia->stash)[deraumere],
 	   (ia->stash)[sibur],
 	   (ia->stash)[mendiane],
 	   (ia->stash)[phiras],
-	   (ia->stash)[thystane]
+	   (ia->stash)[thystame]
 	   );
   pushNode(ia->wrBuffer, s);
   ia->pause = 1;
