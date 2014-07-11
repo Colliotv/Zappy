@@ -422,7 +422,7 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   loadObj(modelList[18], (char *)"resources/WalkMech.md2", (char *)"resources/violette.tga");
   loadObj(modelList[19], (char *)"resources/WalkMech.md2", (char *)"resources/White.tga");
   loadObj(modelList[20], (char *)"resources/Ground.md2", (char *)"resources/Metal.tga");
-  loadObj(modelList[21], (char *)"resources/LevelUp.md2", (char *)"resources/Yellow.tga");  
+  // loadObj(modelList[21], (char *)"resources/LevelUp.md2", (char *)"resources/Yellow.tga");  
   glClearColor(0.2f,0.2f,0.2f,1.0f);
 
   glMatrixMode(GL_PROJECTION);
@@ -444,40 +444,40 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   NextFrame=Time1 + FRAMEDELAY;
   Frames = modelList[10].GetFrameCount();
 
-  v_square = createList(20.0, 20.0);
-  v_player = refreshPlayers();
-  v_square[100].linemate = 2;
-  v_square[25].linemate = 2;
-  v_square[225].linemate = 2;
-  v_square[275].linemate = 2;
-  v_square[100].phiras = 2;
-  v_square[75].phiras = 2;
-  v_square[150].phiras = 2;
-  v_square[200].phiras = 2;
-  v_square[100].deraumere = 2;
-  v_square[380].deraumere = 2;
-  v_square[36].deraumere = 2;
-  v_square[205].deraumere = 2;
-  v_square[100].sibur = 2;
-  v_square[123].sibur = 2;
-  v_square[89].sibur = 2;
-  v_square[67].sibur = 2;
-  v_square[67].incant = 1;
-  v_square[100].mendiane = 2;
-  v_square[160].mendiane = 2;
-  v_square[395].mendiane = 2;
-  v_square[320].mendiane = 2;
-  v_square[320].incant = 1;
-  v_square[100].thystame = 2;
-  v_square[218].thystame = 2;
-  v_square[121].thystame = 2;
-  v_square[78].thystame = 2;
-  v_square[100].egg = 2;
-  v_square[100].food = 2;
+  // v_square = createList(20.0, 20.0);
+  // v_player = refreshPlayers();
+  // v_square[100].linemate = 2;
+  // v_square[25].linemate = 2;
+  // v_square[225].linemate = 2;
+  // v_square[275].linemate = 2;
+  // v_square[100].phiras = 2;
+  // v_square[75].phiras = 2;
+  // v_square[150].phiras = 2;
+  // v_square[200].phiras = 2;
+  // v_square[100].deraumere = 2;
+  // v_square[380].deraumere = 2;
+  // v_square[36].deraumere = 2;
+  // v_square[205].deraumere = 2;
+  // v_square[100].sibur = 2;
+  // v_square[123].sibur = 2;
+  // v_square[89].sibur = 2;
+  // v_square[67].sibur = 2;
+  // v_square[67].incant = 1;
+  // v_square[100].mendiane = 2;
+  // v_square[160].mendiane = 2;
+  // v_square[395].mendiane = 2;
+  // v_square[320].mendiane = 2;
+  // v_square[320].incant = 1;
+  // v_square[100].thystame = 2;
+  // v_square[218].thystame = 2;
+  // v_square[121].thystame = 2;
+  // v_square[78].thystame = 2;
+  // v_square[100].egg = 2;
+  // v_square[100].food = 2;
 
   while(window.isOpen())
   {
-    // this->ClientRead(fd);
+    this->ClientRead(fd);
 
     glLoadIdentity();
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
@@ -494,7 +494,7 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
 
     eventsManager(window);
 
-    drawObject(modelList[21], 50.0f, 50.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, CurFrame);
+    // drawObject(modelList[21], 50.0f, 50.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, CurFrame);
 
     this->drawList(modelList, CurFrame);
     v_playerForInterface = this->v_player;
