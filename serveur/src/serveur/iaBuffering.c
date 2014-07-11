@@ -29,26 +29,29 @@ iaClients* delete_iaClient(teams* team, iaClients* node) {
 }
 
 static int	actualizeByIa(teams* team, iaClients* node,
-			      fd_set* rd, fd_set* wr) {
+			      fd_set* rd, fd_set* wr)
+{
   char* k;
 
   if (!node)
     return (0);
   if (node->iaClient == -1)
     return (actualizeByIa(team, node->next, rd, wr));
-  if (FD_ISSET(node->iaClient, rd) && node->rdBuffer->size < 10) {
-    if ((k = _get_socket(node->iaClient)) == NULL)
-      return (actualizeByIa(team, disable_iaClient(node), rd, wr));
-    else
-      pushNode(node->rdBuffer, k);
-  }
-  if (FD_ISSET(node->iaClient, wr) && node->wrBuffer->size) {
-    while ((k = popNode(node->wrBuffer)) != NULL)
-      if (write(node->iaClient, k, strlen(k)) <= 0)
+  if (FD_ISSET(node->iaClient, rd) && node->rdBuffer->size < 10)
+    {
+      if ((k = _get_socket(node->iaClient)) == NULL)
 	return (actualizeByIa(team, disable_iaClient(node), rd, wr));
-      else
-	free(k);
-  }
+      pushNode(node->rdBuffer, k);
+      printf("received from iaClient[%d] > %s", node->iaClient, k);
+    }
+  if (FD_ISSET(node->iaClient, wr) && node->wrBuffer->size)
+      while ((k = popNode(node->wrBuffer)) != NULL)
+	{
+	  if (write(node->iaClient, k, strlen(k)) <= 0)
+	    return (actualizeByIa(team, disable_iaClient(node), rd, wr));
+	  printf("send to iaClient[%d] > %s", node->iaClient, k);
+	  free(k);
+	}
   return (actualizeByIa(team, node->next, rd, wr));
 }
 
