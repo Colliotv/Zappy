@@ -49,6 +49,7 @@ struct square
 	int	phiras;
 	int	thystame;
 	int egg;
+	int incant;
 };
 
 class Game
