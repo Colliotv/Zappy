@@ -82,12 +82,13 @@ std::vector<player> refreshPlayers()
   std::vector<player> playerList;
   std::vector<std::string> teamList;
   player buff;
-  int n = 0;
+  unsigned int n = 0, m = 0;
 
   buff.pos_x = 0;
   buff.pos_y = 0;
   buff.nb = 1;
-  buff.orientation = 1;
+  buff.nb_team = -1;
+  buff.orientation = 3;
   buff.food = 22;
   buff.linemate = 2;
   buff.deraumere = 32;
@@ -101,7 +102,8 @@ std::vector<player> refreshPlayers()
   buff.pos_x = 1;
   buff.pos_y = 1;
   buff.nb = 2;
-  buff.orientation = 4;
+  buff.nb_team = -1;
+  buff.orientation = 3;
   buff.food = 2;
   buff.linemate = 2;
   buff.deraumere = 3;
@@ -115,7 +117,8 @@ std::vector<player> refreshPlayers()
   buff.pos_x = 15;
   buff.pos_y = 10;
   buff.nb = 3;
-  buff.orientation = 1;
+  buff.nb_team = -1;
+  buff.orientation = 3;
   buff.food = 2;
   buff.linemate = 2;
   buff.deraumere = 3;
@@ -124,12 +127,13 @@ std::vector<player> refreshPlayers()
   buff.phiras = 5;
   buff.thystame = 0;
   buff.level = 4;
-  buff.team = "Plop";
+  buff.team = "tata";
   playerList.push_back(buff);
   buff.pos_x = 10;
   buff.pos_y = 10;
   buff.nb = 4;
-  buff.orientation = 1;
+  buff.nb_team = -1;
+  buff.orientation = 3;
   buff.food = 2;
   buff.linemate = 2;
   buff.deraumere = 3;
@@ -138,12 +142,13 @@ std::vector<player> refreshPlayers()
   buff.phiras = 5;
   buff.thystame = 0;
   buff.level = 2;
-  buff.team = "Lesticocos";
+  buff.team = "toto";
   playerList.push_back(buff);
   buff.pos_x = 19;
   buff.pos_y = 19;
   buff.nb = 5;
-  buff.orientation = 1;
+  buff.nb_team = -1;
+  buff.orientation = 3;
   buff.food = 2;
   buff.linemate = 2;
   buff.deraumere = 3;
@@ -152,12 +157,13 @@ std::vector<player> refreshPlayers()
   buff.phiras = 5;
   buff.thystame = 0;
   buff.level = 1;
-  buff.team = "Plop";
+  buff.team = "tutu";
   playerList.push_back(buff);
   buff.pos_x = 14;
   buff.pos_y = 6;
   buff.nb = 6;
-  buff.orientation = 1;
+  buff.nb_team = -1;
+  buff.orientation = 3;
   buff.food = 2;
   buff.linemate = 2;
   buff.deraumere = 3;
@@ -171,7 +177,8 @@ std::vector<player> refreshPlayers()
   buff.pos_x = 16;
   buff.pos_y = 13;
   buff.nb = 7;
-  buff.orientation = 1;
+  buff.nb_team = -1;
+  buff.orientation = 3;
   buff.food = 2;
   buff.linemate = 2;
   buff.deraumere = 3;
@@ -180,12 +187,73 @@ std::vector<player> refreshPlayers()
   buff.phiras = 5;
   buff.thystame = 0;
   buff.level = 7;
-  buff.team = "Epitech";
+  buff.team = "bla";
   playerList.push_back(buff);
   buff.pos_x = 15;
   buff.pos_y = 19;
   buff.nb = 8;
-  buff.orientation = 1;
+  buff.nb_team = -1;
+  buff.orientation = 3;
+  buff.food = 2;
+  buff.linemate = 2;
+  buff.deraumere = 3;
+  buff.sibur = 1;
+  buff.mendiane = 9;
+  buff.phiras = 5;
+  buff.thystame = 0;
+  buff.level = 8;
+  buff.team = "popo";
+  playerList.push_back(buff);
+  buff.pos_x = 6;
+  buff.pos_y = 3;
+  buff.nb = 8;
+  buff.nb_team = -1;
+  buff.orientation = 3;
+  buff.food = 2;
+  buff.linemate = 2;
+  buff.deraumere = 3;
+  buff.sibur = 1;
+  buff.mendiane = 9;
+  buff.phiras = 5;
+  buff.thystame = 0;
+  buff.level = 1;
+  buff.team = "pipi";
+  playerList.push_back(buff);
+  buff.pos_x = 7;
+  buff.pos_y = 8;
+  buff.nb = 8;
+  buff.nb_team = -1;
+  buff.orientation = 3;
+  buff.food = 2;
+  buff.linemate = 2;
+  buff.deraumere = 3;
+  buff.sibur = 1;
+  buff.mendiane = 9;
+  buff.phiras = 5;
+  buff.thystame = 0;
+  buff.level = 2;
+  buff.team = "pupu";
+  playerList.push_back(buff);  
+  buff.pos_y = 1;
+  buff.pos_y = 2;
+  buff.nb = 8;
+  buff.nb_team = -1;
+  buff.orientation = 3;
+  buff.food = 2;
+  buff.linemate = 2;
+  buff.deraumere = 3;
+  buff.sibur = 1;
+  buff.mendiane = 9;
+  buff.phiras = 5;
+  buff.thystame = 0;
+  buff.level = 4;
+  buff.team = "lala";
+  playerList.push_back(buff);
+  buff.pos_y = 7;
+  buff.pos_y = 16;
+  buff.nb = 8;
+  buff.nb_team = -1;
+  buff.orientation = 3;
   buff.food = 2;
   buff.linemate = 2;
   buff.deraumere = 3;
@@ -194,11 +262,25 @@ std::vector<player> refreshPlayers()
   buff.phiras = 5;
   buff.thystame = 0;
   buff.level = 6;
-  buff.team = "Lesticocos";
+  buff.team = "ploplo";
   playerList.push_back(buff);
 
-  // while (n < playerList.size())
-
+  while (n < playerList.size())
+  {
+    m = 0;
+    while (m < teamList.size())
+    {
+      if (playerList[n].team == teamList[m])
+        playerList[n].nb_team = m;
+      m++;
+    }
+    if (playerList[n].nb_team == -1)
+    {
+      teamList.push_back(playerList[n].team);
+      playerList[n].nb_team = m;
+    }
+    n++;
+  }
 
   return (playerList);
 
@@ -253,11 +335,11 @@ void loadObj(MD2Obj &object, char *pathMod, char *pathText)
 void  drawObject(MD2Obj &model, float Tx, float Ty, float Tz, float Sx, float Sy, float Sz, float Rx, float Ry, float Rz, int &CurFrame)
 {
   glTranslatef(Tx, Ty, Tz);
-  glRotatef(Rx, Ry , Rz, 1.0f);
   glScalef(Sx, Sy, Sz);
+  glRotatef(Rx, Ry , Rz, 1.0f);
   model.Draw(CurFrame);
-  glScalef(1.0f/Sx, 1.0f/Sy, 1.0f/Sz);
   glRotatef(-Rx ,-Ry ,-Rz , 1.0f);
+  glScalef(1.0f/Sx, 1.0f/Sy, 1.0f/Sz);
   glTranslatef(-Tx, -Ty, -Tz);
 }
 
@@ -265,28 +347,30 @@ void  Game::drawList(MD2Obj *modelList, int &CurFrame)
 {
   unsigned int n = 0;
 
-  while (n++ < v_player.size())
+  while (n < v_player.size())
+  {
     if (v_player[n].nb > 0)
-      drawObject(modelList[1], 60.0f * v_player[n].pos_x, 60.0f * v_player[n].pos_y, 30.0f, 1.0f, 1.0f, 1.0f, -90.0f * v_player[n].orientation -90.0f, 0.0f, 0.0f, CurFrame);
+      drawObject(modelList[10 + (v_player[n].nb_team % 10)], 60.0f * v_player[n].pos_x, 60.0f * v_player[n].pos_y, 30.0f, 0.5f + 0.2f * v_player[n].level, 0.5f + 0.2f * v_player[n].level, 0.5f + 0.2f * v_player[n].level, -90.0f * v_player[n].orientation -90.0f, 0.0f, 0.0f, CurFrame);
+    std::cout << v_player[n].level << std::endl;
+    n++;
+  }    
   n = 0;
   while (n < v_square.size())
   {
-    drawObject(modelList[0], 60.0f * v_square[n].pos_x, 60.0f * v_square[n].pos_y, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, CurFrame);        
+    drawObject(modelList[0], 60.0f * v_square[n].pos_x, 60.0f * v_square[n].pos_y, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, CurFrame);
     glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,30.0f);
-    glScalef(0.1, 0.1, 0.1);
     if (v_square[n].linemate > 0)
-      drawObject(modelList[2], 250.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, CurFrame);
+      drawObject(modelList[2], 25.0f, 0.0f, 0.0f, 0.1f, 0.1f, 0.1f, 0.0f, 0.0f, 0.0f, CurFrame);
     if (v_square[n].phiras > 0)
-      drawObject(modelList[3], 200.0f, -200.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, CurFrame);
+      drawObject(modelList[3], 20.0f, -20.0f, 0.0f, 0.1f, 0.1f, 0.1f, 0.0f, 0.0f, 0.0f, CurFrame);
     if (v_square[n].deraumere > 0)
-      drawObject(modelList[4], 100.0f, -325.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, CurFrame);
+      drawObject(modelList[4], 10.0f, -32.0f, 0.0f, 0.1f, 0.1f, 0.1f, 0.0f, 0.0f, 0.0f, CurFrame);
     if (v_square[n].sibur > 0)
-      drawObject(modelList[5], -150.0f, -175.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, CurFrame);
+      drawObject(modelList[5], -15.0f, -17.0f, 0.0f, 0.1f, 0.1f, 0.1f, 0.0f, 0.0f, 0.0f, CurFrame);
     if (v_square[n].mendiane > 0)
-      drawObject(modelList[6], 0.0f, -100.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, CurFrame);
+      drawObject(modelList[6], 0.0f, -10.0f, 0.0f, 0.1f, 0.1f, 0.1f, 0.0f, 0.0f, 0.0f, CurFrame);
     if (v_square[n].thystame > 0)
-      drawObject(modelList[7], -75.0f, -300.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, CurFrame);
-    glScalef(1.0/0.1, 1.0/0.1, 1.0/0.1);
+      drawObject(modelList[7], -7.0f, -30.0f, 0.0f, 0.1f, 0.1f, 0.1f, 0.0f, 0.0f, 0.0f, CurFrame);
     if (v_square[n].egg > 0)
       drawObject(modelList[8], -10.0f, 0.0f, 0.0f, 8.0f, 8.0f, 8.0f, 0.0f, 0.0f, 0.0f, CurFrame);
     if (v_square[n].food > 0)
@@ -315,7 +399,7 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   int Frames,CurFrame=0;
 
   loadObj(modelList[0], (char *)"resources/Ground.md2", (char *)"resources/Grass.tga");
-  loadObj(modelList[1], (char *)"resources/WalkMech.md2", (char *)"resources/Pink.tga");  
+  loadObj(modelList[1], (char *)"resources/WalkMech.md2", (char *)"resources/BlueMech.tga");  
   loadObj(modelList[2], (char *)"resources/Ground.md2", (char *)"resources/Green.tga");
   loadObj(modelList[3], (char *)"resources/Ground.md2", (char *)"resources/Blue.tga");
   loadObj(modelList[4], (char *)"resources/Ground.md2", (char *)"resources/Red.tga");

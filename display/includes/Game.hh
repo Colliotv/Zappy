@@ -19,6 +19,7 @@
 struct player
 {
 	int nb;
+	int nb_team;
 	int pos_x;
 	int pos_y;
 	int spawn_x;

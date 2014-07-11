@@ -150,7 +150,7 @@ void  Interface::drawText(sf::RenderWindow &window, std::vector<player> playerLi
     m++;
   while (m < playerList.size() && n < 800 && playerList[m].team == curTeam)
   {
-    text.setString("Player  " + std::to_string(playerList[m].nb) + "    lvl  " + std::to_string(playerList[m].level));
+    text.setString("Player  " + std::to_string(playerList[m].nb) + "    lvl  " + std::to_string(playerList[m].level) + " " + std::to_string(playerList[m].nb_team));
     text.setPosition(20, n + 20);
     window.draw(text);
     text.setString(std::to_string(playerList[m].food) + "  " + std::to_string(playerList[m].linemate) + "  " + std::to_string(playerList[m].deraumere) + "  " + 
