@@ -31,8 +31,11 @@ static void	seeForPlayer(teams* node, iaClients* ignored, position *p, char** r)
   _node = node->list;
   while (_node)
     {
-      asprintf(r, "%s player", rs = *r);
-      free(rs);
+      if (_node->_p.x == p->x && _node->_p.y == p->y)
+	{
+	  asprintf(r, "%s joueur", rs = *r);
+	  free(rs);
+	}
       _node = _node->next;
     }
   seeForPlayer(node->next, ignored, p, r);
