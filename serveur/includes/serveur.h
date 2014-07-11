@@ -75,6 +75,7 @@ teams*  getTeam(teams*, iaClients*);
 
 /* waiting */
 wclients* del_waiting(serveur* this, wclients* node, bool);
+void	iaProcess(serveur* this, teams* team);
 
 void	iaAvance	(serveur* this, iaClients* ia, char*);
 void	iaDroite	(serveur* this, iaClients* ia, char*);

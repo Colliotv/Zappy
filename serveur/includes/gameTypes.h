@@ -42,6 +42,7 @@ typedef enum estate{
   egg = 0,
   unaffected,
   alive,
+  deleting,
 } state;
   
 typedef struct sLife{

@@ -1,6 +1,7 @@
 #include <string.h>
 
 #include "serveur.h"
+#include "monitor.h"
 
 void	iaAvance	(serveur* this, iaClients* ia, char* i) {
   (void) i;
@@ -22,6 +23,7 @@ void	iaAvance	(serveur* this, iaClients* ia, char* i) {
     ia->_p.x = 0;
   ia->pause = 7;
   pushNode(ia->wrBuffer, strdup("ok\n"));
+  avertMonitor(this, mPositionPlayer(ia->num, ia->_p.x, ia->_p.y, ia->_o));
 }
 
 void	iaDroite	(serveur* this, iaClients* ia, char* i) {

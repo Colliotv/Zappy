@@ -14,6 +14,20 @@ static void	addUnaff(serveur* this, iaClients* ia) {
   team->size += 1;
 }
 
+static void	iaForkInit(serveur* this, iaClients* _egg, iaClients* ia) {
+  (void)this;
+  _egg->iaClient = FD_NOSET;
+  _egg->pause = READY;
+  _egg->wrBuffer = createBuffer();
+  _egg->state = egg;
+  _egg->depletingNut = pBirth + uLife;
+  _egg->pause = pBirth;
+  _egg->lvl = 1;
+  _egg->_o = random() % maxOrientation;
+  _egg->_p.x = ia->_p.x;
+  _egg->_p.y = ia->_p.y;
+}
+
 void	iaFork		(serveur* this, iaClients* ia, char* i) {
   iaClients* node;
 
@@ -24,16 +38,7 @@ void	iaFork		(serveur* this, iaClients* ia, char* i) {
   ia->next = node;
   node->num = this->num;
   this->num += 1;
-  node->iaClient = FD_NOSET;
-  node->pause = READY;
-  node->wrBuffer = createBuffer();
-  node->state = egg;
-  node->depletingNut = pBirth + uLife;
-  node->pause = pBirth;
-  node->lvl = 1;
-  node->_o = random() % maxOrientation;
-  node->_p.x = ia->_p.x;
-  node->_p.y = ia->_p.y;
+  iaForkInit(this, node, ia);
   bzero(node->stash, sizeof(node->stash));
   (node->stash)[nourriture] = 3;
   ia->pause = pFork;

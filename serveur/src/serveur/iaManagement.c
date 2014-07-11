@@ -19,7 +19,7 @@ static int	push_in_waiting(serveur* this, wclients* node) {
     return (push_in_waiting(this, node));
   ia->iaClient = node->_.client;
   ia->rdBuffer = node->_.rdBuffer;
-  ia->state = alive;
+  ia->state = (ia->state == unaffected) ? (alive) : (ia->state);
   team->unaff_size -= 1;
   asprintf(&sending, "%d\n", team->unaff_size);
   pushNode(ia->wrBuffer, sending);

@@ -59,7 +59,7 @@ void	iaInventaire	(serveur* this, iaClients* ia, char* i) {
   (void)this;
   (void)i;
   asprintf(&s, "{nourriture %d, sibur %d, phiras %d \
-, mendiane %d, thystane %d, linemate %d, deraumere %d}",
+, mendiane %d, thystane %d, linemate %d, deraumere %d}\n",
 	   (ia->stash)[nourriture],
 	   (ia->stash)[sibur],
 	   (ia->stash)[phiras],

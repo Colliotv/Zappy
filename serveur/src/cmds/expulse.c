@@ -53,19 +53,26 @@ static void	updatePos(iaClients* node, iaClients* exp,
   node->_p.y = p->y;
 }
 
-static void	dispatchNewPosition(teams* node, iaClients* ignored,
+static bool	dispatchNewPosition(teams* node, iaClients* ignored,
 				    position *p, orientation o) {
   iaClients*	c;
+  bool		test1;
+  bool		test2;
 
   if (!node)
-    return ;
+    return (false);
+  test1 = false;
   c = node->list;
   while (c) {
     if (c != ignored && c->iaClient != -1)
-      updatePos(c, ignored, p, o);
+      {
+	updatePos(c, ignored, p, o);
+	test1 = true;
+      }
     c = c->next;
   }
-  dispatchNewPosition(node->next, ignored, p, o);
+  test2 = dispatchNewPosition(node->next, ignored, p, o);
+  return (test1 || test2);
 }
 
 void	iaExpulse	(serveur* this, iaClients* ia, char* i) {

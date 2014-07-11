@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "serveur.h"
 
 static int	fetchIAClient(iaClients* node, fd_set *rd, fd_set *wr) {
