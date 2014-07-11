@@ -24,9 +24,11 @@ static void	testPlayer(teams* node, iaClients* ia, char** s, int* n) {
   if (!node)
     return ;
   _n = node->list;
-  while (_n) {
-    testIa(_n, ia, s, n);
-  }
+  while (_n)
+    {
+      testIa(_n, ia, s, n);
+      _n = _n->next;
+    }
   testPlayer(node->next, ia, s, n);
 }
 
