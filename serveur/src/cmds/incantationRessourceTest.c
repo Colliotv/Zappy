@@ -30,13 +30,15 @@ static	void	fillRequired(int* ressource, int lvl) {
 
 bool	testForRessource(serveur* this, iaClients* ia, int* ressource) {
   int	itt;
+  char*	r;
 
   (void)this;
   fillRequired(ressource, ia->lvl);
   itt = 0;
+  r = (GET_SQUARE(this, ia->_p.x, ia->_p.y));
   while (itt < ressourceLength)
     {
-      if ((ia->stash)[itt] < ressource[itt])
+      if (r[itt] != ressource[itt])
 	return (false);
       itt++;
     }

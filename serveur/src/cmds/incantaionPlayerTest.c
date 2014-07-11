@@ -42,7 +42,7 @@ bool	testForPlayer(serveur* this, iaClients* ia) {
     (ia->lvl == 4 || ia->lvl == 5) ? (4) :
     (ia->lvl == 6 || ia->lvl == 7) ? (6) : (0);
   testPlayer(this->teams, ia, &s, &n);
-  test = (n < 0);
+  test = (n == 0);
   if (test)
     avertMonitor(this, "%s\n", s);
   free(s);

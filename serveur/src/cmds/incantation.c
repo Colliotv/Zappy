@@ -25,7 +25,7 @@ static void	sendNotif(teams* team, position *_p, int lvl) {
   sendNotif(team->next, _p, lvl);
 }
 
-static void	depletRessource(int *stash, int *r){
+static void	depletRessource(char *stash, int *r){
   int	itt;
 
   itt = 0;
@@ -57,7 +57,7 @@ void	iaIncantation	(serveur* this, iaClients* ia, char* i) {
   if (testForPlayer(this, ia)
       && testForRessource(this, ia, ressource))
     {
-      depletRessource(ia->stash, ressource);
+      depletRessource(GET_SQUARE(this, ia->_p.x, ia->_p.y), ressource);
       pushNode(ia->wrBuffer, strdup("elevation en cours\n"));
       sendNotif(this->teams, &(ia->_p), ia->lvl);
       avertMonitor(this, mIncantSPlayer(ia->_p.x, ia->_p.y));
