@@ -19,19 +19,19 @@ def findResources(ia, obj):
 					ia.sendCmd("gauche")
 					ia.sendCmd("avance")
 					ia.prend(obj)
-					print("PRIS " + obj)
+					#print("PRIS " + obj)
 					return 1
 				if (i == 2):
 					ia.sendCmd("avance")
 					ia.prend(obj)
-					print("PRIS " + obj)
+					#print("PRIS " + obj)
 					return 1
 				if (i == 3):
 					ia.sendCmd("avance")
 					ia.sendCmd("droite")
 					ia.sendCmd("avance")
 					ia.prend(obj)
-					print("PRIS " + obj)
+					#print("PRIS " + obj)
 					return 1
 				if (i == 4):
 					ia.sendCmd("avance")
@@ -40,7 +40,7 @@ def findResources(ia, obj):
 					ia.sendCmd("avance")
 					ia.sendCmd("avance")
 					ia.prend(obj)
-					print("PRIS " + obj)
+					#print("PRIS " + obj)
 					return 1
 				if (i == 5):
 					ia.sendCmd("avance")
@@ -48,13 +48,13 @@ def findResources(ia, obj):
 					ia.sendCmd("gauche")
 					ia.sendCmd("avance")
 					ia.prend(obj)
-					print("PRIS " + obj)
+					#print("PRIS " + obj)
 					return 1
 				if (i == 6):
 					ia.sendCmd("avance")
 					ia.sendCmd("avance")
 					ia.prend(obj)
-					print("PRIS " + obj)
+					#print("PRIS " + obj)
 					return 1
 				if (i == 7):
 					ia.sendCmd("avance")
@@ -62,7 +62,7 @@ def findResources(ia, obj):
 					ia.sendCmd("droite")
 					ia.sendCmd("avance")
 					ia.prend(obj)
-					print("PRIS " + obj)
+					#print("PRIS " + obj)
 					return 1
 				if (i == 8):
 					ia.sendCmd("avance")
@@ -71,7 +71,7 @@ def findResources(ia, obj):
 					ia.sendCmd("avance")
 					ia.sendCmd("avance")
 					ia.prend(obj)
-					print("PRIS " + obj)
+					#print("PRIS " + obj)
 					return 1
 		i = i + 1
 	ia.sendCmd("avance")
@@ -96,12 +96,13 @@ def checkCalled(ia):
 
 	ia.voir()
 	for tmp in ia.listBroadcast:
-		print(tmp)
 		if tmp.find("come") != -1 and int(tmp[15]) == ia.lvl:
 			ia.myBroadcast = tmp
 			return 0
 		if tmp.find("stop") != -1 and int(tmp[15]) == ia.lvl:
-			cleanList(ia, i)
+			#cleanList(ia, i)
+			ia.myBroadcast = ""
+			ia.listBroadcast.clear()
 			return -1
 		i += 1
 	return -1
@@ -109,45 +110,45 @@ def checkCalled(ia):
 def getCloser(ia):
 	ia.voir()
 	pos = int(ia.myBroadcast[8])
-	print("pos =", pos)
+	#print("pos =", pos)
 	if (pos == 0):
-		print("ARRRIVEEEEEE")
+		#print("ARRRIVEEEEEE")
 		return 1
 	if (2 <= pos <= 4):
 		ia.sendCmd("gauche")
 		ia.sendCmd("avance")
-		print("gauche avance")
+		#print("gauche avance")
 		if pos == 2:
 			ia.sendCmd("droite")
 			ia.sendCmd("avance")
-			print("droite avance")
+			#print("droite avance")
 		elif pos == 4:
 			ia.sendCmd("gauche")
 			ia.sendCmd("avance")
-			print("gauche avance")
+			#print("gauche avance")
 	elif (6 <= pos <= 8):
 		ia.sendCmd("droite")
 		ia.sendCmd("avance")
-		print("droite avance")
+		#print("droite avance")
 		if pos == 6:
 			ia.sendCmd("droite")
 			ia.sendCmd("avance")
-			print("droite avance")
+			#print("droite avance")
 		elif pos == 8:
 			ia.sendCmd("gauche")
 			ia.sendCmd("avance")
-			print("gauche avance")
+			#print("gauche avance")
 	else:
 		if (pos == 1):
 			ia.voir()
 			ia.inventaire()
 			ia.sendCmd("avance")
-			print("avance")
+			#print("avance")
 		else:
 			ia.sendCmd("droite")
 			ia.sendCmd("droite")
 			ia.sendCmd("avance")
-			print("droite droite avance")
+			#print("droite droite avance")
 	ia.myBroadcast = ""
 	ia.listBroadcast.clear()
 	if checkCalled(ia) == 0:
@@ -191,11 +192,17 @@ def getStone(ia):
 
 
 def callOthers(ia):
+	i = 0
 	broadcast = "broadcast come " + str(ia.lvl)
-	while checkNbPlayer(ia) != 0:
+	while checkNbPlayer(ia) != 0 and i != 75:
+		print("J'APPELLE")
 		ia.sendCmd(broadcast)
+		i += 1
+	# i = 0
+	# while i != 10:
 	broadcast = "broadcast stop " + str(ia.lvl)
 	ia.sendCmd(broadcast)
+		#i += 1
 
 def poseStone(ia):
 	i = 1
@@ -224,10 +231,11 @@ def checkNbPlayer(ia):
 	ia.voir()
 	i = 0
 	nbPlayer = 0
-	ia.listVoir = ia.listVoir[0].split(' ')
-	lenList = len(ia.listVoir)
+	#ia.listVoir = ia.listVoir[0].split(' ')
+	liste = ia.listVoir[0].split(' ')
+	lenList = len(liste)
 	while i != lenList:
-		if ia.listVoir[i].find("joueur") != -1:
+		if liste[i].find("joueur") != -1:
 			nbPlayer += 1
 		i += 1
 	if (nbPlayer >= ia.listNbPlayer[ia.lvl-1]):
@@ -247,15 +255,20 @@ def algo(ia):
 				emptyCase(ia)
 				poseStone(ia)
 				if checkNbPlayer(ia) == 0:
+					print("avant 1")
 					ia.incantation()
-					continue
+					print("apres 1")
 				else:
 					if checkCalled(ia) != 0:
 						callOthers(ia)
+						print("avant 2")
+						ia.incantation()
+						print("apres 2")
 					else:
 						getCloser(ia)
-					ia.incantation()
-					continue
+					# print("avant 2")
+					# ia.incantation()
+					# print("apres 2")
 			else:
 				getStone(ia)
 

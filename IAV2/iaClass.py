@@ -57,6 +57,9 @@ class iaClass:
 			for tmp in tmplist:
 				if tmp == "ok" or tmp == "ko":
 					b = True
+				elif tmp == "mort":
+					print("LE JOUEUR EST MORT")
+					sys.exit(0)
 				else:
 					if len(tmp) > 1:
 						self.listBroadcast.insert(0, tmp)
@@ -72,6 +75,9 @@ class iaClass:
 				if tmp.find("{ ") != -1:
 					self.listVoir = tmp.split(',')
 					b = True
+				elif tmp == "mort":
+					print("LE JOUEUR EST MORT")
+					sys.exit(0)
 				else:
 					if len(tmp) > 1:
 						self.listBroadcast.insert(0, tmp)
@@ -92,6 +98,9 @@ class iaClass:
 					self.phiras = int(self.listInventaire[5][7:])
 					self.thystame = int(self.listInventaire[6][9:10])
 					b = True
+				elif tmp == "mort":
+					print("LE JOUEUR EST MORT")
+					sys.exit(0)
 			else:
 				if len(tmp) > 1:
 					self.listBroadcast.insert(0, tmp)
@@ -106,19 +115,32 @@ class iaClass:
 			for tmp in tmplist:
 				if tmp == "elevation en cours":
 					b = True
+					c = 1
 				elif tmp == "ko":
+					print("INCANTATION KO")
 					return -1
+				elif tmp == "mort":
+					print("LE JOUEUR EST MORT")
+					sys.exit(0)
 				else:
 					if len(tmp) > 1:
 						self.listBroadcast.insert(0, tmp)
 		b = False
-		while b != True:
+		msg = ""
+		while b != True and c == 1:
 			msg = self.connexion.recv(4096).decode()
 			tmplist = msg.split('\n')
 			for tmp in tmplist:
+				print(tmp)
 				if tmp.find("niveau actuel") != -1:
 					self.lvl += 1
 					b = True
+				elif tmp == "ko":
+					print("INCANTATION KO")
+					return -1
+				elif tmp == "mort":
+					print("LE JOUEUR EST MORT")
+					sys.exit(0)
 				else:
 					if len(tmp) > 1:
 						self.listBroadcast.insert(0, tmp)
@@ -134,6 +156,9 @@ class iaClass:
 			for tmp in tmplist:
 				if tmp.find("ok") != -1:
 					b = True
+				elif tmp == "mort":
+					print("LE JOUEUR EST MORT")
+					sys.exit(0)
 				else:
 					if len(tmp) > 1:
 						self.listBroadcast.insert(0, tmp)
@@ -148,6 +173,9 @@ class iaClass:
 			for tmp in tmplist:
 				if tmp.find("ok") != -1 or tmp.find("ko") != -1:
 					b = True
+				elif tmp == "mort":
+					print("LE JOUEUR EST MORT")
+					sys.exit(0)
 				else:
 					if len(tmp) > 1:
 						self.listBroadcast.insert(0, tmp)
