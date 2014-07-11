@@ -29,7 +29,7 @@ void  Interface::nextPlay(std::vector<player> playerList)
 
   while (n < playerList.size() && playerList[n].nb != curPlay)
     n++;
-  if (n < playerList.size() - 1 && playerList[n + 1].team == curTeam)
+  if (n < playerList.size() && n + 1 < playerList.size() && playerList[n + 1].team == curTeam)
   {
     curPlay = playerList[n + 1].nb;
     curPos++;

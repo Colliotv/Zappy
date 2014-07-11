@@ -422,7 +422,7 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   loadObj(modelList[18], (char *)"resources/WalkMech.md2", (char *)"resources/violette.tga");
   loadObj(modelList[19], (char *)"resources/WalkMech.md2", (char *)"resources/White.tga");
   loadObj(modelList[20], (char *)"resources/Ground.md2", (char *)"resources/Metal.tga");
-  loadObj(modelList[21], (char *)"resources/LevelUp.md2", (char *)"resources/Yellow.tga");  
+  // loadObj(modelList[21], (char *)"resources/LevelUp.md2", (char *)"resources/Yellow.tga");  
   glClearColor(0.2f,0.2f,0.2f,1.0f);
 
   glMatrixMode(GL_PROJECTION);
@@ -494,7 +494,7 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
 
     eventsManager(window);
 
-    drawObject(modelList[21], 50.0f, 50.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, CurFrame);
+    // drawObject(modelList[21], 50.0f, 50.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, CurFrame);
 
     this->drawList(modelList, CurFrame);
     v_playerForInterface = this->v_player;
