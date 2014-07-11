@@ -61,12 +61,12 @@ void	iaInventaire	(serveur* this, iaClients* ia, char* i) {
   asprintf(&s, "{nourriture %d, sibur %d, phiras %d \
 , mendiane %d, thystane %d, linemate %d, deraumere %d}\n",
 	   (ia->stash)[nourriture],
-	   (ia->stash)[sibur],
-	   (ia->stash)[phiras],
-	   (ia->stash)[mendiane],
-	   (ia->stash)[thystane],
 	   (ia->stash)[linemate],
-	   (ia->stash)[deraumere]
+	   (ia->stash)[deraumere],
+	   (ia->stash)[sibur],
+	   (ia->stash)[mendiane],
+	   (ia->stash)[phiras],
+	   (ia->stash)[thystane]
 	   );
   pushNode(ia->wrBuffer, s);
   ia->pause = 1;
