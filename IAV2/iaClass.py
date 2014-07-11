@@ -27,6 +27,7 @@ class iaClass:
 		self.phiras = 0
 		self.thystame = 0
 		self.fork = 0
+		self.id = 0
 
 	def connect(self, serv, port, team):
 		try:
