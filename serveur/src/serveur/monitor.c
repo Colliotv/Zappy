@@ -45,6 +45,7 @@ static bool	getrd(serveur* this, clients* node, fd_set *rd) {
   k = _get_socket(node->client);
   if (k == NULL)
     return (false);
+  printf("received Message From Client[%d], %s", node->client, k);  
   calcCmd(this, node, k);
   free(k);
   return (true);
