@@ -18,7 +18,7 @@ void	avertMonitorByCmd	(serveur*, char*);
 # define mPopEgg(n) "eht %d\n", n
 # define mLvlPlayer(n, lvl) "pvl %d %d\n", n, lvl
 # define mStashPlayer(n, x, y, nourriture, i1, i2, i3, i4, i5, i6) "pin %d %d %d %d %d %d %d %d %d\n", n, x, y, nourriture, i1, i2, i3, i4, i5, i6
-# define mBroadcastPlayer(n, m) "pbc %d, %s", n
+# define mBroadcastPlayer(n, m) "pbc %d, %s", n, m
 # define mExpulsePlayer(n) "pex %d\n", n
 # define mPosePlayer(n, r) "pdr %d %d\n", n, r
 # define mPrendPlayer(n, r) "pgt %d %d\n", n, r

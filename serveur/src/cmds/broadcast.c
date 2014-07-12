@@ -39,7 +39,7 @@ static void	sendMsg(iaClients* ia, iaClients* ignored,
   asprintf(&k, "message %d,%s",
 	   retrieveDist(size, &(ia->_p), &(ignored->_p)),
 	   msg);
-
+  pushNode(ia->wrBuffer, k);
 }
 
 static void	dispatchMsg(teams* node, position* size,
