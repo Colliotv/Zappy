@@ -23,9 +23,6 @@ using namespace std;
 #define FRAMEDELAY 70
 
  int RunLevel = 1;
- float move_X = 1.0;
- float move_Y = 1.0;
- float move_Z = 1.0;
 
 bool LoadTexture(char *TexName, GLuint TexHandle)
 {
@@ -89,7 +86,7 @@ std::vector<player> refreshPlayers()
   buff.pos_y = 0;
   buff.nb = 1;
   buff.nb_team = -1;
-  buff.orientation = 3;
+  buff.orientation = 2;
   buff.food = 22;
   buff.linemate = 2;
   buff.deraumere = 32;
@@ -97,6 +94,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 92;
   buff.phiras = 52;
   buff.thystame = 0;
+  buff.cursor = 0;
   buff.level = 1;
   buff.team = "Plop";
   playerList.push_back(buff);
@@ -112,6 +110,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
+  buff.cursor = 0;
   buff.level = 3;
   buff.team = "Lesticocos";
   playerList.push_back(buff);
@@ -119,7 +118,7 @@ std::vector<player> refreshPlayers()
   buff.pos_y = 10;
   buff.nb = 3;
   buff.nb_team = -1;
-  buff.orientation = 3;
+  buff.orientation = 1;
   buff.food = 2;
   buff.linemate = 2;
   buff.deraumere = 3;
@@ -127,6 +126,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
+  buff.cursor = 0;
   buff.level = 4;
   buff.team = "Lesticocos";
   playerList.push_back(buff);
@@ -142,6 +142,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
+  buff.cursor = 0;
   buff.level = 2;
   buff.team = "Lesticocos";
   playerList.push_back(buff);
@@ -157,6 +158,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
+  buff.cursor = 0;
   buff.level = 1;
   buff.team = "Plop";
   playerList.push_back(buff);
@@ -164,7 +166,7 @@ std::vector<player> refreshPlayers()
   buff.pos_y = 6;
   buff.nb = 6;
   buff.nb_team = -1;
-  buff.orientation = 3;
+  buff.orientation = 4;
   buff.food = 2;
   buff.linemate = 2;
   buff.deraumere = 3;
@@ -172,6 +174,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
+  buff.cursor = 0;
   buff.level = 2;
   buff.team = "Epitech";
   playerList.push_back(buff);
@@ -187,6 +190,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
+  buff.cursor = 0;
   buff.level = 7;
   buff.team = "Epitech";
   playerList.push_back(buff);
@@ -202,6 +206,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
+  buff.cursor = 0;
   buff.level = 8;
   buff.team = "Plop";
   playerList.push_back(buff);
@@ -217,6 +222,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
+  buff.cursor = 0;
   buff.level = 1;
   buff.team = "Plop";
   playerList.push_back(buff);
@@ -232,6 +238,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
+  buff.cursor = 0;
   buff.level = 2;
   buff.team = "Lesticocos";
   playerList.push_back(buff);  
@@ -247,6 +254,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
+  buff.cursor = 0;
   buff.level = 4;
   buff.team = "Epitech";
   playerList.push_back(buff);
@@ -262,6 +270,7 @@ std::vector<player> refreshPlayers()
   buff.mendiane = 9;
   buff.phiras = 5;
   buff.thystame = 0;
+  buff.cursor = 0;
   buff.level = 6;
   buff.team = "Epitech";
   playerList.push_back(buff);
@@ -285,34 +294,6 @@ std::vector<player> refreshPlayers()
 
   return (playerList);
 
-}
-
-void  eventsManager(sf::Window &window)
-{
-  sf::Event event;
-
-  while (window.pollEvent(event))
-  {
-    if (event.type == sf::Event::Closed)
-      window.close();
-    if (event.type == sf::Event::KeyPressed)
-    {
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-        window.close();
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-        move_Y = move_Y - 0.1;
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-        move_Y = move_Y + 0.1;
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        move_X = move_X - 0.1;
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        move_X = move_X + 0.1;
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Add))
-        move_Z = move_Z - 0.1;
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Subtract))
-        move_Z = move_Z + 0.1;
-    }
-  }
 }
 
 void loadObj(MD2Obj &object, char *pathMod, char *pathText)
@@ -352,14 +333,16 @@ void  Game::drawList(MD2Obj *modelList, int &CurFrame)
   {
     if (v_player[n].nb > 0)
       drawObject(modelList[10 + (v_player[n].nb_team % 10)], 60.0f * v_player[n].pos_x, 60.0f * v_player[n].pos_y, 10.0f, 0.5f + 0.2f * v_player[n].level, 0.5f + 0.2f * v_player[n].level, 0.5f + 0.2f * v_player[n].level, -90.0f * v_player[n].orientation -90.0f, 0.0f, 0.0f, CurFrame);
+    if (v_square[v_player[n].pos_x + v_player[n].pos_y * size_map_x].food != -1 && v_square[v_player[n].pos_x + v_player[n].pos_y * size_map_x].incant == 0 && v_player[n].cursor == 1)
+      drawObject(modelList[1], 60.0f * v_player[n].pos_x, 60.0f * v_player[n].pos_y, 0.0f, 1.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, CurFrame);
     n++;
-  }    
+  }
   n = 0;
   while (n < v_square.size())
   {
     if (v_square[n].food != -1 && v_square[n].incant == 0)
       drawObject(modelList[0], 60.0f * v_square[n].pos_x, 60.0f * v_square[n].pos_y, 0.0f, 1.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, CurFrame);
-    if (v_square[n].food != -1 && v_square[n].incant == 1)
+    else if (v_square[n].food != -1 && v_square[n].incant == 1)
       drawObject(modelList[20], 60.0f * v_square[n].pos_x, 60.0f * v_square[n].pos_y, 0.0f, 1.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, CurFrame);
     glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,15.0f);
     if (v_square[n].linemate > 0)
@@ -402,7 +385,7 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   int Frames,CurFrame=0;
 
   loadObj(modelList[0], (char *)"resources/Ground.md2", (char *)"resources/Grass.tga");
-  // loadObj(modelList[1], (char *)"resources/exclamation.md2", (char *)"resources/Yellow.tga");
+  loadObj(modelList[1], (char *)"resources/Ground.md2", (char *)"resources/Grass1.tga");
   loadObj(modelList[2], (char *)"resources/Ground.md2", (char *)"resources/Green.tga");
   loadObj(modelList[3], (char *)"resources/Ground.md2", (char *)"resources/Blue.tga");
   loadObj(modelList[4], (char *)"resources/Ground.md2", (char *)"resources/Red.tga");
@@ -444,40 +427,40 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   NextFrame=Time1 + FRAMEDELAY;
   Frames = modelList[10].GetFrameCount();
 
-  v_square = createList(20.0, 20.0);
-  v_player = refreshPlayers();
-  v_square[100].linemate = 2;
-  v_square[25].linemate = 2;
-  v_square[225].linemate = 2;
-  v_square[275].linemate = 2;
-  v_square[100].phiras = 2;
-  v_square[75].phiras = 2;
-  v_square[150].phiras = 2;
-  v_square[200].phiras = 2;
-  v_square[100].deraumere = 2;
-  v_square[380].deraumere = 2;
-  v_square[36].deraumere = 2;
-  v_square[205].deraumere = 2;
-  v_square[100].sibur = 2;
-  v_square[123].sibur = 2;
-  v_square[89].sibur = 2;
-  v_square[67].sibur = 2;
-  v_square[67].incant = 1;
-  v_square[100].mendiane = 2;
-  v_square[160].mendiane = 2;
-  v_square[395].mendiane = 2;
-  v_square[320].mendiane = 2;
-  v_square[320].incant = 1;
-  v_square[100].thystame = 2;
-  v_square[218].thystame = 2;
-  v_square[121].thystame = 2;
-  v_square[78].thystame = 2;
-  v_square[100].egg = 2;
-  v_square[100].food = 2;
+  // v_square = createList(20.0, 20.0);
+  // v_player = refreshPlayers();
+  // v_square[100].linemate = 2;
+  // v_square[25].linemate = 2;
+  // v_square[225].linemate = 2;
+  // v_square[275].linemate = 2;
+  // v_square[100].phiras = 2;
+  // v_square[75].phiras = 2;
+  // v_square[150].phiras = 2;
+  // v_square[200].phiras = 2;
+  // v_square[100].deraumere = 2;
+  // v_square[380].deraumere = 2;
+  // v_square[36].deraumere = 2;
+  // v_square[205].deraumere = 2;
+  // v_square[100].sibur = 2;
+  // v_square[123].sibur = 2;
+  // v_square[89].sibur = 2;
+  // v_square[67].sibur = 2;
+  // v_square[67].incant = 1;
+  // v_square[100].mendiane = 2;
+  // v_square[160].mendiane = 2;
+  // v_square[395].mendiane = 2;
+  // v_square[320].mendiane = 2;
+  // v_square[320].incant = 1;
+  // v_square[100].thystame = 2;
+  // v_square[218].thystame = 2;
+  // v_square[121].thystame = 2;
+  // v_square[78].thystame = 2;
+  // v_square[100].egg = 2;
+  // v_square[100].food = 2;
 
   while(window.isOpen())
   {
-    // this->ClientRead(fd);
+    this->ClientRead(fd);
 
     glLoadIdentity();
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
@@ -487,18 +470,15 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
     Time1=Time2;
 
     glTranslatef(-600.0f, -100.0f,-1000.0f);
-    glTranslatef(50.0f * move_X,25.0f * move_Z,-50.0f * move_Y);
+    glTranslatef(50.0f * Iface.move_X,25.0f * Iface.move_Z,-50.0f * Iface.move_Y);
     glRotatef(-60.0f,1.0f,0.0f,0.0f);
     glLightfv(GL_LIGHT0,GL_POSITION,Position);
     // glRotatef(ViewRotate,0.0f,0.0f,1.0f);
 
-    eventsManager(window);
-
     // drawObject(modelList[21], 50.0f, 50.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, CurFrame);
 
     this->drawList(modelList, CurFrame);
-    v_playerForInterface = this->v_player;
-    Iface.drawInterface(windowControl, v_playerForInterface);
+    Iface.drawInterface(window, windowControl, v_player);
 
     if(Time1>NextFrame)
     {

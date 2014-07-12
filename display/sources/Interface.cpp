@@ -16,6 +16,13 @@ Interface::Interface()
   text.setCharacterSize(24);
   curPlay = -1;
   curTeam = -1;
+  curPos = 0;
+  curCircle = 0;
+  move_X = 1.0;
+  move_Y = 1.0;
+  move_Z = 1.0;
+  mouseX = 0;
+  mouseY = 0;
 }
 
 Interface::~Interface()
@@ -23,7 +30,7 @@ Interface::~Interface()
 
 }
 
-void  Interface::nextPlay(std::vector<player> playerList)
+void  Interface::nextPlay(std::vector<player> &playerList)
 {
   unsigned int n = 0;
 
@@ -31,12 +38,15 @@ void  Interface::nextPlay(std::vector<player> playerList)
     n++;
   if (n < playerList.size() && n + 1 < playerList.size() && playerList[n + 1].team == curTeam)
   {
+    playerList[curCircle].cursor = 0;
     curPlay = playerList[n + 1].nb;
+    playerList[n + 1].cursor = 1;
+    curCircle = n + 1;
     curPos++;
   }
 }
 
-void  Interface::prevPlay(std::vector<player> playerList)
+void  Interface::prevPlay(std::vector<player> &playerList)
 {
   unsigned int n = 0;
 
@@ -44,12 +54,15 @@ void  Interface::prevPlay(std::vector<player> playerList)
     n++;
   if (n > 0 && playerList[n - 1].team == curTeam)
   {
+    playerList[curCircle].cursor = 0;
     curPlay = playerList[n - 1].nb;
+    playerList[n - 1].cursor = 1;
+    curCircle = n - 1;
     curPos--;
   }  
 }
 
-void  Interface::nextTeam(std::vector<player> playerList)
+void  Interface::nextTeam(std::vector<player> &playerList)
 {
   unsigned int n = 0;
 
@@ -59,13 +72,16 @@ void  Interface::nextTeam(std::vector<player> playerList)
     n++;
   if (n < playerList.size())
   {
+    playerList[curCircle].cursor = 0;
     curTeam = playerList[n].team;
     curPlay = playerList[n].nb;
+    playerList[n].cursor = 1;
+    curCircle = n;
     curPos = 0;
   }
 }
 
-void  Interface::prevTeam(std::vector<player> playerList)
+void  Interface::prevTeam(std::vector<player> &playerList)
 {
   unsigned int n = 0;
 
@@ -73,6 +89,7 @@ void  Interface::prevTeam(std::vector<player> playerList)
     n++;
   if (n > 0)
   {
+    playerList[curCircle].cursor = 0;
     n--;
     curTeam = playerList[n].team;
     while (n > 0 && playerList[n].team == curTeam)
@@ -80,18 +97,25 @@ void  Interface::prevTeam(std::vector<player> playerList)
     if (n != 0)
       n++;
     curPlay = playerList[n].nb;
+    playerList[n].cursor = 1;
+    curCircle = n;
     curPos = 0;
   }  
 }
 
-void Interface::eventsInterface(sf::RenderWindow &window, std::vector<player> playerList)
+void Interface::eventsInterface(sf::RenderWindow &mainWindow, std::vector<player> &playerList)
 {
   sf::Event event;
+  sf::Vector2i mouse = sf::Mouse::getPosition(mainWindow);
 
-  while (window.pollEvent(event))
+  while (mainWindow.pollEvent(event))
   {
+    if (event.type == sf::Event::Closed)
+      mainWindow.close();
     if (event.type == sf::Event::KeyPressed)
     {
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        mainWindow.close();
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
         prevPlay(playerList);
       else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
@@ -101,10 +125,19 @@ void Interface::eventsInterface(sf::RenderWindow &window, std::vector<player> pl
       else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         prevTeam(playerList);
     }
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && mouse.x < 1200 && mouse.x > 0 && mouse.y < 800 && mouse.y > 0)
+    {
+      move_X = move_X - (mouseX - mouse.x) * 0.02;
+      move_Y = move_Y + (mouseY - mouse.y) * 0.02;
+    }
+    if (event.type == sf::Event::MouseWheelMoved)
+      move_Z = move_Z - event.mouseWheel.delta * 0.5;
+    mouseX = mouse.x;
+    mouseY = mouse.y;
   }
 }
 
-void  Interface::initInterface(sf::RenderWindow &window, std::vector<player> playerList)
+void  Interface::initInterface(sf::RenderWindow &window, std::vector<player> &playerList)
 {
   unsigned int n = 0;
 
@@ -133,7 +166,7 @@ void  Interface::moveCursor(sf::RenderWindow &window)
   rect.setOutlineColor(sf::Color(120, 120, 120, 128));
 }
 
-void  Interface::drawText(sf::RenderWindow &window, std::vector<player> playerList)
+void  Interface::drawText(sf::RenderWindow &window, std::vector<player> &playerList)
 {
   unsigned int n = 0, m = 0;
 
@@ -162,13 +195,13 @@ void  Interface::drawText(sf::RenderWindow &window, std::vector<player> playerLi
   }
 }
 
-void  Interface::drawInterface(sf::RenderWindow &window, std::vector<player> playerList)
+void  Interface::drawInterface(sf::RenderWindow &mainWindow, sf::RenderWindow &window, std::vector<player> &playerList)
 {
   std::sort(playerList.begin(), playerList.end(), sortByLevel);
   std::sort(playerList.begin(), playerList.end(), sortByTeam);
 
   initInterface(window, playerList);
-  eventsInterface(window, playerList);
+  eventsInterface(mainWindow, playerList);
   moveCursor(window);
   drawText(window, playerList);
   window.display();

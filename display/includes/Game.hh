@@ -34,6 +34,7 @@ struct player
 	int	phiras;
 	int	thystame;
 	int state;
+	int cursor;
 	std::string team;
 };
 
