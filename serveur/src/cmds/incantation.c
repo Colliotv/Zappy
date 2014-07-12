@@ -58,8 +58,8 @@ void	iaIncantation	(serveur* this, iaClients* ia, char* i) {
       && testForRessource(this, ia, ressource))
     {
       depletRessource(GET_SQUARE(this, ia->_p.x, ia->_p.y), ressource);
-      sendNotif(this->teams, &(ia->_p), ia->lvl);
       pushNode(ia->wrBuffer, strdup("elevation en cours\n"));
+      sendNotif(this->teams, &(ia->_p), ia->lvl);
       avertMonitor(this, mIncantSPlayer(ia->_p.x, ia->_p.y));
       ia->pause = 300;
       avertMonitorForEach(this, this->teams, &(ia->_p), ia->lvl);
