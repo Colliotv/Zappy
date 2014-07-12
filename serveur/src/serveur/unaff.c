@@ -17,9 +17,9 @@ static bool	treat_node(serveur* this,
     {
       node->next = this->monitor;
       this->monitor = node;
-      calcCmd(this, node, cmdTeam);
-      calcCmd(this, node, cmdMap);
       calcCmd(this, node, cmdMapSize);
+      calcCmd(this, node, cmdMap);
+      calcCmd(this, node, cmdTeam);
       free(msg);
     }
   else
