@@ -11,11 +11,11 @@ void	pushNode(circularBuffer* this, char* value) {
   node->next = NULL;
   if (!this->endQueue)
     this->endQueue = node;
+  else
+    this->endQueue->next = node;
   if (!this->queue)
     this->queue = node;
-  else
-    node->next = this->queue;
-  this->queue = node;
+  this->endQueue = node;
   node->value = value;
   this->size += 1;
 }
