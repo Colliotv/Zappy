@@ -30,7 +30,6 @@ static bool	treat_node(serveur* this,
       ((wclients*)node) ->team = msg;
       node->next = (clients*)(this->waiting);
       this->waiting = (wclients*)node;
-      printf("new node for team[%s]\n", msg);
     }
   return (true);
 }

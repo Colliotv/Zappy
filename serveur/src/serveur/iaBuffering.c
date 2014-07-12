@@ -37,7 +37,7 @@ static int	actualizeByIa(teams* team, iaClients* node,
     return (0);
   if (node->iaClient == -1)
     return (actualizeByIa(team, node->next, rd, wr));
-  if (FD_ISSET(node->iaClient, rd) && node->rdBuffer->size < 10)
+  if (FD_ISSET(node->iaClient, rd))
     {
       if ((k = _get_socket(node->iaClient)) == NULL)
 	return (actualizeByIa(team, disable_iaClient(node), rd, wr));

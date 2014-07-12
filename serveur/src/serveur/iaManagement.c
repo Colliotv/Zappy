@@ -3,10 +3,17 @@
 #include "serveur.h"
 #include "monitor.h"
 
+static void	sendingIAData(serveur *this, iaClients* ia, teams* team) {
+  char*		sending;
+  asprintf(&sending, "%d\n", team->unaff_size);
+  pushNode(ia->wrBuffer, sending);
+  asprintf(&sending, "%d %d\n", this->size.x, this->size.y);
+  pushNode(ia->wrBuffer, sending);
+}
+
 static int	push_in_waiting(serveur* this, wclients* node) {
   teams*	team;
   iaClients*	ia;
-  char*		sending;
 
   if (!node)
     return (0);
@@ -21,9 +28,7 @@ static int	push_in_waiting(serveur* this, wclients* node) {
   ia->rdBuffer = node->_.rdBuffer;
   ia->state = (ia->state == unaffected) ? (alive) : (ia->state);
   team->unaff_size -= 1;
-  asprintf(&sending, "%d\n%d %d\n", team->unaff_size,
-	   this->size.x, this->size.y);
-  pushNode(ia->wrBuffer, sending);
+  sendingIAData(this, ia, team);
   if (ia->state == egg)
     avertMonitor(this, mConnectEgg(ia->num));
   avertMonitor(this, mNewPlayer(ia->num, ia->_p.x, ia->_p.y, ia->_o,
