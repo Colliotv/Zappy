@@ -62,8 +62,8 @@ void	iaIncantation	(serveur* this, iaClients* ia, char* i) {
       sendNotif(this->teams, &(ia->_p), ia->lvl);
       avertMonitor(this, mIncantSPlayer(ia->_p.x, ia->_p.y));
       ia->pause = 300;
-      avertMonitorForEach(this, this->teams, &(ia->_p), ia->lvl);
       avertMonitor(this, mIncantEPlayer(ia->_p.x, ia->_p.y));
+      avertMonitorForEach(this, this->teams, &(ia->_p), ia->lvl);
       return ;
     }
   pushNode(ia->wrBuffer, strdup("ko\n"));
