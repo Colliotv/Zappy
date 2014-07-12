@@ -6,11 +6,18 @@
 #include "serveur.h"
 #include "ressource.h"
 
-static char*	addS(char* r, char* ressource) {
+static char*	addS(char* r, char* ressource, int n) {
   char* rs;
+  int	i;
 
-  asprintf(&rs, "%s %s", r, ressource);
-  free(r);
+  i = 0;
+  while (i < n)
+    {
+      asprintf(&rs, "%s %s", r, ressource);
+      free(r);
+      r = rs;
+      i++;
+    }
   return (rs);
 }
 
@@ -19,19 +26,19 @@ char*	getRessourceOnMap(char* ressource) {
 
   r = strdup("");
   if (ressource[linemate])
-    r = addS(r, " linemate");
+    r = addS(r, " linemate", ressource[linemate]);
   if (ressource[deraumere])
-    r = addS(r, " deraumere");
+    r = addS(r, " deraumere", ressource[deraumere]);
   if (ressource[sibur])
-    r = addS(r, " sibur");
+    r = addS(r, " sibur", ressource[sibur]);
   if (ressource[mendiane])
-    r = addS(r, " mendiane");
+    r = addS(r, " mendiane", ressource[mendiane]);
   if (ressource[phiras])
-    r = addS(r, " phiras");
+    r = addS(r, " phiras", ressource[phiras]);
   if (ressource[thystame])
-    r = addS(r, " thystame");
+    r = addS(r, " thystame", ressource[thystame]);
   if (ressource[nourriture])
-    r = addS(r, " nourriture");
+    r = addS(r, " nourriture", ressource[nourriture]);
   return (r);
 }
 
