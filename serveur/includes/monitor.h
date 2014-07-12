@@ -24,7 +24,7 @@ void	avertMonitorByCmd	(serveur*, char*);
 # define mPrendPlayer(n, r) "pgt %d %d\n", n, r
 # define mIncantEPlayer(x, y) "pie %d %d 0\n", x, y
 # define mIncantSPlayer(x, y) "pie %d %d 1\n", x, y
-# define mPositionPlayer(n ,x, y, o) "ppo %d %d %d %d\n", n, x, y, o
+# define mPositionPlayer(n ,x, y, o) "ppo %d %d %d %d\n", n, x, y, (o) + 1
 # define mBegFork(n) "pfk %d\n", n
 # define mEndFork(e, n, x, y) "enw %d %d %d %d\n", e, n, x, y
 
