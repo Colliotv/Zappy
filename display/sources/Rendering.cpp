@@ -1,20 +1,20 @@
 
-#include "Framework.h"
-#include <iostream>
-#include <math.h>
-#include <time.h>
-#include "tga.h"
-#include "MD2Loader.h"
-#include "Obj.hh"
-#include "Render.h"
-#include "Game.hh"
-#include "Interface.hh"
 #include <vector>
 #include <unistd.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/OpenGL.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <iostream>
+#include <math.h>
+#include <time.h>
+#include "Framework.h"
+#include "tga.h"
+#include "MD2Loader.h"
+#include "Obj.hh"
+#include "Rendering.hh"
+#include "Game.hh"
+#include "Interface.hh"
 
 using namespace std;
 
@@ -22,9 +22,19 @@ using namespace std;
 
 #define FRAMEDELAY 70
 
- int RunLevel = 1;
+ // int RunLevel = 1;
 
-bool LoadTexture(char *TexName, GLuint TexHandle)
+Rendering::Rendering()
+{
+  
+}
+
+Rendering::~Rendering()
+{
+  
+}
+
+bool Rendering::LoadTexture(char *TexName, GLuint TexHandle)
 {
   TGAImg Img;
 
@@ -44,259 +54,7 @@ bool LoadTexture(char *TexName, GLuint TexHandle)
   return true;
 }
 
-std::vector<square> createList(float size_x, float size_y)
-{
-  std::vector<square> v_player;
-  square buff;
-  float x = 0.0f;
-  float y = 0.0f;
-
-  while (x < size_x)
-  {
-    y = 0.0f;
-    while (y < size_y)
-    {
-      buff.pos_x = x;
-      buff.pos_y = y;
-      buff.food = 0;
-      buff.incant = 0;
-      buff.egg = 0;
-      buff.linemate = 0;
-      buff.deraumere = 0;
-      buff.sibur = 0;
-      buff.mendiane = 0;
-      buff.phiras = 0;
-      buff.thystame = 0;
-      v_player.push_back(buff);
-      y++;
-    }
-    x++;
-  }
-  return (v_player);
-}
-
-// std::vector<player> refreshPlayers()
-// {
-//   std::vector<player> playerList;
-//   std::vector<std::string> teamList;
-//   player buff;
-//   unsigned int n = 0, m = 0;
-
-//   buff.pos_x = 0;
-//   buff.pos_y = 0;
-//   buff.nb = 1;
-//   buff.nb_team = -1;
-//   buff.orientation = 2;
-//   buff.food = 22;
-//   buff.linemate = 2;
-//   buff.deraumere = 32;
-//   buff.sibur = 1;
-//   buff.mendiane = 92;
-//   buff.phiras = 52;
-//   buff.thystame = 0;
-//   buff.cursor = 0;
-//   buff.level = 1;
-//   buff.team = "Plop";
-//   playerList.push_back(buff);
-//   buff.pos_x = 1;
-//   buff.pos_y = 1;
-//   buff.nb = 2;
-//   buff.nb_team = -1;
-//   buff.orientation = 3;
-//   buff.food = 2;
-//   buff.linemate = 2;
-//   buff.deraumere = 3;
-//   buff.sibur = 1;
-//   buff.mendiane = 9;
-//   buff.phiras = 5;
-//   buff.thystame = 0;
-//   buff.cursor = 0;
-//   buff.level = 3;
-//   buff.team = "Lesticocos";
-//   playerList.push_back(buff);
-//   buff.pos_x = 15;
-//   buff.pos_y = 10;
-//   buff.nb = 3;
-//   buff.nb_team = -1;
-//   buff.orientation = 1;
-//   buff.food = 2;
-//   buff.linemate = 2;
-//   buff.deraumere = 3;
-//   buff.sibur = 1;
-//   buff.mendiane = 9;
-//   buff.phiras = 5;
-//   buff.thystame = 0;
-//   buff.cursor = 0;
-//   buff.level = 4;
-//   buff.team = "Lesticocos";
-//   playerList.push_back(buff);
-//   buff.pos_x = 10;
-//   buff.pos_y = 10;
-//   buff.nb = 4;
-//   buff.nb_team = -1;
-//   buff.orientation = 3;
-//   buff.food = 2;
-//   buff.linemate = 2;
-//   buff.deraumere = 3;
-//   buff.sibur = 1;
-//   buff.mendiane = 9;
-//   buff.phiras = 5;
-//   buff.thystame = 0;
-//   buff.cursor = 0;
-//   buff.level = 2;
-//   buff.team = "Lesticocos";
-//   playerList.push_back(buff);
-//   buff.pos_x = 19;
-//   buff.pos_y = 19;
-//   buff.nb = 5;
-//   buff.nb_team = -1;
-//   buff.orientation = 3;
-//   buff.food = 2;
-//   buff.linemate = 2;
-//   buff.deraumere = 3;
-//   buff.sibur = 1;
-//   buff.mendiane = 9;
-//   buff.phiras = 5;
-//   buff.thystame = 0;
-//   buff.cursor = 0;
-//   buff.level = 1;
-//   buff.team = "Plop";
-//   playerList.push_back(buff);
-//   buff.pos_x = 14;
-//   buff.pos_y = 6;
-//   buff.nb = 6;
-//   buff.nb_team = -1;
-//   buff.orientation = 4;
-//   buff.food = 2;
-//   buff.linemate = 2;
-//   buff.deraumere = 3;
-//   buff.sibur = 1;
-//   buff.mendiane = 9;
-//   buff.phiras = 5;
-//   buff.thystame = 0;
-//   buff.cursor = 0;
-//   buff.level = 2;
-//   buff.team = "Epitech";
-//   playerList.push_back(buff);
-//   buff.pos_x = 16;
-//   buff.pos_y = 13;
-//   buff.nb = 7;
-//   buff.nb_team = -1;
-//   buff.orientation = 3;
-//   buff.food = 2;
-//   buff.linemate = 2;
-//   buff.deraumere = 3;
-//   buff.sibur = 1;
-//   buff.mendiane = 9;
-//   buff.phiras = 5;
-//   buff.thystame = 0;
-//   buff.cursor = 0;
-//   buff.level = 7;
-//   buff.team = "Epitech";
-//   playerList.push_back(buff);
-//   buff.pos_x = 15;
-//   buff.pos_y = 19;
-//   buff.nb = 8;
-//   buff.nb_team = -1;
-//   buff.orientation = 3;
-//   buff.food = 2;
-//   buff.linemate = 2;
-//   buff.deraumere = 3;
-//   buff.sibur = 1;
-//   buff.mendiane = 9;
-//   buff.phiras = 5;
-//   buff.thystame = 0;
-//   buff.cursor = 0;
-//   buff.level = 8;
-//   buff.team = "Plop";
-//   playerList.push_back(buff);
-//   buff.pos_x = 6;
-//   buff.pos_y = 3;
-//   buff.nb = 9;
-//   buff.nb_team = -1;
-//   buff.orientation = 3;
-//   buff.food = 2;
-//   buff.linemate = 2;
-//   buff.deraumere = 3;
-//   buff.sibur = 1;
-//   buff.mendiane = 9;
-//   buff.phiras = 5;
-//   buff.thystame = 0;
-//   buff.cursor = 0;
-//   buff.level = 1;
-//   buff.team = "Plop";
-//   playerList.push_back(buff);
-//   buff.pos_x = 7;
-//   buff.pos_y = 8;
-//   buff.nb = 10;
-//   buff.nb_team = -1;
-//   buff.orientation = 3;
-//   buff.food = 2;
-//   buff.linemate = 2;
-//   buff.deraumere = 3;
-//   buff.sibur = 1;
-//   buff.mendiane = 9;
-//   buff.phiras = 5;
-//   buff.thystame = 0;
-//   buff.cursor = 0;
-//   buff.level = 2;
-//   buff.team = "Lesticocos";
-//   playerList.push_back(buff);  
-//   buff.pos_y = 1;
-//   buff.pos_y = 2;
-//   buff.nb = 11;
-//   buff.nb_team = -1;
-//   buff.orientation = 3;
-//   buff.food = 2;
-//   buff.linemate = 2;
-//   buff.deraumere = 3;
-//   buff.sibur = 1;
-//   buff.mendiane = 9;
-//   buff.phiras = 5;
-//   buff.thystame = 0;
-//   buff.cursor = 0;
-//   buff.level = 4;
-//   buff.team = "Epitech";
-//   playerList.push_back(buff);
-//   buff.pos_y = 7;
-//   buff.pos_y = 16;
-//   buff.nb = 12;
-//   buff.nb_team = -1;
-//   buff.orientation = 3;
-//   buff.food = 2;
-//   buff.linemate = 2;
-//   buff.deraumere = 3;
-//   buff.sibur = 1;
-//   buff.mendiane = 9;
-//   buff.phiras = 5;
-//   buff.thystame = 0;
-//   buff.cursor = 0;
-//   buff.level = 6;
-//   buff.team = "Epitech";
-//   playerList.push_back(buff);
-
-//   while (n < playerList.size())
-//   {
-//     m = 0;
-//     while (m < teamList.size())
-//     {
-//       if (playerList[n].team == teamList[m])
-//         playerList[n].nb_team = m;
-//       m++;
-//     }
-//     if (playerList[n].nb_team == -1)
-//     {
-//       teamList.push_back(playerList[n].team);
-//       playerList[n].nb_team = m;
-//     }
-//     n++;
-//   }
-
-//   return (playerList);
-
-//}
-
-void loadObj(MD2Obj &object, char *pathMod, char *pathText)
+void Rendering::loadObj(MD2Obj &object, char *pathMod, char *pathText)
 {
   GLuint texture;
   char File[256];
@@ -314,7 +72,7 @@ void loadObj(MD2Obj &object, char *pathMod, char *pathText)
   object.SetTexture(texture);
 }
 
-void  drawObject(MD2Obj &model, float Tx, float Ty, float Tz, float Sx, float Sy, float Sz, float Rx, float Ry, float Rz, int &CurFrame)
+void  Rendering::drawObject(MD2Obj &model, float Tx, float Ty, float Tz, float Sx, float Sy, float Sz, float Rx, float Ry, float Rz, int &CurFrame)
 {
   glTranslatef(Tx, Ty, Tz);
   glScalef(Sx, Sy, Sz);
@@ -325,7 +83,7 @@ void  drawObject(MD2Obj &model, float Tx, float Ty, float Tz, float Sx, float Sy
   glTranslatef(-Tx, -Ty, -Tz);
 }
 
-void  Game::drawList(MD2Obj *modelList, int &CurFrame)
+void  Rendering::drawList(MD2Obj *modelList, int &CurFrame, std::vector<square> &v_square, std::vector<player> &v_player, int size_map_x)
 {
   unsigned int n = 0;
 
@@ -375,7 +133,7 @@ void  Game::drawList(MD2Obj *modelList, int &CurFrame)
   }
 }
 
-void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
+void  Rendering::Render(int fd, Game &parser)
 {
   Interface Iface;
   sf::Vector2<int> myVect(1200, 0);
@@ -387,7 +145,6 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   GLfloat Ambient[] = {0.9f,  0.9f,  0.9f, 10.0f};
   GLfloat Diffuse[] = {10.0f,  10.0f,  10.0f, 10.0f};
   GLfloat Position[] = {500.0f, 0.0f, -500.0f, 1.0f};
-  std::vector<player> v_playerForInterface;
   MD2Obj  modelList[22];
   float ViewRotate=0.0f;
   long Time1,Time2, Ticks, NextFrame;
@@ -436,40 +193,9 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
   NextFrame=Time1 + FRAMEDELAY;
   Frames = modelList[10].GetFrameCount();
 
-  // v_square = createList(20.0, 20.0);
-  // v_player = refreshPlayers();
-  // v_square[100].linemate = 2;
-  // v_square[25].linemate = 2;
-  // v_square[225].linemate = 2;
-  // v_square[275].linemate = 2;
-  // v_square[100].phiras = 2;
-  // v_square[75].phiras = 2;
-  // v_square[150].phiras = 2;
-  // v_square[200].phiras = 2;
-  // v_square[100].deraumere = 2;
-  // v_square[380].deraumere = 2;
-  // v_square[36].deraumere = 2;
-  // v_square[205].deraumere = 2;
-  // v_square[100].sibur = 2;
-  // v_square[123].sibur = 2;
-  // v_square[89].sibur = 2;
-  // v_square[67].sibur = 2;
-  // v_square[67].incant = 1;
-  // v_square[100].mendiane = 2;
-  // v_square[160].mendiane = 2;
-  // v_square[395].mendiane = 2;
-  // v_square[320].mendiane = 2;
-  // v_square[320].incant = 1;
-  // v_square[100].thystame = 2;
-  // v_square[218].thystame = 2;
-  // v_square[121].thystame = 2;
-  // v_square[78].thystame = 2;
-  // v_square[100].egg = 2;
-  // v_square[100].food = 2;
-
   while(window.isOpen())
   {
-    this->ClientRead(fd);
+    parser.ClientRead(fd);
 
     glLoadIdentity();
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
@@ -482,12 +208,9 @@ void  Game::Rendering(sf::RenderWindow & /*window*/, int fd)
     glTranslatef(50.0f * Iface.move_X,25.0f * Iface.move_Z,-50.0f * Iface.move_Y);
     glRotatef(-60.0f,1.0f,0.0f,0.0f);
     glLightfv(GL_LIGHT0,GL_POSITION,Position);
-    // glRotatef(ViewRotate,0.0f,0.0f,1.0f);
 
-    // drawObject(modelList[21], 50.0f, 50.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, CurFrame);
-
-    this->drawList(modelList, CurFrame);
-    Iface.drawInterface(window, windowControl, v_player);
+    drawList(modelList, CurFrame, parser.v_square, parser.v_player, parser.size_map_x);
+    Iface.drawInterface(window, windowControl, parser.v_player);
 
     if(Time1>NextFrame)
     {

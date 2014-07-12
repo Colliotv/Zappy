@@ -4,9 +4,10 @@
 #include    <unistd.h>
 #include    <SFML/Graphics.hpp>
 #include    "Menu.hh"
-#include    "Render.h"
+// #include    "Render.h"
 #include    "Framework.h"
 #include    "Game.hh"
+#include    "Rendering.hh"
 
 GLFWwindow* InitWindow(int ScrX, int ScrY);
 
@@ -48,6 +49,7 @@ void    exec_game(sf::RenderWindow &window, std::string ip, std::string hostname
 {
     int fd;
     Game    parser;
+    Rendering  displayEngine;
 
     std::cout << "[" << ip << "]" << "{" << hostname << "}\n";
 //    fd = ConnectClientGraToServer(ip, hostname);
@@ -60,7 +62,7 @@ void    exec_game(sf::RenderWindow &window, std::string ip, std::string hostname
         parser.ClientRead(fd);
         window.close();
         parser.initMap();
-        parser.Rendering(window, fd);
+        displayEngine.Render(fd, parser);
         _exit(0);
     }
 }

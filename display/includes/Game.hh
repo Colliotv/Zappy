@@ -61,43 +61,40 @@ struct square
 
 class Game
 {
-	std::map<std::string, void(Game::*)(std::stringstream&)>    cmd;
-	std::vector<square> v_square;
-	std::vector<player> v_player;
-	int                 sgt;
-	int                 fd_server;
-	int                 size_map_x;
-	int                 size_map_y;
-	int                 map_ready = 0;
+	public:
+		std::map<std::string, void(Game::*)(std::stringstream&)>    cmd;
+		std::vector<square> v_square;
+		std::vector<player> v_player;
+		int                 sgt;
+		int                 fd_server;
+		int                 size_map_x;
+		int                 size_map_y;
+		int                 map_ready = 0;
 
-public:
-	Game();
-	~Game();
-	void  initMap();
-	void	isset_server(int fd);
-	void  Rendering(sf::RenderWindow &, int);
-	void	ClientRead(int cs);
-	void    drawList(MD2Obj *modelList, int &CurFrame);
-
-	void    cmdMszSizeMap(std::stringstream &);
-	void    cmdBctContentCase(std::stringstream &);
-	void cmdTnaNameTeam(std::stringstream &);
-	void cmdPnwConnect(std::stringstream &);
-	void cmdPpoPosition(std::stringstream &);
-	void cmdPlvNiveau(std::stringstream &);
-	void cmdPinInventaire(std::stringstream &);
-	void cmdPexExpulse(std::stringstream &);
-	void cmdPicIncantBegin(std::stringstream &);
-	void cmdPieIncantEnd(std::stringstream &);
-	void cmdPfkEggsSpawn(std::stringstream &);
-	void cmdPdrDepositResource(std::stringstream &);
-	void cmdPgtGetResource(std::stringstream &);
-	void cmdPdiPlayerDead(std::stringstream &);
-	void cmdEnwEggsSpawn(std::stringstream &);
-	void cmdEhtEclos(std::stringstream &);
-	void cmdEboEggsConnect(std::stringstream &);
-	void cmdEdiDead(std::stringstream &);
-	void cmdSegVictory(std::stringstream &);
+		Game();
+		~Game();
+		void initMap();
+		void isset_server(int fd);
+		void ClientRead(int cs);
+		void cmdMszSizeMap(std::stringstream &);
+		void cmdBctContentCase(std::stringstream &);
+		void cmdTnaNameTeam(std::stringstream &);
+		void cmdPnwConnect(std::stringstream &);
+		void cmdPpoPosition(std::stringstream &);
+		void cmdPlvNiveau(std::stringstream &);
+		void cmdPinInventaire(std::stringstream &);
+		void cmdPexExpulse(std::stringstream &);
+		void cmdPicIncantBegin(std::stringstream &);
+		void cmdPieIncantEnd(std::stringstream &);
+		void cmdPfkEggsSpawn(std::stringstream &);
+		void cmdPdrDepositResource(std::stringstream &);
+		void cmdPgtGetResource(std::stringstream &);
+		void cmdPdiPlayerDead(std::stringstream &);
+		void cmdEnwEggsSpawn(std::stringstream &);
+		void cmdEhtEclos(std::stringstream &);
+		void cmdEboEggsConnect(std::stringstream &);
+		void cmdEdiDead(std::stringstream &);
+		void cmdSegVictory(std::stringstream &);
 };
 
 int   ConnectClientGraToServer(std::string   ip, std::string hostname);

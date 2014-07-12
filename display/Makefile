@@ -8,7 +8,7 @@ DIR_CLIENT	=	client_dir
 SRCS    	= 	./sources/menu_main.cpp \
 				./sources/Menu.cpp \
 				./sources/MD2Loader.cpp \
-				./sources/Render.cpp \
+				./sources/Rendering.cpp \
 				./sources/tga.cpp \
 				./sources/connect_main.cpp	\
 				./sources/create_socket.cpp \
