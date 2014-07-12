@@ -45,13 +45,13 @@ static int	actualizeByIa(teams* team, iaClients* node,
       printf("received from iaClient[%d] > %s", node->iaClient, k);
     }
   if (FD_ISSET(node->iaClient, wr) && node->wrBuffer->size)
-      while ((k = popNode(node->wrBuffer)) != NULL)
-	{
-	  if (write(node->iaClient, k, strlen(k)) <= 0)
-	    return (actualizeByIa(team, disable_iaClient(node), rd, wr));
-	  printf("send to iaClient[%d] > %s", node->iaClient, k);
-	  free(k);
-	}
+    while ((k = popNode(node->wrBuffer)) != NULL)
+      {
+	if (write(node->iaClient, k, strlen(k)) <= 0)
+	  return (actualizeByIa(team, disable_iaClient(node), rd, wr));
+	printf("send to iaClient[%d] > %s", node->iaClient, k);
+	free(k);
+      }
   return (actualizeByIa(team, node->next, rd, wr));
 }
 
