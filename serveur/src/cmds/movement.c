@@ -42,7 +42,7 @@ void	iaGauche	(serveur* this, iaClients* ia, char* i) {
   (void) i;
   ia->_o -= 1;
   if (ia->_o == minOrientation)
-    ia->_o = haut;
+    ia->_o = droite;
   ia->pause = 7;
   pushNode(ia->wrBuffer, strdup("ok\n"));
   avertMonitor(this, mPositionPlayer(ia->num, ia->_p.x, ia->_p.y, ia->_o));
