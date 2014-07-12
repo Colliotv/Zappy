@@ -6,8 +6,8 @@
 void	iaAvance	(serveur* this, iaClients* ia, char* i) {
   (void) i;
   ia->_p.x +=
-    (ia->_o == gauche) ? (-1) :
-    (ia->_o == droite) ? (+1) :
+    (ia->_o == gauche) ? (+1) :
+    (ia->_o == droite) ? (-1) :
     (0);
   ia->_p.y +=
     (ia->_o == haut) ? (-1) :
