@@ -11,7 +11,7 @@ static void	testIa(iaClients* ia, iaClients* p, char** s, int* n) {
   char*	s2;
 
   if (!(ia->_p.x == p->_p.x && ia->_p.y == p->_p.y && ia->lvl == p->lvl) ||
-      p->iaClient == -1)
+      p->state == alive)
     return ;
   *n -= 1;
   s2 = *s;
