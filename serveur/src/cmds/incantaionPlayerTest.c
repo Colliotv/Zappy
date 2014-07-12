@@ -48,6 +48,8 @@ bool	testForPlayer(serveur* this, iaClients* ia) {
   test = (n == 0);
   if (test)
     avertMonitor(this, "%s\n", s);
+  if (!test)
+    printf ("FAIL BY    PLAYYYYYYYYERRRRRRR!!!!!\n");
   free(s);
   return (test);
 }

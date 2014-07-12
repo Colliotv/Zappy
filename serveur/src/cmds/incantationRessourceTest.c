@@ -39,7 +39,10 @@ bool	testForRessource(serveur* this, iaClients* ia, int* ressource) {
   while (itt < ressourceLength)
     {
       if (r[itt] != ressource[itt])
-	return (false);
+	{
+	  printf("FAIIIIIL BY RESSSOURCEEEEE\n");
+	  return (false);
+	}
       itt++;
     }
   return (true);
