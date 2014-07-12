@@ -113,6 +113,14 @@ def getCloser(ia):
 	#print("pos =", pos)
 	if (pos == 0):
 		#print("ARRRIVEEEEEE")
+		# b = False
+		# while b != True:
+		# 	msg = ia.connexion.recv(4096).decode()
+		# 	if msg.find("up mon gars") != -1:
+		# 		ia.lvl += 1
+		# 		b = True
+		# 	elif msg.find("incantation ko") != 1:
+		# 		b = True
 		return 1
 	if (2 <= pos <= 4):
 		ia.sendCmd("gauche")
@@ -149,7 +157,6 @@ def getCloser(ia):
 			ia.sendCmd("droite")
 			ia.sendCmd("avance")
 			#print("droite droite avance")
-	print("ICI")
 	ia.myBroadcast = ""
 	ia.listBroadcast.clear()
 	if checkCalled(ia) == 0:
@@ -198,7 +205,7 @@ def getStone(ia):
 def callOthers(ia):
 	i = 0
 	broadcast = "broadcast come " + str(ia.lvl)
-	while checkNbPlayer(ia) != 0 and i != 75:
+	while checkNbPlayer(ia) != 0 and i != 50:
 		print("J'APPELLE")
 		ia.sendCmd(broadcast)
 		i += 1
@@ -243,7 +250,7 @@ def checkNbPlayer(ia):
 		if liste[i].find("joueur") != -1:
 			nbPlayer += 1
 		i += 1
-	if (nbPlayer >= ia.listNbPlayer[ia.lvl-1]):
+	if (nbPlayer == ia.listNbPlayer[ia.lvl-1]):
 		return 0
 	return -1
 

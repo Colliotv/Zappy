@@ -27,7 +27,6 @@ class iaClass:
 		self.phiras = 0
 		self.thystame = 0
 		self.fork = 0
-		self.id = 0
 
 	def connect(self, serv, port, team):
 		try:
@@ -136,8 +135,12 @@ class iaClass:
 				if tmp.find("niveau actuel") != -1:
 					self.lvl += 1
 					b = True
+					msgUp = "broadcast up mon gars"
+					self.sendCmd(msgUp)
 				elif tmp == "ko":
 					print("INCANTATION KO")
+					msgUp = "broadcast incantation ko"
+					self.sendCmd(msgUp)
 					return -1
 				elif tmp == "mort":
 					print("LE JOUEUR EST MORT")
