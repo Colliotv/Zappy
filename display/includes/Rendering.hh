@@ -12,6 +12,7 @@
 class Rendering
 {
 	public:
+		MD2Obj  modelList[22];
 
 		Rendering();
 		~Rendering();

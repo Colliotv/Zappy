@@ -26,7 +26,27 @@ using namespace std;
 
 Rendering::Rendering()
 {
-  
+  loadObj(modelList[0], (char *)"resources/Ground.md2", (char *)"resources/Grass.tga");
+  loadObj(modelList[1], (char *)"resources/Ground.md2", (char *)"resources/Grass1.tga");
+  loadObj(modelList[2], (char *)"resources/Ground.md2", (char *)"resources/Green.tga");
+  loadObj(modelList[3], (char *)"resources/Ground.md2", (char *)"resources/Blue.tga");
+  loadObj(modelList[4], (char *)"resources/Ground.md2", (char *)"resources/Red.tga");
+  loadObj(modelList[5], (char *)"resources/Ground.md2", (char *)"resources/Yellow.tga");
+  loadObj(modelList[6], (char *)"resources/Ground.md2", (char *)"resources/Orange.tga");
+  loadObj(modelList[7], (char *)"resources/Ground.md2", (char *)"resources/Pink.tga");
+  loadObj(modelList[8], (char *)"resources/techlab.md2", (char *)"resources/techlab_diffuse.tga");
+  loadObj(modelList[9], (char *)"resources/nuclear.md2", (char *)"resources/barrel02_D.tga");
+  loadObj(modelList[10], (char *)"resources/WalkMech.md2", (char *)"resources/azur.tga");
+  loadObj(modelList[11], (char *)"resources/WalkMech.md2", (char *)"resources/Black.tga");
+  loadObj(modelList[12], (char *)"resources/WalkMech.md2", (char *)"resources/caca.tga");
+  loadObj(modelList[13], (char *)"resources/WalkMech.md2", (char *)"resources/lava.tga");
+  loadObj(modelList[14], (char *)"resources/WalkMech.md2", (char *)"resources/multi.tga");
+  loadObj(modelList[15], (char *)"resources/WalkMech.md2", (char *)"resources/Pastis.tga");
+  loadObj(modelList[16], (char *)"resources/WalkMech.md2", (char *)"resources/rouge.tga");
+  loadObj(modelList[17], (char *)"resources/WalkMech.md2", (char *)"resources/vert.tga");
+  loadObj(modelList[18], (char *)"resources/WalkMech.md2", (char *)"resources/violette.tga");
+  loadObj(modelList[19], (char *)"resources/WalkMech.md2", (char *)"resources/White.tga");
+  loadObj(modelList[20], (char *)"resources/Ground.md2", (char *)"resources/Metal.tga");
 }
 
 Rendering::~Rendering()
@@ -145,33 +165,11 @@ void  Rendering::Render(int fd, Game &parser)
   GLfloat Ambient[] = {0.9f,  0.9f,  0.9f, 10.0f};
   GLfloat Diffuse[] = {10.0f,  10.0f,  10.0f, 10.0f};
   GLfloat Position[] = {500.0f, 0.0f, -500.0f, 1.0f};
-  MD2Obj  modelList[22];
+
   float ViewRotate=0.0f;
   long Time1,Time2, Ticks, NextFrame;
   int Frames,CurFrame=0;
 
-  loadObj(modelList[0], (char *)"resources/Ground.md2", (char *)"resources/Grass.tga");
-  loadObj(modelList[1], (char *)"resources/Ground.md2", (char *)"resources/Grass1.tga");
-  loadObj(modelList[2], (char *)"resources/Ground.md2", (char *)"resources/Green.tga");
-  loadObj(modelList[3], (char *)"resources/Ground.md2", (char *)"resources/Blue.tga");
-  loadObj(modelList[4], (char *)"resources/Ground.md2", (char *)"resources/Red.tga");
-  loadObj(modelList[5], (char *)"resources/Ground.md2", (char *)"resources/Yellow.tga");
-  loadObj(modelList[6], (char *)"resources/Ground.md2", (char *)"resources/Orange.tga");
-  loadObj(modelList[7], (char *)"resources/Ground.md2", (char *)"resources/Pink.tga");
-  loadObj(modelList[8], (char *)"resources/techlab.md2", (char *)"resources/techlab_diffuse.tga");
-  loadObj(modelList[9], (char *)"resources/nuclear.md2", (char *)"resources/barrel02_D.tga");
-  loadObj(modelList[10], (char *)"resources/WalkMech.md2", (char *)"resources/azur.tga");
-  loadObj(modelList[11], (char *)"resources/WalkMech.md2", (char *)"resources/Black.tga");
-  loadObj(modelList[12], (char *)"resources/WalkMech.md2", (char *)"resources/caca.tga");
-  loadObj(modelList[13], (char *)"resources/WalkMech.md2", (char *)"resources/lava.tga");
-  loadObj(modelList[14], (char *)"resources/WalkMech.md2", (char *)"resources/multi.tga");
-  loadObj(modelList[15], (char *)"resources/WalkMech.md2", (char *)"resources/Pastis.tga");
-  loadObj(modelList[16], (char *)"resources/WalkMech.md2", (char *)"resources/rouge.tga");
-  loadObj(modelList[17], (char *)"resources/WalkMech.md2", (char *)"resources/vert.tga");
-  loadObj(modelList[18], (char *)"resources/WalkMech.md2", (char *)"resources/violette.tga");
-  loadObj(modelList[19], (char *)"resources/WalkMech.md2", (char *)"resources/White.tga");
-  loadObj(modelList[20], (char *)"resources/Ground.md2", (char *)"resources/Metal.tga");
-  // loadObj(modelList[21], (char *)"resources/LevelUp.md2", (char *)"resources/Yellow.tga");  
   glClearColor(0.2f,0.2f,0.2f,1.0f);
 
   glMatrixMode(GL_PROJECTION);
@@ -204,10 +202,10 @@ void  Rendering::Render(int fd, Game &parser)
     Ticks=Time2-Time1;
     Time1=Time2;
 
-    glTranslatef(-600.0f, -100.0f,-1000.0f);
+    glTranslatef(-30.0f * parser.size_map_x, -100.0f,-50.0f * parser.size_map_y);
     glTranslatef(50.0f * Iface.move_X,25.0f * Iface.move_Z,-50.0f * Iface.move_Y);
     glRotatef(-60.0f,1.0f,0.0f,0.0f);
-    glLightfv(GL_LIGHT0,GL_POSITION,Position);
+    glLightfv(GL_LIGHT0,GL_POSITION,Position)
 
     drawList(modelList, CurFrame, parser.v_square, parser.v_player, parser.size_map_x);
     Iface.drawInterface(window, windowControl, parser.v_player);
