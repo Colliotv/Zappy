@@ -131,13 +131,30 @@ void Game::cmdPnwConnect(std::stringstream &iss)
   buff.state = ALIVE;
   buff.cursor = 0;
   v_player.push_back(buff);
-  // std::cout << "cmdPnwConnect ";
-  unsigned int i = 0;
 
-  while (i < v_player.size())
+  // std::cout << "cmdPnwConnect ";
+  unsigned int i = 0;  
+  std::vector<std::string> teamList;
+  unsigned int n = 0, m = 0;
+
+
+  while (n < v_player.size())
   {
     // std::cout << "nb"<< v_player[i].nb << " x"<< v_player[i].pos_x << " y" << v_player[i].pos_y << " orien" << v_player[i].orientation << " level" << v_player[i].level << " team[" <<  v_player[i].team << "]\n";
     i++;
+    m = 0;
+    while (m < teamList.size())
+    {
+      if (v_player[n].team == teamList[m])
+        v_player[n].nb_team = m;
+      m++;
+    }
+    if (v_player[n].nb_team == -1)
+    {
+      teamList.push_back(v_player[n].team);
+      v_player[n].nb_team = m;
+    }
+    n++;
   }
 }
 
@@ -261,27 +278,10 @@ void Game::cmdPicIncantBegin(std::stringstream &iss) // animation Début
   iss >> pos_x;
   iss >> pos_y;
   iss >> current_niv;
+
   // std::cout << "cmdPicIncantBegin x " << pos_x << " y " << pos_y << " current_niv : " << current_niv;
-  while (iss >> tmp)
-  {
-    std::cout << " joueur n " << tmp; 
-    player_buff.push_back(tmp);
-  }
-  unsigned int i = 0;
-  unsigned int j = 0;
-  while (i < v_player.size())
-  {
-    while (j < player_buff.size())
-    {
-      if (v_player[i].nb == player_buff[j])
-      {
-        // std::cout << "*** JOUEUR n : " << v_player[i].nb << " begin incant\n";
-      }
-      j++;
-    }
-    j = 0;
-    i++;
-  }
+  
+  v_square[pos_x + (pos_y * this->size_map_x)].incant = 1;
 }
 
 void Game::cmdPieIncantEnd(std::stringstream &iss)
@@ -295,16 +295,9 @@ void Game::cmdPieIncantEnd(std::stringstream &iss)
   iss >> y;
   iss >> result;
   i = 0;
+
   // std::cout << "cmdPieIncantEnd ";
-  while (i < v_player.size())
-  {
-    if (x == v_player[i].pos_x && y == v_player[i].pos_y && result == 1)
-    {
-      // std::cout << "player n : " << v_player[i].nb << " level++ :" <<
-      v_player[i].level++;
-    }
-    i++;
-  }
+  v_square[x + (y * this->size_map_x)].incant = 0;
 }
 
 void Game::cmdPfkEggsSpawn(std::stringstream &iss)
