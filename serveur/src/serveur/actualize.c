@@ -70,21 +70,27 @@ void	actualize(serveur* this) {
   fd_set rd;
   fd_set wr;
   int	mx;
+  int	k;
   struct timeval tv;
 
-  FD_ZERO(&rd);
-  FD_ZERO(&wr);
-  mx = fetchFDS(this, &rd, &wr);
-  tv.tv_sec = 0;
-  tv.tv_usec = 0;
-  select(mx, &rd, &wr, NULL, &tv);
-  if (this->time)
-    usleep(1.f/this->time * 1000000.f);
-  else
-    usleep(100000.f);
-  addClient(this, &rd);
-  actualize_unaff(this, &rd, &wr);
-  actualize_waiting(this, &rd, &wr);
-  actualize_IA(this, &rd, &wr);
-  push_monitor(this, this->monitor, &rd, &wr);
+  k = 0;
+  while (k <= 10)
+    {
+      FD_ZERO(&rd);
+      FD_ZERO(&wr);
+      mx = fetchFDS(this, &rd, &wr);
+      tv.tv_sec = 0;
+      tv.tv_usec = 0;
+      select(mx, &rd, &wr, NULL, &tv);
+      if (this->time)
+	usleep((1.f/this->time * 1000000.f) / 50.f);
+      else
+	usleep(100000.f / 50.f);
+      addClient(this, &rd);
+      actualize_unaff(this, &rd, &wr);
+      actualize_waiting(this, &rd, &wr);
+      actualize_IA(this, &rd, &wr, k == 10);
+      push_monitor(this, this->monitor, &rd, &wr);
+      k++;
+    }
 }

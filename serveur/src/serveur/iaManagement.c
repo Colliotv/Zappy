@@ -31,9 +31,10 @@ static int	push_in_waiting(serveur* this, wclients* node) {
   return (push_in_waiting(this, del_waiting(this, node, false)));
 }
 
-void	actualize_IA(serveur* this, fd_set* rd, fd_set* wr) {
+void	actualize_IA(serveur* this, fd_set* rd, fd_set* wr, bool buffered) {
   if (this->waiting)
     push_in_waiting(this, this->waiting);
   actualizeBuffering(this->teams, rd, wr);
-  iaProcess(this, this->teams);
+  if (buffered)
+    iaProcess(this, this->teams);
 }
