@@ -75,226 +75,226 @@ std::vector<square> createList(float size_x, float size_y)
   return (v_player);
 }
 
-std::vector<player> refreshPlayers()
-{
-  std::vector<player> playerList;
-  std::vector<std::string> teamList;
-  player buff;
-  unsigned int n = 0, m = 0;
+// std::vector<player> refreshPlayers()
+// {
+//   std::vector<player> playerList;
+//   std::vector<std::string> teamList;
+//   player buff;
+//   unsigned int n = 0, m = 0;
 
-  buff.pos_x = 0;
-  buff.pos_y = 0;
-  buff.nb = 1;
-  buff.nb_team = -1;
-  buff.orientation = 2;
-  buff.food = 22;
-  buff.linemate = 2;
-  buff.deraumere = 32;
-  buff.sibur = 1;
-  buff.mendiane = 92;
-  buff.phiras = 52;
-  buff.thystame = 0;
-  buff.cursor = 0;
-  buff.level = 1;
-  buff.team = "Plop";
-  playerList.push_back(buff);
-  buff.pos_x = 1;
-  buff.pos_y = 1;
-  buff.nb = 2;
-  buff.nb_team = -1;
-  buff.orientation = 3;
-  buff.food = 2;
-  buff.linemate = 2;
-  buff.deraumere = 3;
-  buff.sibur = 1;
-  buff.mendiane = 9;
-  buff.phiras = 5;
-  buff.thystame = 0;
-  buff.cursor = 0;
-  buff.level = 3;
-  buff.team = "Lesticocos";
-  playerList.push_back(buff);
-  buff.pos_x = 15;
-  buff.pos_y = 10;
-  buff.nb = 3;
-  buff.nb_team = -1;
-  buff.orientation = 1;
-  buff.food = 2;
-  buff.linemate = 2;
-  buff.deraumere = 3;
-  buff.sibur = 1;
-  buff.mendiane = 9;
-  buff.phiras = 5;
-  buff.thystame = 0;
-  buff.cursor = 0;
-  buff.level = 4;
-  buff.team = "Lesticocos";
-  playerList.push_back(buff);
-  buff.pos_x = 10;
-  buff.pos_y = 10;
-  buff.nb = 4;
-  buff.nb_team = -1;
-  buff.orientation = 3;
-  buff.food = 2;
-  buff.linemate = 2;
-  buff.deraumere = 3;
-  buff.sibur = 1;
-  buff.mendiane = 9;
-  buff.phiras = 5;
-  buff.thystame = 0;
-  buff.cursor = 0;
-  buff.level = 2;
-  buff.team = "Lesticocos";
-  playerList.push_back(buff);
-  buff.pos_x = 19;
-  buff.pos_y = 19;
-  buff.nb = 5;
-  buff.nb_team = -1;
-  buff.orientation = 3;
-  buff.food = 2;
-  buff.linemate = 2;
-  buff.deraumere = 3;
-  buff.sibur = 1;
-  buff.mendiane = 9;
-  buff.phiras = 5;
-  buff.thystame = 0;
-  buff.cursor = 0;
-  buff.level = 1;
-  buff.team = "Plop";
-  playerList.push_back(buff);
-  buff.pos_x = 14;
-  buff.pos_y = 6;
-  buff.nb = 6;
-  buff.nb_team = -1;
-  buff.orientation = 4;
-  buff.food = 2;
-  buff.linemate = 2;
-  buff.deraumere = 3;
-  buff.sibur = 1;
-  buff.mendiane = 9;
-  buff.phiras = 5;
-  buff.thystame = 0;
-  buff.cursor = 0;
-  buff.level = 2;
-  buff.team = "Epitech";
-  playerList.push_back(buff);
-  buff.pos_x = 16;
-  buff.pos_y = 13;
-  buff.nb = 7;
-  buff.nb_team = -1;
-  buff.orientation = 3;
-  buff.food = 2;
-  buff.linemate = 2;
-  buff.deraumere = 3;
-  buff.sibur = 1;
-  buff.mendiane = 9;
-  buff.phiras = 5;
-  buff.thystame = 0;
-  buff.cursor = 0;
-  buff.level = 7;
-  buff.team = "Epitech";
-  playerList.push_back(buff);
-  buff.pos_x = 15;
-  buff.pos_y = 19;
-  buff.nb = 8;
-  buff.nb_team = -1;
-  buff.orientation = 3;
-  buff.food = 2;
-  buff.linemate = 2;
-  buff.deraumere = 3;
-  buff.sibur = 1;
-  buff.mendiane = 9;
-  buff.phiras = 5;
-  buff.thystame = 0;
-  buff.cursor = 0;
-  buff.level = 8;
-  buff.team = "Plop";
-  playerList.push_back(buff);
-  buff.pos_x = 6;
-  buff.pos_y = 3;
-  buff.nb = 9;
-  buff.nb_team = -1;
-  buff.orientation = 3;
-  buff.food = 2;
-  buff.linemate = 2;
-  buff.deraumere = 3;
-  buff.sibur = 1;
-  buff.mendiane = 9;
-  buff.phiras = 5;
-  buff.thystame = 0;
-  buff.cursor = 0;
-  buff.level = 1;
-  buff.team = "Plop";
-  playerList.push_back(buff);
-  buff.pos_x = 7;
-  buff.pos_y = 8;
-  buff.nb = 10;
-  buff.nb_team = -1;
-  buff.orientation = 3;
-  buff.food = 2;
-  buff.linemate = 2;
-  buff.deraumere = 3;
-  buff.sibur = 1;
-  buff.mendiane = 9;
-  buff.phiras = 5;
-  buff.thystame = 0;
-  buff.cursor = 0;
-  buff.level = 2;
-  buff.team = "Lesticocos";
-  playerList.push_back(buff);  
-  buff.pos_y = 1;
-  buff.pos_y = 2;
-  buff.nb = 11;
-  buff.nb_team = -1;
-  buff.orientation = 3;
-  buff.food = 2;
-  buff.linemate = 2;
-  buff.deraumere = 3;
-  buff.sibur = 1;
-  buff.mendiane = 9;
-  buff.phiras = 5;
-  buff.thystame = 0;
-  buff.cursor = 0;
-  buff.level = 4;
-  buff.team = "Epitech";
-  playerList.push_back(buff);
-  buff.pos_y = 7;
-  buff.pos_y = 16;
-  buff.nb = 12;
-  buff.nb_team = -1;
-  buff.orientation = 3;
-  buff.food = 2;
-  buff.linemate = 2;
-  buff.deraumere = 3;
-  buff.sibur = 1;
-  buff.mendiane = 9;
-  buff.phiras = 5;
-  buff.thystame = 0;
-  buff.cursor = 0;
-  buff.level = 6;
-  buff.team = "Epitech";
-  playerList.push_back(buff);
+//   buff.pos_x = 0;
+//   buff.pos_y = 0;
+//   buff.nb = 1;
+//   buff.nb_team = -1;
+//   buff.orientation = 2;
+//   buff.food = 22;
+//   buff.linemate = 2;
+//   buff.deraumere = 32;
+//   buff.sibur = 1;
+//   buff.mendiane = 92;
+//   buff.phiras = 52;
+//   buff.thystame = 0;
+//   buff.cursor = 0;
+//   buff.level = 1;
+//   buff.team = "Plop";
+//   playerList.push_back(buff);
+//   buff.pos_x = 1;
+//   buff.pos_y = 1;
+//   buff.nb = 2;
+//   buff.nb_team = -1;
+//   buff.orientation = 3;
+//   buff.food = 2;
+//   buff.linemate = 2;
+//   buff.deraumere = 3;
+//   buff.sibur = 1;
+//   buff.mendiane = 9;
+//   buff.phiras = 5;
+//   buff.thystame = 0;
+//   buff.cursor = 0;
+//   buff.level = 3;
+//   buff.team = "Lesticocos";
+//   playerList.push_back(buff);
+//   buff.pos_x = 15;
+//   buff.pos_y = 10;
+//   buff.nb = 3;
+//   buff.nb_team = -1;
+//   buff.orientation = 1;
+//   buff.food = 2;
+//   buff.linemate = 2;
+//   buff.deraumere = 3;
+//   buff.sibur = 1;
+//   buff.mendiane = 9;
+//   buff.phiras = 5;
+//   buff.thystame = 0;
+//   buff.cursor = 0;
+//   buff.level = 4;
+//   buff.team = "Lesticocos";
+//   playerList.push_back(buff);
+//   buff.pos_x = 10;
+//   buff.pos_y = 10;
+//   buff.nb = 4;
+//   buff.nb_team = -1;
+//   buff.orientation = 3;
+//   buff.food = 2;
+//   buff.linemate = 2;
+//   buff.deraumere = 3;
+//   buff.sibur = 1;
+//   buff.mendiane = 9;
+//   buff.phiras = 5;
+//   buff.thystame = 0;
+//   buff.cursor = 0;
+//   buff.level = 2;
+//   buff.team = "Lesticocos";
+//   playerList.push_back(buff);
+//   buff.pos_x = 19;
+//   buff.pos_y = 19;
+//   buff.nb = 5;
+//   buff.nb_team = -1;
+//   buff.orientation = 3;
+//   buff.food = 2;
+//   buff.linemate = 2;
+//   buff.deraumere = 3;
+//   buff.sibur = 1;
+//   buff.mendiane = 9;
+//   buff.phiras = 5;
+//   buff.thystame = 0;
+//   buff.cursor = 0;
+//   buff.level = 1;
+//   buff.team = "Plop";
+//   playerList.push_back(buff);
+//   buff.pos_x = 14;
+//   buff.pos_y = 6;
+//   buff.nb = 6;
+//   buff.nb_team = -1;
+//   buff.orientation = 4;
+//   buff.food = 2;
+//   buff.linemate = 2;
+//   buff.deraumere = 3;
+//   buff.sibur = 1;
+//   buff.mendiane = 9;
+//   buff.phiras = 5;
+//   buff.thystame = 0;
+//   buff.cursor = 0;
+//   buff.level = 2;
+//   buff.team = "Epitech";
+//   playerList.push_back(buff);
+//   buff.pos_x = 16;
+//   buff.pos_y = 13;
+//   buff.nb = 7;
+//   buff.nb_team = -1;
+//   buff.orientation = 3;
+//   buff.food = 2;
+//   buff.linemate = 2;
+//   buff.deraumere = 3;
+//   buff.sibur = 1;
+//   buff.mendiane = 9;
+//   buff.phiras = 5;
+//   buff.thystame = 0;
+//   buff.cursor = 0;
+//   buff.level = 7;
+//   buff.team = "Epitech";
+//   playerList.push_back(buff);
+//   buff.pos_x = 15;
+//   buff.pos_y = 19;
+//   buff.nb = 8;
+//   buff.nb_team = -1;
+//   buff.orientation = 3;
+//   buff.food = 2;
+//   buff.linemate = 2;
+//   buff.deraumere = 3;
+//   buff.sibur = 1;
+//   buff.mendiane = 9;
+//   buff.phiras = 5;
+//   buff.thystame = 0;
+//   buff.cursor = 0;
+//   buff.level = 8;
+//   buff.team = "Plop";
+//   playerList.push_back(buff);
+//   buff.pos_x = 6;
+//   buff.pos_y = 3;
+//   buff.nb = 9;
+//   buff.nb_team = -1;
+//   buff.orientation = 3;
+//   buff.food = 2;
+//   buff.linemate = 2;
+//   buff.deraumere = 3;
+//   buff.sibur = 1;
+//   buff.mendiane = 9;
+//   buff.phiras = 5;
+//   buff.thystame = 0;
+//   buff.cursor = 0;
+//   buff.level = 1;
+//   buff.team = "Plop";
+//   playerList.push_back(buff);
+//   buff.pos_x = 7;
+//   buff.pos_y = 8;
+//   buff.nb = 10;
+//   buff.nb_team = -1;
+//   buff.orientation = 3;
+//   buff.food = 2;
+//   buff.linemate = 2;
+//   buff.deraumere = 3;
+//   buff.sibur = 1;
+//   buff.mendiane = 9;
+//   buff.phiras = 5;
+//   buff.thystame = 0;
+//   buff.cursor = 0;
+//   buff.level = 2;
+//   buff.team = "Lesticocos";
+//   playerList.push_back(buff);  
+//   buff.pos_y = 1;
+//   buff.pos_y = 2;
+//   buff.nb = 11;
+//   buff.nb_team = -1;
+//   buff.orientation = 3;
+//   buff.food = 2;
+//   buff.linemate = 2;
+//   buff.deraumere = 3;
+//   buff.sibur = 1;
+//   buff.mendiane = 9;
+//   buff.phiras = 5;
+//   buff.thystame = 0;
+//   buff.cursor = 0;
+//   buff.level = 4;
+//   buff.team = "Epitech";
+//   playerList.push_back(buff);
+//   buff.pos_y = 7;
+//   buff.pos_y = 16;
+//   buff.nb = 12;
+//   buff.nb_team = -1;
+//   buff.orientation = 3;
+//   buff.food = 2;
+//   buff.linemate = 2;
+//   buff.deraumere = 3;
+//   buff.sibur = 1;
+//   buff.mendiane = 9;
+//   buff.phiras = 5;
+//   buff.thystame = 0;
+//   buff.cursor = 0;
+//   buff.level = 6;
+//   buff.team = "Epitech";
+//   playerList.push_back(buff);
 
-  while (n < playerList.size())
-  {
-    m = 0;
-    while (m < teamList.size())
-    {
-      if (playerList[n].team == teamList[m])
-        playerList[n].nb_team = m;
-      m++;
-    }
-    if (playerList[n].nb_team == -1)
-    {
-      teamList.push_back(playerList[n].team);
-      playerList[n].nb_team = m;
-    }
-    n++;
-  }
+//   while (n < playerList.size())
+//   {
+//     m = 0;
+//     while (m < teamList.size())
+//     {
+//       if (playerList[n].team == teamList[m])
+//         playerList[n].nb_team = m;
+//       m++;
+//     }
+//     if (playerList[n].nb_team == -1)
+//     {
+//       teamList.push_back(playerList[n].team);
+//       playerList[n].nb_team = m;
+//     }
+//     n++;
+//   }
 
-  return (playerList);
+//   return (playerList);
 
-}
+//}
 
 void loadObj(MD2Obj &object, char *pathMod, char *pathText)
 {
@@ -332,17 +332,26 @@ void  Game::drawList(MD2Obj *modelList, int &CurFrame)
   while (n < v_player.size())
   {
     if (v_player[n].nb > 0)
-      drawObject(modelList[10 + (v_player[n].nb_team % 10)], 60.0f * v_player[n].pos_x, 60.0f * v_player[n].pos_y, 10.0f, 0.5f + 0.2f * v_player[n].level, 0.5f + 0.2f * v_player[n].level, 0.5f + 0.2f * v_player[n].level, -90.0f * v_player[n].orientation -90.0f, 0.0f, 0.0f, CurFrame);
-    if (v_square[v_player[n].pos_x + v_player[n].pos_y * size_map_x].food != -1 && v_square[v_player[n].pos_x + v_player[n].pos_y * size_map_x].incant == 0 && v_player[n].cursor == 1)
-      drawObject(modelList[1], 60.0f * v_player[n].pos_x, 60.0f * v_player[n].pos_y, 0.0f, 1.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, CurFrame);
+      drawObject(modelList[10 + (v_player[n].nb_team % 10)], 60.0f * v_player[n].pos_x[0], 60.0f * v_player[n].pos_y[0], 10.0f, 0.5f + 0.2f * v_player[n].level, 0.5f + 0.2f * v_player[n].level, 0.5f + 0.2f * v_player[n].level, -90.0f * v_player[n].orientation -90.0f, 0.0f, 0.0f, CurFrame);
+    if (v_square[v_player[n].pos_x[0] + v_player[n].pos_y[0] * size_map_x].food != -1 && v_square[v_player[n].pos_x[0] + v_player[n].pos_y[0] * size_map_x].incant == 0 && v_player[n].cursor == 1)
+      drawObject(modelList[1], 60.0f * v_player[n].pos_x[0], 60.0f * v_player[n].pos_y[0], 0.0f, 1.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, CurFrame);
+    usleep(300);
+    if (v_player[n].orientation == EST && v_player[n].pos_x[0] < v_player[n].pos_x[1])
+      v_player[n].pos_x[0] += 0.20f;
+    if (v_player[n].orientation == OUEST && v_player[n].pos_x[0] > v_player[n].pos_x[1])
+      v_player[n].pos_x[0] -= 0.20f;
+    if (v_player[n].orientation == SUD && v_player[n].pos_y[0] > v_player[n].pos_y[1])
+      v_player[n].pos_y[0] -= 0.20f;
+    if (v_player[n].orientation == NORD && v_player[n].pos_y[0] < v_player[n].pos_y[1])
+      v_player[n].pos_y[0] += 0.20f;
     n++;
   }
   n = 0;
   while (n < v_square.size())
   {
-    if (v_square[n].food != -1 && v_square[n].incant == 0)
+    if (v_square[n].incant == 0)
       drawObject(modelList[0], 60.0f * v_square[n].pos_x, 60.0f * v_square[n].pos_y, 0.0f, 1.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, CurFrame);
-    else if (v_square[n].food != -1 && v_square[n].incant == 1)
+    else if (v_square[n].incant == 1)
       drawObject(modelList[20], 60.0f * v_square[n].pos_x, 60.0f * v_square[n].pos_y, 0.0f, 1.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, CurFrame);
     glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,15.0f);
     if (v_square[n].linemate > 0)

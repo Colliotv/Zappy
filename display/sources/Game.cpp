@@ -123,13 +123,17 @@ void Game::cmdPnwConnect(std::stringstream &iss)
   player  buff;
 
   iss >> buff.nb;
-  iss >> buff.pos_x;
-  iss >> buff.pos_y;
+  iss >> buff.pos_x[0];
+  iss >> buff.pos_y[0];
   iss >> buff.orientation;
   iss >> buff.level;
   iss >> buff.team;
   buff.state = ALIVE;
   buff.cursor = 0;
+  if (buff.orientation == 1)
+    buff.orientation = 3;
+  else if (buff.orientation == 3)
+    buff.orientation = 1;
   v_player.push_back(buff);
 
   // std::cout << "cmdPnwConnect ";
@@ -176,9 +180,16 @@ void Game::cmdPpoPosition(std::stringstream &iss)
     if (v_player[i].nb == nb_player)
     {
       // std::cout << v_player[i].pos_x << " y---------" << v_player[i].pos_y << std::endl;
-      v_player[i].pos_x = pos_x;
-      v_player[i].pos_y = pos_y;
+      v_player[i].pos_x[0] = v_player[i].pos_x[1];
+      v_player[i].pos_y[0] = v_player[i].pos_y[1];
+
+      v_player[i].pos_x[1] = pos_x;
+      v_player[i].pos_y[1] = pos_y;
       v_player[i].orientation = orientation;
+      if (v_player[i].orientation == 1)
+        v_player[i].orientation = 3;
+      else if (v_player[i].orientation == 3)
+        v_player[i].orientation = 1;
     }
     i++;
   }
@@ -217,8 +228,8 @@ void Game::cmdPinInventaire(std::stringstream &iss)
     // std::cout << "nb_player : " << nb_player << " i " << i;
     if (nb_player == v_player[i].nb)
     {
-        iss >> v_player[i].pos_x;
-        iss >> v_player[i].pos_y;
+        iss >> v_player[i].pos_x[0];
+        iss >> v_player[i].pos_y[0];
         iss >> v_player[i].food;
         iss >> v_player[i].linemate;
         iss >> v_player[i].deraumere;
@@ -245,8 +256,8 @@ void Game::cmdPexExpulse(std::stringstream &iss)
   {
     if (it->nb == nb_player)
     {
-      x = it->pos_x;
-      y = it->pos_y;
+      x = it->pos_x[1];
+      y = it->pos_y[1];
       break;
     }
     else
@@ -255,7 +266,7 @@ void Game::cmdPexExpulse(std::stringstream &iss)
   it = v_player.begin();
   while (it != v_player.end())
   {
-    if (it->pos_x == x && it->pos_y == y)
+    if (it->pos_x[1] == x && it->pos_y[1] == y)
     {
       // std::cout << "*** \n";
       char *str;
@@ -272,15 +283,12 @@ void Game::cmdPicIncantBegin(std::stringstream &iss) // animation Début
   int pos_x;
   int pos_y;
   int current_niv;
-  int tmp;
   std::vector<int> player_buff;
 
   iss >> pos_x;
   iss >> pos_y;
   iss >> current_niv;
-
   // std::cout << "cmdPicIncantBegin x " << pos_x << " y " << pos_y << " current_niv : " << current_niv;
-  
   v_square[pos_x + (pos_y * this->size_map_x)].incant = 1;
 }
 
@@ -289,13 +297,9 @@ void Game::cmdPieIncantEnd(std::stringstream &iss)
   int    x;
   int    y;
   int    result;
-  unsigned int    i;
-
   iss >> x;
   iss >> y;
   iss >> result;
-  i = 0;
-
   // std::cout << "cmdPieIncantEnd ";
   v_square[x + (y * this->size_map_x)].incant = 0;
 }
@@ -323,8 +327,8 @@ void Game::cmdPdrDepositResource(std::stringstream &iss)
   {
     if (v_player[i].nb == num_player)
     {
-      x = v_player[i].pos_x;
-      y = v_player[i].pos_y;
+      x = v_player[i].pos_x[0];
+      y = v_player[i].pos_y[0];
       if (i == 0)
       {
         v_player[i].food--;
@@ -381,8 +385,8 @@ void Game::cmdPgtGetResource(std::stringstream &iss)
   {
     if (v_player[i].nb == num_player)
     {
-      x = v_player[i].pos_x;
-      y = v_player[i].pos_y;
+      x = v_player[i].pos_x[0];
+      y = v_player[i].pos_y[0];
       if (i == 0)
       {
         v_player[i].food++;
@@ -427,10 +431,8 @@ void Game::cmdPgtGetResource(std::stringstream &iss)
 void Game::cmdPdiPlayerDead(std::stringstream &iss)
 {
   int nb_player;
-  unsigned int i;
 
   iss >> nb_player;
-  i = 0;
   // std::cout << "cmdPdiPlayerDead  ";
   std::vector<player>::iterator it = v_player.begin();
   while ( it != v_player.end() )

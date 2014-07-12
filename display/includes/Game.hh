@@ -15,13 +15,19 @@
 #define DEAD 0;
 #define ALIVE 1;
 
+enum {
+	NORD = 1,
+	EST = 2,
+	SUD = 3,
+	OUEST = 4,
+};
 
 struct player
 {
 	int nb;
 	int nb_team;
-	int pos_x;
-	int pos_y;
+	float pos_x[2];
+	float pos_y[2];
 	int spawn_x;
 	int spawn_y;
 	int orientation;
