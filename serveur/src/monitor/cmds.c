@@ -17,6 +17,22 @@ void	avertThisMonitor(clients* monitor, char* s, ... ) {
   va_end(ap);
 }
 
+static void	avertAllPlayer(teams* team, clients* monitor) {
+  iaClients*	ia;
+
+  if (!team)
+    return ;
+  ia = team->list;
+  printf("plop\n");
+  while (ia) {
+    if (ia->state == alive)
+       avertThisMonitor(monitor,
+		       mNewPlayerendl(ia->num, ia->_p.x, ia->_p.y,
+				      ia->_o, ia->lvl, team->name));
+    ia = ia->next;
+  }
+  avertAllPlayer(team->next, monitor);
+}
 
 void	calcCmd(serveur* this, clients* monitor, char* k) {
   if (!strncmp(cmdMapSize, k, strlen(cmdMapSize)))
@@ -33,6 +49,8 @@ void	calcCmd(serveur* this, clients* monitor, char* k) {
     avertPlayerLevel(this, monitor, k);
   if (!strncmp("pin ", k, strlen("pin ")))
     avertPlayerInventaire(this, monitor, k);
+  if (!strncmp("Clients", k, strlen("Clients")))
+    avertAllPlayer(this->teams, monitor);
 }
 
 void	avertMonitorByCmd(serveur* this, char* k) {

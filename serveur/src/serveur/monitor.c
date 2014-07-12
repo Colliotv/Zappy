@@ -32,9 +32,18 @@ static clients*	deleteMonitor(serveur* this, clients* monitor) {
   pre = this->monitor;
   while (pre && pre != monitor && pre->next != monitor)
     pre = pre->next;
-  if (!pre)
-    return (monitor);
-  return (NULL);/* wut a relire */
+  if (pre == this->monitor)
+    this->monitor = pre->next;
+  else if (pre)
+    pre->next = monitor->next;
+  if (pre == this->monitor)
+    pre = NULL;
+  else
+    pre = pre->next;
+  destroyBuffer(monitor->rdBuffer, true);
+  close(monitor->client);
+  free(monitor);
+  return (pre);
 }
 
 static bool	getrd(serveur* this, clients* node, fd_set *rd) {
@@ -45,7 +54,7 @@ static bool	getrd(serveur* this, clients* node, fd_set *rd) {
   k = _get_socket(node->client);
   if (k == NULL)
     return (false);
-  printf("received Message From Client[%d], %s", node->client, k);  
+  printf("received Message From Client[%d], %s\n", node->client, k);  
   calcCmd(this, node, k);
   free(k);
   return (true);

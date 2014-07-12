@@ -62,14 +62,14 @@ void	iaIncantation	(serveur* this, iaClients* ia, char* i) {
       depletRessource(GET_SQUARE(this, ia->_p.x, ia->_p.y), ressource);
       pushNode(ia->wrBuffer, strdup("elevation en cours\n"));
       sendNotif(this->teams, &(ia->_p), ia->lvl);
-      avertMonitor(this, mIncantSPlayer(ia->_p.x, ia->_p.y));
-      ia->pause = 300;
-      avertMonitorForEach(this, this->teams, &(ia->_p), ia->lvl);
       r = GET_SQUARE(this, ia->_p.x, ia->_p.y);
       avertMonitor(this, mCaseMap(ia->_p.x, ia->_p.y,
 				  r[nourriture], r[linemate], r[deraumere],
 				  r[sibur], r[mendiane], r[phiras], r[thystame]
 				  ));
+      avertMonitor(this, mIncantSPlayer(ia->_p.x, ia->_p.y));
+      ia->pause = 300;
+      avertMonitorForEach(this, this->teams, &(ia->_p), ia->lvl);
       return ;
     }
   avertMonitor(this, mIncantEPlayer(ia->_p.x, ia->_p.y));

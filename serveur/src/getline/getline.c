@@ -1,3 +1,4 @@
+#include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -10,15 +11,17 @@ char*	_get_socket(_fd fd) {
 
   itt = 0;
   buff = NULL;
-  c = 0;
-  while (c != '\n' && read(fd, &c, 1) > 0)
+  c = -1;
+  while ((c != 0 && c != '\n') && read(fd, &c, 1) > 0)
     {
+      if (c == '0' && itt == 1)
+	return (strdup("msz"));
       buff = realloc(buff, itt + 1);
       buff[itt] = c;
       itt += 1;
-      if (c == '\n')
+      if (c == '\n' || c == 0)
 	buff = realloc(buff, itt + 1);
-      if (c == '\n')
+      if (c == '\n' || c == 0)
 	buff[itt] = 0;
     }
   return (buff);

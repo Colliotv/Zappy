@@ -14,6 +14,7 @@ void	avertMonitorByCmd	(serveur*, char*);
 # define mCaseMap(x, y, nourriture, i1, i2, i3, i4, i5, i6) "bct %d %d %d %d %d %d %d %d %d\n", x, y, nourriture, i1, i2, i3, i4, i5, i6
 # define mNameTeam(s) "tna %s\n", s
 # define mNewPlayer(n, x, y, orientation, lvl, team) "pnw %d %d %d %d %d %s", n, x, y, orientation + 1, lvl, team
+# define mNewPlayerendl(n, x, y, orientation, lvl, team) "pnw %d %d %d %d %d %s\n", n, x, y, orientation + 1, lvl, team
 # define mConnectEgg(e) "ebo %d\n", e
 # define mPopEgg(n) "eht %d\n", n
 # define mLvlPlayer(n, lvl) "pvl %d %d\n", n, lvl

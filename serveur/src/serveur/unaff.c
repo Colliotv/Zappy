@@ -20,6 +20,7 @@ static bool	treat_node(serveur* this,
       calcCmd(this, node, cmdMapSize);
       calcCmd(this, node, cmdMap);
       calcCmd(this, node, cmdTeam);
+      avertMonitorByCmd(this, "Clients\n");
       free(msg);
     }
   else

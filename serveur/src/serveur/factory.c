@@ -8,13 +8,12 @@
 static iaClients*	addIaClient(serveur* this , struct args* arg, int n, iaClients* prev){
   iaClients	*node;
 
-  if (!n)
-    return (NULL);
+  (void)n;
   if ((node = malloc(sizeof(iaClients))) == NULL)
     lerror(MEMORY_ERROR(sizeof(iaClients)));
   node->next = NULL;
   if (prev)
-    prev->next = node;
+    node->next = prev;
   node->num = this->num;
   this->num += 1;
   node->iaClient = FD_NOSET;
@@ -29,12 +28,12 @@ static iaClients*	addIaClient(serveur* this , struct args* arg, int n, iaClients
   node->_o = random() % maxOrientation;
   node->_p.x = random() % arg->X;
   node->_p.y = random() % arg->Y;
-  addIaClient(this, arg, n-1, node);
   return (node);
 }
 
 static teams*	addTeam(serveur* this, struct nameNode* teamName, struct args* arg,
 			teams *prev){
+  int	n;
   teams	*node;
 
   if (!teamName)
@@ -44,7 +43,10 @@ static teams*	addTeam(serveur* this, struct nameNode* teamName, struct args* arg
   node->next = NULL;
   if (prev)
     prev->next = node;
-  node->list = addIaClient(this, arg, arg->nByTeams, NULL);
+  n = arg->nByTeams;
+  node->list = NULL;
+  while (n)
+    node->list = addIaClient(this, arg, n--, node->list);
   node->size = arg->nByTeams;
   node->name = teamName->name;
   node->unaff_size = arg->nByTeams;
