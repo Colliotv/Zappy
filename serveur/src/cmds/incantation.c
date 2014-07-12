@@ -64,7 +64,6 @@ void	iaIncantation	(serveur* this, iaClients* ia, char* i) {
       sendNotif(this->teams, &(ia->_p), ia->lvl);
       avertMonitor(this, mIncantSPlayer(ia->_p.x, ia->_p.y));
       ia->pause = 300;
-      avertMonitor(this, mIncantEPlayer(ia->_p.x, ia->_p.y));
       avertMonitorForEach(this, this->teams, &(ia->_p), ia->lvl);
       r = GET_SQUARE(this, ia->_p.x, ia->_p.y);
       avertMonitor(this, mCaseMap(ia->_p.x, ia->_p.y,
@@ -73,5 +72,6 @@ void	iaIncantation	(serveur* this, iaClients* ia, char* i) {
 				  ));
       return ;
     }
+  avertMonitor(this, mIncantEPlayer(ia->_p.x, ia->_p.y));
   pushNode(ia->wrBuffer, strdup("ko\n"));
 }
