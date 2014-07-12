@@ -14,9 +14,9 @@ void	iaAvance	(serveur* this, iaClients* ia, char* i) {
     (ia->_o == bas) ? (+1) :
     (0);
   if (ia->_p.y < 0)
-    ia->_p.y = this->size.y;
+    ia->_p.y = this->size.y - 1;
   if (ia->_p.x < 0)
-    ia->_p.x = this->size.x;
+    ia->_p.x = this->size.x - 1;
   if (ia->_p.y >= this->size.y)
     ia->_p.y = 0;
   if (ia->_p.x >= this->size.x)
