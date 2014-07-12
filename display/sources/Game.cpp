@@ -130,6 +130,8 @@ void Game::cmdPnwConnect(std::stringstream &iss)
   iss >> buff.team;
   buff.state = ALIVE;
   buff.cursor = 0;
+  buff.pos_x[1] = buff.pos_x[0];
+  buff.pos_y[1] = buff.pos_y[0];
   if (buff.orientation == 1)
     buff.orientation = 3;
   else if (buff.orientation == 3)
@@ -256,8 +258,8 @@ void Game::cmdPexExpulse(std::stringstream &iss)
   {
     if (it->nb == nb_player)
     {
-      x = it->pos_x[1];
-      y = it->pos_y[1];
+      x = it->pos_x[0];
+      y = it->pos_y[0];
       break;
     }
     else

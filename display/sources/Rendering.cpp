@@ -205,7 +205,7 @@ void  Rendering::Render(int fd, Game &parser)
     glTranslatef(-30.0f * parser.size_map_x, -100.0f,-50.0f * parser.size_map_y);
     glTranslatef(50.0f * Iface.move_X,25.0f * Iface.move_Z,-50.0f * Iface.move_Y);
     glRotatef(-60.0f,1.0f,0.0f,0.0f);
-    glLightfv(GL_LIGHT0,GL_POSITION,Position)
+    glLightfv(GL_LIGHT0,GL_POSITION,Position);
 
     drawList(modelList, CurFrame, parser.v_square, parser.v_player, parser.size_map_x);
     Iface.drawInterface(window, windowControl, parser.v_player);
