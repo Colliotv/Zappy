@@ -5,7 +5,8 @@
 teams*	getTeamById(serveur* this, char* k) {
   teams* node;
 
-  if (k)
+  if (!k)
+    return (NULL);
   node = this->teams;
   while (node && node->name && !(!strncmp(node->name, k, strlen(k) - 1)
 				 && strlen(node->name) == strlen(k) - 1))
