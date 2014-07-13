@@ -315,16 +315,12 @@ def main():
 				host = sys.argv[i]
 			elif sys.argv[i] == "-p":
 				i += 1
-				print("port")
 				port = sys.argv[i]
 			elif sys.argv[i] == "-n":
 				i += 1
-				print("n")
 				team = sys.argv[i]
 			i += 1
 		if team == "null" or port == "null":
-			print(team)
-			print(port)
 			print("USAGE : ./ia -h host -p port -n team")
 			sys.exit()
 		if host == "null":
