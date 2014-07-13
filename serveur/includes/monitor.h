@@ -17,7 +17,7 @@ void	avertMonitorByCmd	(serveur*, char*);
 # define mNewPlayerendl(n, x, y, orientation, lvl, team) "pnw %d %d %d %d %d %s\n", n, x, y, orientation + 1, lvl, team
 # define mConnectEgg(e) "ebo %d\n", e
 # define mPopEgg(n) "eht %d\n", n
-# define mLvlPlayer(n, lvl) "pvl %d %d\n", n, lvl
+# define mLvlPlayer(n, lvl) "plv %d %d\n", n, lvl
 # define mStashPlayer(n, x, y, nourriture, i1, i2, i3, i4, i5, i6) "pin %d %d %d %d %d %d %d %d %d\n", n, x, y, nourriture, i1, i2, i3, i4, i5, i6
 # define mBroadcastPlayer(n, m) "pbc %d, %s", n, m
 # define mExpulsePlayer(n) "pex %d\n", n

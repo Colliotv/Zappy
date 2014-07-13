@@ -20,6 +20,7 @@ static void	iaForkInit(serveur* this, iaClients* _egg, iaClients* ia) {
   _egg->iaClient = FD_NOSET;
   _egg->pause = READY;
   _egg->wrBuffer = createBuffer();
+  _egg->rdBuffer = createBuffer();
   _egg->state = egg;
   _egg->depletingNut = pBirth + uLife;
   _egg->pause = pBirth;
