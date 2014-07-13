@@ -44,6 +44,11 @@ typedef enum estate{
   alive,
   deleting,
 } state;
+
+typedef struct sexpulse{
+  position	_p;
+  orientation	_o;
+} expulse;
   
 typedef struct sLife{
   gtime	time;
