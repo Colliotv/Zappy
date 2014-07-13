@@ -438,6 +438,7 @@ void Game::cmdSegVictory(std::stringstream &iss)
 {
 	std::string   name_team;
 	iss >> name_team;
+	player_win = name_team;
 }
 
 void	Game::isset_server(int fd)
