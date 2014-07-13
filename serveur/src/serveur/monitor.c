@@ -78,13 +78,13 @@ static bool     pushwr(clients* node, fd_set* wr) {
 void	push_monitor(serveur* this, clients* node, fd_set* rd, fd_set* wr) {
   bool	oui;
 
-  if (!node)
-    return ;
-  oui = getrd(this, node, rd);
-  if (oui)
-    oui = pushwr(node, wr);
-  if (!oui)
-    push_monitor(this, deleteMonitor(this, node), rd, wr);
-  else
-    push_monitor(this, node->next, rd, wr);
+  while (node) {
+    oui = getrd(this, node, rd);
+    if (oui)
+      oui = pushwr(node, wr);
+    if (!oui)
+      node = deleteMonitor(this, node);
+    else
+      node = node->next;
+  }
 }
