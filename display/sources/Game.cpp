@@ -55,7 +55,7 @@ void Game::cmdMszSizeMap(std::stringstream &iss)
 //    	std::cout << "msz x[" << x << "] y{" << y << "}" << i << std::endl;
       buff.pos_x = x;
       buff.pos_y = y;
-      buff.food = -1;
+      buff.food = -42;
       buff.linemate = 0;
       buff.deraumere = 0;
       buff.sibur = 0;
