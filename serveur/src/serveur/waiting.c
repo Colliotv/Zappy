@@ -57,7 +57,7 @@ static int	getcmd(serveur* this, wclients* node, fd_set* rd) {
   return (getcmd(this, (wclients*)node->_.next, rd));
 }
 
-static int	match_wrong(serveur* this, wclients* node) {
+static void	match_wrong(serveur* this, wclients* node) {
   while (node)
     {
       if (!getTeamById(this, node->team))
