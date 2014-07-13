@@ -174,12 +174,12 @@ void Game::cmdPpoPosition(std::stringstream &iss)
   iss >> pos_x;
   iss >> pos_y;
   iss >> orientation;
-  std::cout << "cmdPpoPosition nb_player " << nb_player << " .size()" << v_player.size() << std::endl;
+//  std::cout << "cmdPpoPosition nb_player " << nb_player << " .size()" << v_player.size() << std::endl;
   while (i <v_player.size())
   {
     if (v_player[i].nb == nb_player)
     {
-      std::cout << "x" << pos_x << " y" << pos_y << std::endl;
+//      std::cout << "x" << pos_x << " y" << pos_y << std::endl;
       v_player[i].pos_x[0] = v_player[i].pos_x[1];
       v_player[i].pos_y[0] = v_player[i].pos_y[1];
 
