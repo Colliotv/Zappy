@@ -229,10 +229,10 @@ void Game::cmdPexExpulse(std::stringstream &iss)
   {
     if (it->pos_x[1] == x && it->pos_y[1] == y)
     {
-      // std::cout << "*** \n";
       char *str;
       asprintf(&str, "ppo %d\n", it->nb);
       write(fd_server, str, strlen(str));
+      break;
     }
     else
       it++;
