@@ -71,11 +71,11 @@ void    exec_game(sf::RenderWindow &window, std::string ip, std::string port)
 void    exec_menu()
 {
     sf::RenderWindow window(sf::VideoMode(1200, 800), "Zappy");
-    sfe::Movie      movie;
+    // sfe::Movie      movie;
     Menu            menu;
 
-    movie.openFromFile("space scene.avi");
-    movie.play();
+    // movie.openFromFile("space scene.avi");
+    // movie.play();
     
     menu.music.play();
     while (window.isOpen())
