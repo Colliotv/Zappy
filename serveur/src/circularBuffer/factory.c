@@ -8,13 +8,14 @@ void	pushNode(circularBuffer* this, char* value) {
 
   if ((node = malloc(sizeof(circularNode))) == NULL)
     lerror(MEMORY_ERROR(sizeof(circularNode)));
+  node->next = NULL;
   if (!this->endQueue)
     this->endQueue = node;
   else
     this->endQueue->next = node;
   if (!this->queue)
-    this->queue = this->endQueue;
-  node->next = NULL;
+    this->queue = node;
+  this->endQueue = node;
   node->value = value;
   this->size += 1;
 }

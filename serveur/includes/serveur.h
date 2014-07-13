@@ -65,7 +65,7 @@ iaClients* delete_iaClient(teams* team, iaClients* node);
 void	addClient		(serveur*, fd_set*);
 void	actualize_unaff		(serveur*, fd_set*, fd_set*);
 void	actualize_waiting	(serveur*, fd_set*, fd_set*);
-void	actualize_IA		(serveur*, fd_set*, fd_set*);
+void	actualize_IA		(serveur*, fd_set*, fd_set*, bool);
 void	push_monitor		(serveur*, clients*, fd_set*, fd_set*);
 void	actualizeBuffering	(teams*, fd_set*, fd_set *);
 

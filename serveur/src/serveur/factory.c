@@ -8,13 +8,12 @@
 static iaClients*	addIaClient(serveur* this , struct args* arg, int n, iaClients* prev){
   iaClients	*node;
 
-  if (!n)
-    return (NULL);
+  (void)n;
   if ((node = malloc(sizeof(iaClients))) == NULL)
     lerror(MEMORY_ERROR(sizeof(iaClients)));
   node->next = NULL;
   if (prev)
-    prev->next = node;
+    node->next = prev;
   node->num = this->num;
   this->num += 1;
   node->iaClient = FD_NOSET;
@@ -24,17 +23,17 @@ static iaClients*	addIaClient(serveur* this , struct args* arg, int n, iaClients
   node->pause = 0;
   node->depletingNut = DEPLET_TIME;
   bzero(node->stash, sizeof(node->stash));
-  (node->stash)[nourriture] = 3;
+  (node->stash)[nourriture] = 10;
   node->lvl = 1;
   node->_o = random() % maxOrientation;
   node->_p.x = random() % arg->X;
   node->_p.y = random() % arg->Y;
-  addIaClient(this, arg, n-1, node);
   return (node);
 }
 
 static teams*	addTeam(serveur* this, struct nameNode* teamName, struct args* arg,
 			teams *prev){
+  int	n;
   teams	*node;
 
   if (!teamName)
@@ -44,7 +43,10 @@ static teams*	addTeam(serveur* this, struct nameNode* teamName, struct args* arg
   node->next = NULL;
   if (prev)
     prev->next = node;
-  node->list = addIaClient(this, arg, arg->nByTeams, NULL);
+  n = arg->nByTeams;
+  node->list = NULL;
+  while (n)
+    node->list = addIaClient(this, arg, n--, node->list);
   node->size = arg->nByTeams;
   node->name = teamName->name;
   node->unaff_size = arg->nByTeams;
@@ -57,8 +59,13 @@ static void	fillMap(serveur* this, int pond) {
   int	i;
 
   i = 0;
+  (void)pond;
   while (i < this->size.y * this->size.x * ressourceLength) {
-    (this->ressources)[i] = random() % (pond * (1 + 10 * !(i %   ressourceLength == nourriture)));
+    (this->ressources)[i] = 0;
+    if ((i % ressourceLength) == nourriture)
+      (this->ressources)[i] = random() % 10;
+    else
+      (this->ressources)[i] = random() % 3;
     i++;
   }
   include_treatement(this);

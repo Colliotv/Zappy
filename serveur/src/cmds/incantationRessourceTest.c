@@ -24,20 +24,25 @@ static	void	fillRequired(int* ressource, int lvl) {
   ressource[phiras] =
     (lvl == 3 || lvl == 7)	? (2) :
     (lvl == 4 || lvl == 6)	? (1) : (0);
-  ressource[thystane] =
+  ressource[thystame] =
     (lvl == 7)			? (1) : (0);
 }
 
 bool	testForRessource(serveur* this, iaClients* ia, int* ressource) {
   int	itt;
+  char*	r;
 
   (void)this;
   fillRequired(ressource, ia->lvl);
   itt = 0;
+  r = (GET_SQUARE(this, ia->_p.x, ia->_p.y));
   while (itt < ressourceLength)
     {
-      if ((ia->stash)[itt] < ressource[itt])
-	return (false);
+      if (r[itt] != ressource[itt])
+	{
+	  printf("FAIIIIIL BY RESSSOURCEEEEE\n");
+	  return (false);
+	}
       itt++;
     }
   return (true);

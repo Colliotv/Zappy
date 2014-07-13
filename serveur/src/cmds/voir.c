@@ -9,12 +9,11 @@ static void	updatePosition(iaClients* ia,
 			       int front, int side, position *p) {
   p->x = ia->_p.x;
   p->y = ia->_p.y;
-
   p->x += 
     -(ia->_o == haut  ) * side +
-    -(ia->_o == gauche) * front +
+    +(ia->_o == gauche) * front +
     +(ia->_o == bas   ) * side +
-    +(ia->_o == droite) * front;
+    -(ia->_o == droite) * front;
   p->y += 
     -(ia->_o == haut  ) * front +
     -(ia->_o == gauche) * side +
@@ -29,13 +28,15 @@ static void	seeForPlayer(teams* node, iaClients* ignored, position *p, char** r)
   if (!node)
     return ;
   _node = node->list;
-  while (!_node) {
-    if (_node != ignored) {
-      asprintf(r, "%s player", rs = *r);
-      free(rs);
+  while (_node)
+    {
+      if (_node->_p.x == p->x && _node->_p.y == p->y && _node->state == alive)
+	{
+	  asprintf(r, "%s joueur", rs = *r);
+	  free(rs);
+	}
+      _node = _node->next;
     }
-    _node = _node->next;
-  }
   seeForPlayer(node->next, ignored, p, r);
 }
 
@@ -45,7 +46,7 @@ static char*	seeAt(serveur* this, iaClients* ia, int front, int side) {
   char*		rs;
   char*		rp;
 
-  updatePosition(ia, front, side, &p);
+  updatePosition(ia, front, -side, &p);
   if (ia->_p.y < 0)
     p.y = this->size.y;
   if (p.x < 0)

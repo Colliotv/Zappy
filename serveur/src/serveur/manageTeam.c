@@ -10,7 +10,7 @@ teams*	getTeamById(serveur* this, char* k) {
   while (node && node->name && !(!strncmp(node->name, k, strlen(k) - 1)
 				 && strlen(node->name) == strlen(k) - 1))
     node = node->next;
-  if (!node->name)
+  if (!node || !node->name)
     return (NULL);
   return (node);
 }

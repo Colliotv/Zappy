@@ -9,7 +9,7 @@ typedef enum eRessource{
   sibur,
   mendiane,
   phiras,
-  thystane,
+  thystame,
   ressourceLength,
 } ressource;
 

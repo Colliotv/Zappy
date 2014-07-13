@@ -70,6 +70,12 @@ static void	  testForNonInitialized(struct args* this){
     lerror(NAMES_UNITIALIZED);
   if (!(this->initialized[nByTeams]) || !this->nByTeams)
     this->nByTeams = BASE_NBY;
+  if (this->nByTeams > 5000)
+    {
+      printf("WARNING: can't pass over 5000 clients by team,\
+ will be maxed to 5000\n");
+      this->nByTeams = 5000;
+    }
   if (!(this->initialized[atime]))
     this->time = BASE_TIME;
 }

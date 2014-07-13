@@ -6,11 +6,18 @@
 #include "serveur.h"
 #include "ressource.h"
 
-static char*	addS(char* r, char* ressource) {
+static char*	addS(char* r, char* ressource, int n) {
   char* rs;
+  int	i;
 
-  asprintf(&rs, "%s %s", r, ressource);
-  free(r);
+  i = 0;
+  while (i < n)
+    {
+      asprintf(&rs, "%s %s", r, ressource);
+      free(r);
+      r = rs;
+      i++;
+    }
   return (rs);
 }
 
@@ -19,23 +26,24 @@ char*	getRessourceOnMap(char* ressource) {
 
   r = strdup("");
   if (ressource[linemate])
-    r = addS(r, " linemate");
+    r = addS(r, " linemate", ressource[linemate]);
   if (ressource[deraumere])
-    r = addS(r, " deraumere");
+    r = addS(r, " deraumere", ressource[deraumere]);
   if (ressource[sibur])
-    r = addS(r, " sibur");
+    r = addS(r, " sibur", ressource[sibur]);
   if (ressource[mendiane])
-    r = addS(r, " mendiane");
+    r = addS(r, " mendiane", ressource[mendiane]);
   if (ressource[phiras])
-    r = addS(r, " phiras");
-  if (ressource[thystane])
-    r = addS(r, " thystane");
+    r = addS(r, " phiras", ressource[phiras]);
+  if (ressource[thystame])
+    r = addS(r, " thystame", ressource[thystame]);
   if (ressource[nourriture])
-    r = addS(r, " nourriture");
+    r = addS(r, " nourriture", ressource[nourriture]);
   return (r);
 }
 
 ressource getRessourceId(char* ressource) {
+  printf("ressource %s", ressource);
   if (!strcmp(ressource, "nourriture\n"))
     return (nourriture);
   if (!strcmp(ressource, "linemate\n"))
@@ -46,8 +54,8 @@ ressource getRessourceId(char* ressource) {
     return (mendiane);
   if (!strcmp(ressource, "phiras\n"))
     return (phiras);
-  if (!strcmp(ressource, "thystane\n"))
-    return (thystane);
+  if (!strcmp(ressource, "thystame\n"))
+    return (thystame);
   if (!strcmp(ressource, "deraumere\n"))
     return (deraumere);
   return (-1);
@@ -58,15 +66,15 @@ void	iaInventaire	(serveur* this, iaClients* ia, char* i) {
 
   (void)this;
   (void)i;
-  asprintf(&s, "{nourriture %d, sibur %d, phiras %d \
-, mendiane %d, thystane %d, linemate %d, deraumere %d}\n",
+  asprintf(&s, "{nourriture %d,linemate %d,deraumere %d\
+,sibur %d,mendiane %d,phiras %d,thystame %d}\n",
 	   (ia->stash)[nourriture],
-	   (ia->stash)[sibur],
-	   (ia->stash)[phiras],
-	   (ia->stash)[mendiane],
-	   (ia->stash)[thystane],
 	   (ia->stash)[linemate],
-	   (ia->stash)[deraumere]
+	   (ia->stash)[deraumere],
+	   (ia->stash)[sibur],
+	   (ia->stash)[mendiane],
+	   (ia->stash)[phiras],
+	   (ia->stash)[thystame]
 	   );
   pushNode(ia->wrBuffer, s);
   ia->pause = 1;
