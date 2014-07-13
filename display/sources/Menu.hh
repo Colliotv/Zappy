@@ -19,7 +19,7 @@ class Menu
 		int button;
 		char	c;
 		std::string	ip;
-		std::string	hostname;
+		std::string	port;
 
 		Menu();
 		~Menu();

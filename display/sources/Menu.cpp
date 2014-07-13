@@ -8,8 +8,8 @@ Menu::Menu()
 {
 	button = 1;
     c = 0;
-    ip = "";
-    hostname = "";
+    ip = "127.0.0.1";
+    port = "42424";
 	if (!font.loadFromFile("resources/LCD.otf"))
 		std::cout << "Error : failed to load font" << std::endl;
     if (!music.openFromFile("resources/StarCraft.wav"))
@@ -23,10 +23,10 @@ Menu::Menu()
     textIp.setFont(font);
     textHost.setFont(font);
     text1.setString("IP :");
-    text2.setString("HostName :");
+    text2.setString("Port :");
     text3.setString("Start");
     textIp.setString(ip);
-    textHost.setString(hostname);
+    textHost.setString(port);
     text1.setCharacterSize(24);
     text2.setCharacterSize(24);
     text3.setCharacterSize(24);
@@ -41,7 +41,7 @@ Menu::Menu()
     text2.setPosition(120, 320);
     text3.setPosition(120, 520);
     textIp.setPosition(165, 120);
-    textHost.setPosition(245, 320);
+    textHost.setPosition(195, 320);
     rect1.setSize(sf::Vector2f(400, 80));
     rect2.setSize(sf::Vector2f(400, 80));
     rect3.setSize(sf::Vector2f(400, 80));

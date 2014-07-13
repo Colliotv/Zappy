@@ -170,7 +170,7 @@ void  Rendering::Render(int fd, Game &parser)
   long Time1,Time2, Ticks, NextFrame;
   int Frames,CurFrame=0;
 
-  glClearColor(0.2f,0.2f,0.2f,1.0f);
+  glClearColor(0.1f,0.1f,0.1f,1.0f);
 
   glMatrixMode(GL_PROJECTION);
   glViewport(0,0,1200,800);
@@ -180,12 +180,19 @@ void  Rendering::Render(int fd, Game &parser)
   
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_TEXTURE_2D);
-
   glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
   glEnable(GL_LIGHTING);
   glEnable(GL_LIGHT0);
   glLightfv(GL_LIGHT0, GL_AMBIENT, Ambient);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, Diffuse);
+
+  glEnable(GL_FOG);
+  glFogi(GL_FOG_MODE,GL_LINEAR);
+  glHint(GL_FOG_HINT, GL_FASTEST);
+  GLfloat fogColor[4] ={0.1f,0.1f,0.1f,1.0f};
+  glFogfv(GL_FOG_COLOR,fogColor);
+  glFogf(GL_FOG_START,1750.0f);
+  glFogf(GL_FOG_END,3000.0f);
 
   Time1=Time2=clock();
   NextFrame=Time1 + FRAMEDELAY;
@@ -202,10 +209,10 @@ void  Rendering::Render(int fd, Game &parser)
     Ticks=Time2-Time1;
     Time1=Time2;
 
-    glTranslatef(-30.0f * parser.size_map_x, -100.0f,-50.0f * parser.size_map_y);
+    glTranslatef(-30.0f * parser.size_map_x, -100.0f,-1500.0f);
     glTranslatef(50.0f * Iface.move_X,25.0f * Iface.move_Z,-50.0f * Iface.move_Y);
-    glRotatef(-60.0f,1.0f,0.0f,0.0f);
-    glLightfv(GL_LIGHT0,GL_POSITION,Position)
+    glRotatef(-70.0f,1.0f,0.0f,0.0f);
+    glLightfv(GL_LIGHT0,GL_POSITION,Position);
 
     drawList(modelList, CurFrame, parser.v_square, parser.v_player, parser.size_map_x);
     Iface.drawInterface(window, windowControl, parser.v_player);

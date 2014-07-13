@@ -13,7 +13,7 @@
 
 int		CreateSocket(t_socket *so, char *num_port)
 {
-  so->port = atoi(/*num_port*/"42424");
+  so->port = atoi(num_port);
   so->pe = getprotobyname("TCP");
   so->s =  socket(AF_INET, SOCK_STREAM, so->pe->p_proto);
   if (so->s == -1)
@@ -29,7 +29,7 @@ int		ConnectToServer(t_socket *so, char *addr)
 {
   so->sin.sin_family = AF_INET;
   so->sin.sin_port = htons(so->port);
-  so->sin.sin_addr.s_addr = inet_addr("127.0.0.1"/*addr*/);
+  so->sin.sin_addr.s_addr = inet_addr(addr);
   so->error = connect(so->s, (const struct sockaddr *)&so->sin,
 		      sizeof(so->sin));
   if (so->error == -1)
