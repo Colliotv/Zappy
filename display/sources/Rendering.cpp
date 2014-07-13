@@ -103,25 +103,34 @@ void  Rendering::drawObject(MD2Obj &model, float Tx, float Ty, float Tz, float S
   glTranslatef(-Tx, -Ty, -Tz);
 }
 
-void  Rendering::drawList(MD2Obj *modelList, int &CurFrame, std::vector<square> &v_square, std::vector<player> &v_player, int size_map_x)
+void  Rendering::drawList(MD2Obj *modelList, int &CurFrame, std::vector<square> &v_square, std::vector<player> &v_player, int size_map_x, int size_map_y)
 {
   unsigned int n = 0;
 
   while (n < v_player.size())
   {
-    if (v_player[n].nb > 0)
-      drawObject(modelList[10 + (v_player[n].nb_team % 10)], 60.0f * v_player[n].pos_x[0], 60.0f * v_player[n].pos_y[0], 10.0f, 0.5f + 0.2f * v_player[n].level, 0.5f + 0.2f * v_player[n].level, 0.5f + 0.2f * v_player[n].level, -90.0f * v_player[n].orientation -90.0f, 0.0f, 0.0f, CurFrame);
+    std::cout << "orient [" << v_player[n].orientation << "] x0 [" << v_player[n].pos_x[0] << "] y0 [ " << v_player[n].pos_y[0] << "] x1 {" << v_player[n].pos_x[1] << "} y1 {" << v_player[n].pos_y[1] << "}" << std::endl;
     if (v_square[v_player[n].pos_x[0] + v_player[n].pos_y[0] * size_map_x].food != -1 && v_square[v_player[n].pos_x[0] + v_player[n].pos_y[0] * size_map_x].incant == 0 && v_player[n].cursor == 1)
       drawObject(modelList[1], 60.0f * v_player[n].pos_x[0], 60.0f * v_player[n].pos_y[0], 0.0f, 1.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, CurFrame);
-    usleep(300);
-    if (v_player[n].orientation == EST && v_player[n].pos_x[0] < v_player[n].pos_x[1])
-      v_player[n].pos_x[0] += 0.20f;
-    if (v_player[n].orientation == OUEST && v_player[n].pos_x[0] > v_player[n].pos_x[1])
-      v_player[n].pos_x[0] -= 0.20f;
+    if (v_player[n].nb > 0)
+      drawObject(modelList[10 + (v_player[n].nb_team % 10)], 60.0f * v_player[n].pos_x[0], 60.0f * v_player[n].pos_y[0], 10.0f, 0.5f + 0.2f * v_player[n].level, 0.5f + 0.2f * v_player[n].level, 0.5f + 0.2f * v_player[n].level, -90.0f * v_player[n].orientation -90.0f, 0.0f, 0.0f, CurFrame);
+    if (v_player[n].orientation == SUD && v_player[n].pos_y[1] == size_map_y - 1)
+      v_player[n].pos_y[0] = v_player[n].pos_y[1];
+    if (v_player[n].orientation == NORD && v_player[n].pos_y[1] == 0)
+      v_player[n].pos_y[0] = v_player[n].pos_y[1];
+    if (v_player[n].orientation == OUEST && v_player[n].pos_x[1] == size_map_x - 1)
+      v_player[n].pos_x[0] = v_player[n].pos_x[1];
+    if (v_player[n].orientation == EST && v_player[n].pos_x[1] == 0)
+      v_player[n].pos_x[0] = v_player[n].pos_x[1];
     if (v_player[n].orientation == SUD && v_player[n].pos_y[0] > v_player[n].pos_y[1])
       v_player[n].pos_y[0] -= 0.20f;
     if (v_player[n].orientation == NORD && v_player[n].pos_y[0] < v_player[n].pos_y[1])
       v_player[n].pos_y[0] += 0.20f;
+    if (v_player[n].orientation == EST && v_player[n].pos_x[0] < v_player[n].pos_x[1])
+      v_player[n].pos_x[0] += 0.20f;
+    if (v_player[n].orientation == OUEST && v_player[n].pos_x[0] > v_player[n].pos_x[1])
+      v_player[n].pos_x[0] -= 0.20f;
+    usleep(300);
     n++;
   }
   n = 0;
@@ -207,7 +216,7 @@ void  Rendering::Render(int fd, Game &parser)
     glRotatef(-60.0f,1.0f,0.0f,0.0f);
     glLightfv(GL_LIGHT0,GL_POSITION,Position);
 
-    drawList(modelList, CurFrame, parser.v_square, parser.v_player, parser.size_map_x);
+    drawList(modelList, CurFrame, parser.v_square, parser.v_player, parser.size_map_x, parser.size_map_y);
     Iface.drawInterface(window, windowControl, parser.v_player);
 
     if(Time1>NextFrame)

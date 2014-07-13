@@ -21,7 +21,7 @@ void	isset_standard(char (*buff)[4096], int cs, int *len)
   char	*buffer;
 
   buffer = *buff;
-//  std::cout << "[isset_standard]";
+  std::cout << "[isset_standard]\n";
   *len = read(0, buffer, 4096);
   if (*len > 0)
   {
