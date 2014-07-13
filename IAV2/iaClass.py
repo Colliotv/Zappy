@@ -11,6 +11,7 @@ class iaClass:
 		self.listVoir = []
 		self.myBroadcast = ""
 		self.lvl = 1
+		self.id = 0
 		self.listlvl2 = [1, "linemate"]
 		self.listlvl3 = [2, "linemate", "deraumere", "sibur"]
 		self.listlvl4 = [2, "linemate", "linemate", "sibur", "phiras", "phiras"]
@@ -29,8 +30,6 @@ class iaClass:
 		self.thystame = 0
 		self.fork = 0
 		self.id = 0
-		self.onWay = False
-		self.connectNbr = 0
 
 	def connect(self, serv, port, team):
 		try:
@@ -49,7 +48,7 @@ class iaClass:
 		self.dictionnaireLvl[6] = self.listlvl7
 		self.dictionnaireLvl[7] = self.listlvl8
 		self.listInventaire.insert(0, "{nourriture 10")
-		self.id = random.randint(1,1000000)
+		self.id = random.randint(1, 100000)
 
 	def sendCmd(self, cmd):
 		cmd += "\n"
@@ -95,6 +94,7 @@ class iaClass:
 			tmplist = msg.split('\n')
 			for tmp in tmplist:
 				if tmp.find("{n") != -1:
+					tmp = tmp.replace(", ", ",")
 					self.listInventaire = tmp.split(',')
 					self.linemate = int(self.listInventaire[1][8:])
 					self.deraumere = int(self.listInventaire[2][10:])
@@ -141,8 +141,6 @@ class iaClass:
 					b = True
 				elif tmp == "ko":
 					print("INCANTATION KO")
-					msgUp = "broadcast incantation ko"
-					self.sendCmd(msgUp)
 					return -1
 				elif tmp == "mort":
 					print("LE JOUEUR EST MORT")
@@ -183,33 +181,5 @@ class iaClass:
 					print("LE JOUEUR EST MORT")
 					sys.exit(0)
 				else:
-					if len(tmp) > 1:
-						self.listBroadcast.insert(0, tmp)
-
-	def Fork(self):
-		self.connexion.send("fork\n".encode())
-		b = False
-		while b != True:
-			msg = self.connexion.recv(4096).decode()
-			tmplist = msg.split('\n')
-			for tmp in tmplist:
-				if tmp.find("ok") != -1:
-					b = True
-					self.connectNbr += 1
-				else:
-					if len(tmp) > 1:
-						self.listBroadcast.insert(0, tmp)
-
-	def connect_Nbr(self):
-		self.connexion.send("connect_nbr\n".encode())
-		b = False
-		while b != True:
-			msg = self.connexion.recv(4096).decode()
-			tmplist = msg.split('\n')
-			for tmp in tmplist:
-				try:
-					self.connectNbr = int(tmp)
-					b = True
-				except:
 					if len(tmp) > 1:
 						self.listBroadcast.insert(0, tmp)
