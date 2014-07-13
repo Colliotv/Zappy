@@ -130,7 +130,6 @@ def checkReady(ia):
 					return 0
 
 def callOthers(ia):
-
 	ia.voir()
 	tabCall = []
 	for tmp in ia.listBroadcast:
@@ -279,7 +278,7 @@ def emptyCase(ia):
 			return 0
 		takeAll(ia)
 
-def algo(ia):
+def algo(ia, ip, port, team):
 	while ia.lvl != 8:
 		if checkFood(ia) == -1:
 			while ia.food < 20:
@@ -305,12 +304,33 @@ def algo(ia):
 				getStone(ia)
 
 def main():
-	if len(sys.argv) is not 4:
-		print("USAGE : ./ia.py [serv] [port] [team]")
-	else:
 		ia = iaClass()
-		ia.connect(sys.argv[1], sys.argv[2], sys.argv[3])
-		algo(ia)
+		i = 1
+		host = "null"
+		team = "null"
+		port = "null"
+		while i < len(sys.argv):
+			if sys.argv[i] == "-h":
+				i += 1
+				host = sys.argv[i]
+			elif sys.argv[i] == "-p":
+				i += 1
+				print("port")
+				port = sys.argv[i]
+			elif sys.argv[i] == "-n":
+				i += 1
+				print("n")
+				team = sys.argv[i]
+			i += 1
+		if team == "null" or port == "null":
+			print(team)
+			print(port)
+			print("USAGE : ./ia -h host -p port -n team")
+			sys.exit()
+		if host == "null":
+			host = "localhost"
+		ia.connect(host, port, team)
+		algo(ia, host, port, team)
 
 if __name__ == '__main__':
 	main()
