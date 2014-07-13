@@ -11,6 +11,7 @@ static char*	addS(char* r, char* ressource, int n) {
   int	i;
 
   i = 0;
+  rs = NULL;
   while (i < n)
     {
       asprintf(&rs, "%s %s", r, ressource);

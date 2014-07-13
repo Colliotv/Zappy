@@ -30,6 +30,7 @@ class iaClass:
 		self.fork = 0
 		self.id = 0
 		self.onWay = False
+		self.connectNbr = 0
 
 	def connect(self, serv, port, team):
 		try:
@@ -182,5 +183,33 @@ class iaClass:
 					print("LE JOUEUR EST MORT")
 					sys.exit(0)
 				else:
+					if len(tmp) > 1:
+						self.listBroadcast.insert(0, tmp)
+
+	def Fork(self):
+		self.connexion.send("fork\n".encode())
+		b = False
+		while b != True:
+			msg = self.connexion.recv(4096).decode()
+			tmplist = msg.split('\n')
+			for tmp in tmplist:
+				if tmp.find("ok") != -1:
+					b = True
+					self.connectNbr += 1
+				else:
+					if len(tmp) > 1:
+						self.listBroadcast.insert(0, tmp)
+
+	def connect_Nbr(self):
+		self.connexion.send("connect_nbr\n".encode())
+		b = False
+		while b != True:
+			msg = self.connexion.recv(4096).decode()
+			tmplist = msg.split('\n')
+			for tmp in tmplist:
+				try:
+					self.connectNbr = int(tmp)
+					b = True
+				except:
 					if len(tmp) > 1:
 						self.listBroadcast.insert(0, tmp)

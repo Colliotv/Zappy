@@ -3,15 +3,16 @@
 #include "serveur.h"
 #include "monitor.h"
 
-static void	sendingIAData(serveur *this, iaClients* ia, teams* team) {
+void	sendingIAData(serveur *this, iaClients* ia, teams* team) {
   char*		sending;
+
   asprintf(&sending, "%d\n", team->unaff_size);
   pushNode(ia->wrBuffer, sending);
   asprintf(&sending, "%d %d\n", this->size.x, this->size.y);
   pushNode(ia->wrBuffer, sending);
 }
 
-static void	push_in_waiting(serveur* this, wclients* node) {
+void	push_in_waiting(serveur* this, wclients* node) {
   teams*	team;
   iaClients*	ia;
 
@@ -31,15 +32,30 @@ static void	push_in_waiting(serveur* this, wclients* node) {
 	  sendingIAData(this, ia, team);
 	  if (ia->state == egg)
 	    avertMonitor(this, mConnectEgg(ia->num));
-	  avertMonitor(this, mNewPlayer(ia->num, ia->_p.x, ia->_p.y, ia->_o,
-					ia->lvl, node->team));
+	  avertMonitor(this, mNewPlayerendl(ia->num, ia->_p.x, ia->_p.y, ia->_o,
+					ia->lvl, team->name));
 	  node = del_waiting(this, node, false);
 	}
     }
+}
 
+void	delToMuch(serveur* this, wclients* node)
+{
+  int i;
+
+  i = 0;
+  while (node)
+    {
+      if (i < 5000)
+	node = (wclients*)node->_.next;
+      else
+	node = del_waiting(this, node, true);
+    }
 }
 
 void	actualize_IA(serveur* this, fd_set* rd, fd_set* wr, bool buffered) {
+  if (this->waiting)
+    delToMuch(this, this->waiting);
   if (this->waiting)
     push_in_waiting(this, this->waiting);
   actualizeBuffering(this->teams, rd, wr);

@@ -58,11 +58,13 @@ static int	getcmd(serveur* this, wclients* node, fd_set* rd) {
 }
 
 static int	match_wrong(serveur* this, wclients* node) {
-  if (!node)
-    return (0);
-  if (!getTeamById(this, node->team))
-    return (match_wrong(this, del_waiting(this, node, true)));
-  return (match_wrong(this, (wclients*)node->_.next));
+  while (node)
+    {
+      if (!getTeamById(this, node->team))
+	node = del_waiting(this, node, true);
+      else
+	node = (wclients*)node->_.next;
+    }
 }
 
 void	actualize_waiting(serveur* this, fd_set* rd, fd_set* wr) {

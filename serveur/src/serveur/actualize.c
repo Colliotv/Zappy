@@ -66,7 +66,8 @@ static int	fetchFDS(serveur* this, fd_set *rd, fd_set *wr) {
   return (max);
 }
 
-void	actualize(serveur* this) {
+void	actualize(serveur* this)
+{
   fd_set rd;
   fd_set wr;
   int	mx;

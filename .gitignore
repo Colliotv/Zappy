@@ -33,6 +33,9 @@
 #unignore auteur
 !auteur
 
+#unignore py
+!*.py
+
 #unignore readme (just in case)
 !readme*
 !README*

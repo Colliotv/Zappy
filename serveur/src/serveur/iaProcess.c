@@ -44,31 +44,39 @@ static void	depletNut(serveur* this, iaClients* ia) {
   pushNode(ia->wrBuffer, strdup("mort\n"));
 }
 
-static int	_proc(serveur* this, iaClients* ia, teams* team) {
+static iaClients*	_proc(serveur* this, iaClients* ia, teams* team) {
   if (!ia)
-    return (0);
+    return (NULL);
   if (ia->state == deleting && ia->wrBuffer->size)
-    return (_proc(this, ia->next, team));
+    return (ia->next);
   else if (ia->state == deleting)
-    return (_proc(this, delete_iaClient(team, ia), team));
+    return (delete_iaClient(team, ia));
   if (ia->state == unaffected)
-    return (_proc(this, ia->next, team));
+    return (ia->next);
   ia->pause -= (ia->pause > 0);
   if (ia->pause)
-    return (_proc(this, ia->next, team));
+    return (ia->next);
   ia->depletingNut -= 1;
   if (ia->state == egg)
-    avertMonitor(this, mPopEgg(ia->num));
+    {
+      avertMonitor(this, mPopEgg(ia->num));
+      team->size += 1;
+      team->unaff_size += 1;
+    }
   ia->state = alive;
   if (!ia->depletingNut)
     depletNut(this, ia);
   _cmd(this, ia, popNode(ia->rdBuffer));
-  return (_proc(this, ia->next, team));
+  return (ia->next);
 }
 
 void	iaProcess(serveur* this, teams* team) {
+  iaClients*	node;
+
   if (!team)
     return ;
-  _proc(this, team->list, team);
+  node = team->list;
+  while (node)
+    node = _proc(this, node, team);  
   iaProcess(this, team->next);
 }
