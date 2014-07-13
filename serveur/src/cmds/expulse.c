@@ -6,7 +6,8 @@
 #include "monitor.h"
 #include "serveur.h"
 
-static orientation	deductO(orientation o) {
+static orientation	deductO(orientation o)
+{
   if (o == gauche)
     return (droite);
   if (o == droite)
@@ -23,12 +24,12 @@ static void	deductP(serveur* this, position pp,
   p->x = pp.x;
   p->y = pp.y;
   p->x +=
-    (o == gauche) ? (-1) :
-    (o == droite) ? (+1) :
+    (o == gauche) ? (+1) :
+    (o == droite) ? (-1) :
     (0);
   p->y +=
     (o == haut) ? (-1) :
-    (o == bas) ? (+1) :
+    (o == bas)  ? (+1) :
     (0);
   if (p->y < 0)
     p->y = this->size.y;

@@ -7,14 +7,6 @@
 #include "serveur.h"
 #include "monitor.h"
 
-static void	addUnaff(serveur* this, iaClients* ia) {
-  teams*	team;
-
-  team = getTeam(this->teams, ia);
-  team->unaff_size += 1;
-  team->size += 1;
-}
-
 static void	iaForkInit(serveur* this, iaClients* _egg, iaClients* ia) {
   (void)this;
   _egg->iaClient = FD_NOSET;
@@ -45,7 +37,6 @@ void	iaFork		(serveur* this, iaClients* ia, char* i) {
   bzero(node->stash, sizeof(node->stash));
   (node->stash)[nourriture] = 10;
   ia->pause = pFork;
-  addUnaff(this, ia);
   pushNode(ia->wrBuffer, strdup("ok\n"));
   avertMonitor(this, mEndFork(node->num, ia->num, ia->_p.x, ia->_p.y));
 }

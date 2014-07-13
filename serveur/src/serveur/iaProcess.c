@@ -58,7 +58,11 @@ static int	_proc(serveur* this, iaClients* ia, teams* team) {
     return (_proc(this, ia->next, team));
   ia->depletingNut -= 1;
   if (ia->state == egg)
-    avertMonitor(this, mPopEgg(ia->num));
+    {
+      avertMonitor(this, mPopEgg(ia->num));
+      team->size += 1;
+      team->unaff_size += 1;
+    }
   ia->state = alive;
   if (!ia->depletingNut)
     depletNut(this, ia);
