@@ -36,7 +36,6 @@ static void	push_in_waiting(serveur* this, wclients* node) {
 	  node = del_waiting(this, node, false);
 	}
     }
-
 }
 
 void	actualize_IA(serveur* this, fd_set* rd, fd_set* wr, bool buffered) {
