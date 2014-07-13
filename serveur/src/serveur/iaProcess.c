@@ -25,9 +25,19 @@ static void	_cmd(serveur* this, iaClients* ia, char* cmd) {
   free(cmd);
 }
 
-static void	depletNut(iaClients* ia) {
+static void	depletNut(serveur* this, iaClients* ia) {
   ia->depletingNut = uLife;
   (ia->stash)[nourriture] -= 1;
+  avertMonitor(this,
+	       mStashPlayer(ia->num, ia->_p.x, ia->_p.y,
+			    (ia->stash)[nourriture],
+			    (ia->stash)[linemate],
+			    (ia->stash)[deraumere],
+			    (ia->stash)[sibur],
+			    (ia->stash)[mendiane],
+			    (ia->stash)[phiras],
+			    (ia->stash)[thystame]
+			    ));
   if ((ia->stash)[nourriture] > 0)
     return ;
   ia->state = deleting;
@@ -51,7 +61,7 @@ static int	_proc(serveur* this, iaClients* ia, teams* team) {
     avertMonitor(this, mPopEgg(ia->num));
   ia->state = alive;
   if (!ia->depletingNut)
-    depletNut(ia);
+    depletNut(this, ia);
   _cmd(this, ia, popNode(ia->rdBuffer));
   return (_proc(this, ia->next, team));
 }
