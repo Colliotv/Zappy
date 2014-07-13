@@ -98,6 +98,7 @@ def checkNbPlayer(ia):
 
 def checkCalled(ia):
 	checkReady(ia)
+	ia.voir()
 	if ia.onWay == True:
 		for tmp in ia.listBroadcast:
 			if "come" in tmp and int(tmp[15]) == ia.lvl and int(tmp[17:len(tmp)]) == ia.id:
@@ -107,9 +108,11 @@ def checkCalled(ia):
 			if "stop" in tmp and int(tmp[15]) == ia.lvl and int(tmp[17:len(tmp)]) == ia.id:
 				ia.myBroadcast = ""
 				ia.listBroadcast.clear()
+				ia.onWay = False
 				print("RECU STOP")
 				return -1
 		print("RIEN RECU")
+		ia.onWay = False
 	else:
 		return -1
 
@@ -132,23 +135,24 @@ def checkReady(ia):
 def callOthers(ia):
 
 	ia.voir()
-	tabCall = []
-	for tmp in ia.listBroadcast:
-		if "moi" in tmp:
-			print("recu moi")
-			if (len(tabCall)) < ia.listNbPlayer[ia.lvl - 1] - 1:
-				tabCall.insert(0, int(tmp[14:len(tmp)]))
-	i = 0
-	if len(tabCall) > 0:
-		while checkNbPlayer(ia) != 0:
-			if i == len(tabCall):
-				i = 0
-			if checkFood(ia) == -1:
-				return -1
-			print("J'APPELLE")
-			broadcast = "broadcast come " + str(ia.lvl) + "-" + str(tabCall[i])
-			ia.sendCmd(broadcast)
-			i += 1
+	if checkCalled(ia) != 0:
+		tabCall = []
+		for tmp in ia.listBroadcast:
+			if "moi" in tmp:
+				print("recu moi")
+				if (len(tabCall)) < ia.listNbPlayer[ia.lvl - 1] - 1:
+					tabCall.insert(0, int(tmp[14:len(tmp)]))
+		i = 0
+		if len(tabCall) > 0:
+			while checkNbPlayer(ia) != 0:
+				if i == len(tabCall):
+					i = 0
+				if checkFood(ia) == -1:
+					return -1
+				print("J'APPELLE")
+				broadcast = "broadcast come " + str(ia.lvl) + "-" + str(tabCall[i])
+				ia.sendCmd(broadcast)
+				i += 1
 
 	print("J'ENVOIE STOP")
 	mess = "broadcast stop " + str(ia.lvl) + "-" + str(ia.id)
@@ -281,6 +285,9 @@ def emptyCase(ia):
 
 def algo(ia):
 	while ia.lvl != 8:
+		print("------")
+		print("lvl =", ia.lvl)
+		print("------")
 		if checkFood(ia) == -1:
 			while ia.food < 20:
 				checkFood(ia)
