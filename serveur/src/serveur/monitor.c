@@ -19,7 +19,7 @@ void	avertMonitor(serveur* this, char* s, ... ) {
   while (monitor)
     {
       va_copy(cpy, ap);
-      vasprintf(&si, s, ap);
+      vasprintf(&si, s, cpy);
       pushNode(monitor->rdBuffer, si);
       monitor = monitor->next;
     }
