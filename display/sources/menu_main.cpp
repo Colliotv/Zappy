@@ -3,11 +3,12 @@
 #include    <string>
 #include    <unistd.h>
 #include    <SFML/Graphics.hpp>
+#include    <SFML/Config.hpp>
 #include    "Menu.hh"
-// #include    "Render.h"
 #include    "Framework.h"
 #include    "Game.hh"
 #include    "Rendering.hh"
+#include    "Movie.hpp"
 
 GLFWwindow* InitWindow(int ScrX, int ScrY);
 
@@ -45,19 +46,19 @@ void    buttonSwitcher(int dir, Menu &menu)
     }
 }
 
-void    exec_game(sf::RenderWindow &window, std::string ip, std::string hostname)
+void    exec_game(sf::RenderWindow &window, std::string ip, std::string port)
 {
     int fd;
     Game    parser;
     Rendering  displayEngine;
 
-    std::cout << "[" << ip << "]" << "{" << hostname << "}\n";
-//    fd = ConnectClientGraToServer(ip, hostname);
+    std::cout << "[" << ip << "]" << "{" << port << "}\n";
+//    fd = ConnectClientGraToServer(ip, port);
 //      int   cs;
-//  fd = connect_server(ip, hostname);
+//  fd = connect_server(ip, port);
 //  if (cs != EXIT_FAILURE)
     
-    if (my_connect(&fd, (char *)hostname.c_str(), (char *)ip.c_str()) == EXIT_SUCCESS)
+    if (my_connect(&fd, (char *)port.c_str(), (char *)ip.c_str()) == EXIT_SUCCESS)
     {
         parser.ClientRead(fd);
         window.close();
@@ -67,15 +68,18 @@ void    exec_game(sf::RenderWindow &window, std::string ip, std::string hostname
     }
 }
 
-
 void    exec_menu()
 {
     sf::RenderWindow window(sf::VideoMode(1200, 800), "Zappy");
-    Menu    menu;
+    sfe::Movie      movie;
+    Menu            menu;
+
+    movie.openFromFile("space scene.avi");
+    movie.play();
     
-   // menu.music.play();
-   while (window.isOpen())
-   {
+    menu.music.play();
+    while (window.isOpen())
+    {
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -90,22 +94,22 @@ void    exec_menu()
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
                     buttonSwitcher(1, menu);
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && menu.button == 3)
-                    exec_game(window, menu.ip, menu.hostname);
+                    exec_game(window, menu.ip, menu.port);
             }
             if (event.type == sf::Event::TextEntered)
             {
                 if (event.text.unicode >= 46 && event.text.unicode <= 58 && menu.button == 1 && menu.ip.size() < 16)
                     menu.ip.push_back(static_cast<char>(event.text.unicode));
-                else if (event.text.unicode >= 33 && event.text.unicode < 127 && menu.button == 2 && menu.hostname.size() < 12)
-                    menu.hostname.push_back(static_cast<char>(event.text.unicode));
+                else if (event.text.unicode >= 33 && event.text.unicode < 127 && menu.button == 2 && menu.port.size() < 12)
+                    menu.port.push_back(static_cast<char>(event.text.unicode));
                 else if (event.text.unicode == 8 && menu.button == 1 && menu.ip.size() > 0)
                     menu.ip.pop_back();
-                else if (event.text.unicode == 8 && menu.button == 2  && menu.hostname.size() > 0)
-                    menu.hostname.pop_back();
+                else if (event.text.unicode == 8 && menu.button == 2  && menu.port.size() > 0)
+                    menu.port.pop_back();
             }
         }
         menu.textIp.setString(menu.ip);
-        menu.textHost.setString(menu.hostname);
+        menu.textHost.setString(menu.port);
         window.clear();
         window.draw(menu.spriteBack);
         window.draw(menu.rect1);
