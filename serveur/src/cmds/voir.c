@@ -47,7 +47,7 @@ static char*	seeAt(serveur* this, iaClients* ia, int front, int side) {
   char*		rp;
 
   updatePosition(ia, front, -side, &p);
-  if (ia->_p.y < 0)
+  if (p.y < 0)
     p.y = this->size.y - 1;
   if (p.x < 0)
     p.x = this->size.x - 1;
