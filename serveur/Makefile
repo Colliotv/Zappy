@@ -32,9 +32,9 @@ MAIN	= src/main/main.c
 ###############
 SRC = $(ARGUES) $(MONITOR) $(SOCKRD) $(ERROR) $(BUFFER) $(CMDS) $(SERVER) $(MAIN)
 
-FLAGS	= -W -Wall -Wextra $(INC)              -g3
+FLAGS	= -W -Wall -Wextra $(INC) -O2             -g3
 CFLAGS	= $(FLAGS)
-LDFLAGS	=
+LDFLAGS	= -O2
 
 OBJ		= $(SRC:.c=.o)
 
