@@ -40,21 +40,34 @@ static void	deductP(serveur* this, position pp,
     p->x = 0;
 }
 
-static void	updatePos(iaClients* node, iaClients* exp,
-			  position *p, orientation o) {
+static void	updatePos(serveur*this,
+			  iaClients* node, iaClients* exp,
+			  expulse* e) {
   char* d;
 
   if (node->_p.x != exp->_p.x ||
       node->_p.y != exp->_p.y)
     return ;
-  asprintf(&d, "deplacement %d\n", o);
+  asprintf(&d, "deplacement %d\n", e->_o);
   pushNode(node->wrBuffer, d);
-  node->_p.x = p->x;
-  node->_p.y = p->y;
+  node->_p.x = e->_p.x;
+  node->_p.y = e->_p.y;
+  if (node->_p.x < 0)
+    node->_p.x = this->size.x -1;
+  if (node->_p.y < 0)
+    node->_p.y = this->size.y -1;
+  if (node->_p.x >= this->size.x)
+    node->_p.x = 0;
+  if (node->_p.y >= this->size.y)
+    node->_p.y = 0;
+  avertMonitor(this, mPositionPlayer(node->num,
+				     node->_p.x, node->_p.y,
+				     node->_o));
 }
 
-static bool	dispatchNewPosition(teams* node, iaClients* ignored,
-				    position *p, orientation o) {
+static bool	dispatchNewPosition(serveur* this,
+				    teams* node, iaClients* ignored,
+				    expulse* e) {
   iaClients*	c;
   bool		test1;
   bool		test2;
@@ -63,27 +76,27 @@ static bool	dispatchNewPosition(teams* node, iaClients* ignored,
     return (false);
   test1 = false;
   c = node->list;
-  while (c) {
-    if (c != ignored && c->iaClient != -1)
-      {
-	updatePos(c, ignored, p, o);
-	test1 = true;
-      }
-    c = c->next;
-  }
-  test2 = dispatchNewPosition(node->next, ignored, p, o);
+  while (c)
+    {
+      if (c != ignored && c->iaClient != -1)
+	{
+	  updatePos(this, c, ignored, e);
+	  test1 = true;
+	}
+      c = c->next;
+    }
+  test2 = dispatchNewPosition(this, node->next, ignored, e);
   return (test1 || test2);
 }
 
 void	iaExpulse	(serveur* this, iaClients* ia, char* i) {
-  position	p;
-  orientation	o;
+  expulse	e;
 
   (void)i;
-  o = deductO(ia->_o);
-  deductP(this, ia->_p, ia->_o, &p);
-  dispatchNewPosition(this->teams, ia, &p, o);
-  pushNode(ia->wrBuffer, strdup("ok\n"));
+  e._o = deductO(ia->_o);
+  deductP(this, ia->_p, ia->_o, &(e._p));
   avertMonitor(this, mExpulsePlayer(ia->num));
+  dispatchNewPosition(this, this->teams, ia, &e);
+  pushNode(ia->wrBuffer, strdup("ok\n"));
   ia->pause = 7;
 }

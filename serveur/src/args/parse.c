@@ -6,7 +6,8 @@
 #include "lerror.h"
 
 static void	fillin(struct args* this,
-		       enum argsType	opt, int *itt, char** args){
+		       enum argsType	opt, int *itt, char** args)
+{
   if (opt == port)
     this->port = atoi(args[*itt]);
   if (opt == X)
