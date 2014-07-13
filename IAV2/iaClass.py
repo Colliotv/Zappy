@@ -1,5 +1,6 @@
 import os, sys
 import socket
+import random
 
 class iaClass:
 	def __init__(self):
@@ -27,6 +28,8 @@ class iaClass:
 		self.phiras = 0
 		self.thystame = 0
 		self.fork = 0
+		self.id = 0
+		self.onWay = False
 
 	def connect(self, serv, port, team):
 		try:
@@ -45,6 +48,7 @@ class iaClass:
 		self.dictionnaireLvl[6] = self.listlvl7
 		self.dictionnaireLvl[7] = self.listlvl8
 		self.listInventaire.insert(0, "{nourriture 10")
+		self.id = random.randint(1,1000000)
 
 	def sendCmd(self, cmd):
 		cmd += "\n"
@@ -131,12 +135,9 @@ class iaClass:
 			msg = self.connexion.recv(4096).decode()
 			tmplist = msg.split('\n')
 			for tmp in tmplist:
-				print(tmp)
 				if tmp.find("niveau actuel") != -1:
 					self.lvl += 1
 					b = True
-					msgUp = "broadcast up mon gars"
-					self.sendCmd(msgUp)
 				elif tmp == "ko":
 					print("INCANTATION KO")
 					msgUp = "broadcast incantation ko"
