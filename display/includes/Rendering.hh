@@ -19,9 +19,9 @@ class Rendering
 		bool LoadTexture(char *TexName, GLuint TexHandle);
 		void loadObj(MD2Obj &object, char *pathMod, char *pathText);
 		void  drawObject(MD2Obj &model, float Tx, float Ty, float Tz, float Sx, float Sy, float Sz, float Rx, float Ry, float Rz, int &CurFrame);
-		void  drawList(MD2Obj *modelList, int &CurFrame, std::vector<square> &v_square, std::vector<player> &v_player, int size_map_x);
+		void  drawList(MD2Obj *, int &, std::vector<square> &, std::vector<player> &, int, int);
 		void  Render(int fd, Game &parser);
-
+		void  movePlayer(int);
 };
 
 #endif

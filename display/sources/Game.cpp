@@ -130,6 +130,8 @@ void Game::cmdPnwConnect(std::stringstream &iss)
   iss >> buff.team;
   buff.state = ALIVE;
   buff.cursor = 0;
+  buff.pos_x[1] = buff.pos_x[0];
+  buff.pos_y[1] = buff.pos_y[0];
   if (buff.orientation == 1)
     buff.orientation = 3;
   else if (buff.orientation == 3)
@@ -140,8 +142,6 @@ void Game::cmdPnwConnect(std::stringstream &iss)
   unsigned int i = 0;  
   std::vector<std::string> teamList;
   unsigned int n = 0, m = 0;
-
-
   while (n < v_player.size())
   {
     // std::cout << "nb"<< v_player[i].nb << " x"<< v_player[i].pos_x << " y" << v_player[i].pos_y << " orien" << v_player[i].orientation << " level" << v_player[i].level << " team[" <<  v_player[i].team << "]\n";
@@ -174,12 +174,12 @@ void Game::cmdPpoPosition(std::stringstream &iss)
   iss >> pos_x;
   iss >> pos_y;
   iss >> orientation;
-  // std::cout << "cmdPpoPosition nb_player " << nb_player << " .size()" << v_player.size() << std::endl;
+//  std::cout << "cmdPpoPosition nb_player " << nb_player << " .size()" << v_player.size() << std::endl;
   while (i <v_player.size())
   {
     if (v_player[i].nb == nb_player)
     {
-      // std::cout << v_player[i].pos_x << " y---------" << v_player[i].pos_y << std::endl;
+//      std::cout << "x" << pos_x << " y" << pos_y << std::endl;
       v_player[i].pos_x[0] = v_player[i].pos_x[1];
       v_player[i].pos_y[0] = v_player[i].pos_y[1];
 
@@ -190,6 +190,7 @@ void Game::cmdPpoPosition(std::stringstream &iss)
         v_player[i].orientation = 3;
       else if (v_player[i].orientation == 3)
         v_player[i].orientation = 1;
+//      sleep(1);
     }
     i++;
   }
@@ -439,8 +440,8 @@ void Game::cmdPdiPlayerDead(std::stringstream &iss)
   {
     if ( it->nb == nb_player )
     {
-      // std::cout << "***player delete\n";
-      it = v_player.erase(it); // Will return next valid iterator
+      //std::cout << "***player delete\n";
+      it = v_player.erase(it);
       break;
     }
     else
@@ -512,8 +513,6 @@ void	Game::isset_server(int fd)
       itt += 1;
     }
     std::string    data(buffer, itt);
-
-    std::map<std::string, int/*void(class::*)(stringstream&)*/>::iterator    it;
     std::stringstream iss(data);   
     std::string n;
 
