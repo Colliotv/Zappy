@@ -31,7 +31,6 @@ void	avertMap(serveur* this, clients* monitor) {
       p.y = 0;
       while (p.y < this->size.y)
 	{
-	  printf("loop found shiney, count [%d]!!\n", monitor->rdBuffer->size);
 	  r = GET_SQUARE(this, p.x, p.y);
 	  avertThisMonitor(monitor,
 			   mCaseMap(p.x, p.y,
