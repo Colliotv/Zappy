@@ -220,11 +220,7 @@ void  Rendering::Render(int fd, Game &parser)
 
     glTranslatef(-30.0f * parser.size_map_x, -100.0f,-1500.0f);
     glTranslatef(50.0f * Iface.move_X,25.0f * Iface.move_Z,-50.0f * Iface.move_Y);
-<<<<<<< HEAD
     glRotatef(-70.0f,1.0f,0.0f,0.0f);
-=======
-    glRotatef(-60.0f,1.0f,0.0f,0.0f);
->>>>>>> e812c3ff0b238dc3258047b1e20d7b3c943b9cd4
     glLightfv(GL_LIGHT0,GL_POSITION,Position);
 
     drawList(modelList, CurFrame, parser.v_square, parser.v_player, parser.size_map_x, parser.size_map_y);

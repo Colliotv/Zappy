@@ -29,21 +29,12 @@ LIBSFLAGS	+=	-I./sfml/branches/sfml2
 LIBSFLAGS	+=	-L./sfml/trunk/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 LIBSFLAGS	+=	-lGL -lGLU  -lglfw
 LIBSFLAGS	+=	`pkg-config --libs sndfile` -OpenAL
-LIBSFLAGS	+=	sfeMovie/libsfeMovie.so
-LIBSFLAGS	+=	sfeMovie/libavcodec.so
-LIBSFLAGS	+=	sfeMovie/libavfilter.so
-LIBSFLAGS	+=	sfeMovie/libavutil.so
-LIBSFLAGS	+=	sfeMovie/libswresample.so
-LIBSFLAGS	+=	sfeMovie/libavdevice.so
-LIBSFLAGS	+=	sfeMovie/libavformat.so
-LIBSFLAGS	+=	sfeMovie/libswscale.so
-LIBSFLAGS	+=	GLEW/libGLEW.so.1.9.0
 LIBSFLAGS	+=	-L./includes/
 
 all: 		$(NAME)
 
 $(NAME): 	$(OBJS)
-			$(CC) -o $(NAME) $(OBJS) $(CXXFLAGS) $(LIBSFLAGS)
+			$(CC) -o $(NAME) $(OBJS) $(CXXFLAGS) -L$(LIBSFLAGS)
 
 clean:
 			$(RM) $(OBJS)
