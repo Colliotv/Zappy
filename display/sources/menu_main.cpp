@@ -51,18 +51,11 @@ void    exec_game(sf::RenderWindow &window, std::string ip, std::string port)
     int fd;
     Game    parser;
     Rendering  displayEngine;
-
-    std::cout << "[" << ip << "]" << "{" << port << "}\n";
-//    fd = ConnectClientGraToServer(ip, port);
-//      int   cs;
-//  fd = connect_server(ip, port);
-//  if (cs != EXIT_FAILURE)
     
     if (my_connect(&fd, (char *)port.c_str(), (char *)ip.c_str()) == EXIT_SUCCESS)
     {
         parser.ClientRead(fd);
         window.close();
-        parser.initMap();
         displayEngine.Render(fd, parser);
         _exit(0);
     }
@@ -72,6 +65,7 @@ void    exec_menu()
 {
     sf::RenderWindow window(sf::VideoMode(1200, 800), "Zappy");
     // sfe::Movie      movie;
+
     Menu            menu;
 
     // movie.openFromFile("space scene.avi");

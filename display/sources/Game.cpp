@@ -7,11 +7,7 @@
 #include  "client.h"
 #include  "Game.hh"
 
-Game::Game(){}
-
-Game::~Game(){}
-
-void   Game::initMap()
+Game::Game()
 {
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("msz", &Game::cmdMszSizeMap));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("bct", &Game::cmdBctContentCase));
@@ -23,20 +19,19 @@ void   Game::initMap()
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pex", &Game::cmdPexExpulse));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pic", &Game::cmdPicIncantBegin));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pie", &Game::cmdPieIncantEnd));
-
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pfk", &Game::cmdPfkEggsSpawn));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pdr", &Game::cmdPdrDepositResource));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pgt", &Game::cmdPgtGetResource));
-
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("pdi", &Game::cmdPdiPlayerDead));
- 
-   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("enw", &Game::cmdEnwEggsSpawn));
-
+  cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("enw", &Game::cmdEnwEggsSpawn));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("eht", &Game::cmdEhtEclos));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("edi", &Game::cmdEdiDead));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("ebo", &Game::cmdEboEggsConnect));
   cmd.insert(std::pair<std::string, void(Game::*)(std::stringstream &)>("seg", &Game::cmdSegVictory));
+  player_win = "";
 }
+
+Game::~Game(){}
 
 void Game::cmdMszSizeMap(std::stringstream &iss)
 {
@@ -52,10 +47,9 @@ void Game::cmdMszSizeMap(std::stringstream &iss)
     y = 0;
     while (y < size_map_y)
     {
-//    	std::cout << "msz x[" << x << "] y{" << y << "}" << i << std::endl;
       buff.pos_x = x;
       buff.pos_y = y;
-      buff.food = -1;
+      buff.food = -42;
       buff.linemate = 0;
       buff.deraumere = 0;
       buff.sibur = 0;
@@ -70,20 +64,17 @@ void Game::cmdMszSizeMap(std::stringstream &iss)
     }
     x++;
   }
-  // std::cout << "cmdMszSizeMap size_map_x[" << size_map_x << "] size_map_y[" << size_map_y << "]\n";
 }
 
 void Game::cmdBctContentCase(std::stringstream &iss)
 {
   int   x;
   int   y;
-  // x +(y*xmax)
+
   iss >> x;
   iss >> y;
-//  std::cout << "bct x[" << x << "] y{" << y << "}" << x + (y * this->size_map_x) << std::endl;
   v_square[x + (y * this->size_map_x)].pos_x = x;
   v_square[x + (y * this->size_map_x)].pos_y = y;
-//  std::cout << "size vector " << v_square.size() << std::endl;
   iss >> v_square[x + (y * this->size_map_x)].food;
   iss >> v_square[x + (y * this->size_map_x)].linemate;
   iss >> v_square[x + (y * this->size_map_x)].deraumere;
@@ -91,8 +82,6 @@ void Game::cmdBctContentCase(std::stringstream &iss)
   iss >> v_square[x + (y * this->size_map_x)].mendiane;
   iss >> v_square[x + (y * this->size_map_x)].phiras;
   iss >> v_square[x + (y * this->size_map_x)].thystame;
-  if (x == size_map_x - 1 && y == size_map_y - 1)
-    map_ready = 1;
 }
 
 void Game::cmdTnaNameTeam(std::stringstream &iss)
@@ -100,26 +89,10 @@ void Game::cmdTnaNameTeam(std::stringstream &iss)
 	std::string   name_team;
 
 	iss >> name_team;
-	// std::cout << "cmdTnaNameTeam\n";
-//	unsigned int  i = 0;
-
-  // while (i < v_square.size())
-  // {
-  //   std::cout << v_square[i].pos_x << " " << v_square[i].pos_y << " food " << v_square[i].food << " thystame " << v_square[i].thystame << std::endl;
-  //   i++;
-  // }
 }
 
 void Game::cmdPnwConnect(std::stringstream &iss) 
 {
-//  std::map<std::string,  void(Game::*)(std::stringstream& iss)>::iterator    it;
-//  std::vector<square>::iterator i_square;
-
-  // for (int unsigned i = 0 ; i < v_square.size(); i++)
-  // {
-  //   std::cout << "{" << v_square[i].pos_x << ", " << v_square[i].pos_y << "} ";
-  //   std::cout << " " <<  v_square[i].food << " " << v_square[i].linemate << " " << v_square[i].deraumere << std::endl;
-  // } 
   player  buff;
 
   iss >> buff.nb;
@@ -138,13 +111,11 @@ void Game::cmdPnwConnect(std::stringstream &iss)
     buff.orientation = 1;
   v_player.push_back(buff);
 
-  // std::cout << "cmdPnwConnect ";
   unsigned int i = 0;  
   std::vector<std::string> teamList;
   unsigned int n = 0, m = 0;
   while (n < v_player.size())
   {
-    // std::cout << "nb"<< v_player[i].nb << " x"<< v_player[i].pos_x << " y" << v_player[i].pos_y << " orien" << v_player[i].orientation << " level" << v_player[i].level << " team[" <<  v_player[i].team << "]\n";
     i++;
     m = 0;
     while (m < teamList.size())
@@ -174,12 +145,10 @@ void Game::cmdPpoPosition(std::stringstream &iss)
   iss >> pos_x;
   iss >> pos_y;
   iss >> orientation;
-//  std::cout << "cmdPpoPosition nb_player " << nb_player << " .size()" << v_player.size() << std::endl;
   while (i <v_player.size())
   {
     if (v_player[i].nb == nb_player)
     {
-//      std::cout << "x" << pos_x << " y" << pos_y << std::endl;
       v_player[i].pos_x[0] = v_player[i].pos_x[1];
       v_player[i].pos_y[0] = v_player[i].pos_y[1];
 
@@ -190,7 +159,6 @@ void Game::cmdPpoPosition(std::stringstream &iss)
         v_player[i].orientation = 3;
       else if (v_player[i].orientation == 3)
         v_player[i].orientation = 1;
-//      sleep(1);
     }
     i++;
   }
@@ -205,14 +173,10 @@ void Game::cmdPlvNiveau(std::stringstream &iss)
   i = 0;
   iss >> nb;
   iss >> buff_niv;
-  // std::cout << "cmdPlvNiveau nb_player : " << nb;
   while (i < v_player.size())
   {
     if (nb == v_player[i].nb)
-    {
       v_player[i].level = buff_niv;
-      // std::cout << " i : " << i << " level : " << v_player[i].level << std::endl;
-    }
     i++;
   }
 }
@@ -222,11 +186,9 @@ void Game::cmdPinInventaire(std::stringstream &iss)
   int nb_player;
   unsigned int i = 0;
 
-  // std::cout << "cmdPinInventaire\n";
   iss >> nb_player;
   while (i < v_player.size())
   {
-    // std::cout << "nb_player : " << nb_player << " i " << i;
     if (nb_player == v_player[i].nb)
     {
         iss >> v_player[i].pos_x[0];
@@ -238,7 +200,6 @@ void Game::cmdPinInventaire(std::stringstream &iss)
         iss >> v_player[i].mendiane;
         iss >> v_player[i].phiras;
         iss >> v_player[i].thystame;
-        // std::cout << "*** x : " << v_player[i].pos_x << " y :" << v_player[i].pos_y << std::endl;
     }
     i++;
   }
@@ -246,7 +207,6 @@ void Game::cmdPinInventaire(std::stringstream &iss)
 
 void Game::cmdPexExpulse(std::stringstream &iss)
 {
-  // std::cout << "cmdPexExpulse\n";
   int  nb_player;
   int x;
   int y;
@@ -279,17 +239,15 @@ void Game::cmdPexExpulse(std::stringstream &iss)
   }
 }
 
-void Game::cmdPicIncantBegin(std::stringstream &iss) // animation Début 
+void Game::cmdPicIncantBegin(std::stringstream &iss)
 {
   int pos_x;
   int pos_y;
   int current_niv;
-  std::vector<int> player_buff;
 
   iss >> pos_x;
   iss >> pos_y;
   iss >> current_niv;
-  // std::cout << "cmdPicIncantBegin x " << pos_x << " y " << pos_y << " current_niv : " << current_niv;
   v_square[pos_x + (pos_y * this->size_map_x)].incant = 1;
 }
 
@@ -301,7 +259,6 @@ void Game::cmdPieIncantEnd(std::stringstream &iss)
   iss >> x;
   iss >> y;
   iss >> result;
-  // std::cout << "cmdPieIncantEnd ";
   v_square[x + (y * this->size_map_x)].incant = 0;
 }
 
@@ -310,7 +267,6 @@ void Game::cmdPfkEggsSpawn(std::stringstream &iss)
 	int   num_player;
 
 	iss >> num_player;
-	// std::cout << "cmdPfkEggsSpawn num_player : " << num_player << std::endl;
 }
 
 void Game::cmdPdrDepositResource(std::stringstream &iss)
@@ -323,7 +279,6 @@ void Game::cmdPdrDepositResource(std::stringstream &iss)
 
 	iss >> num_player;
 	iss >> num_resource;
-	// std::cout << "cmdPdrDepositResource num_player : " << num_player << " num_resource : " << num_resource << std::endl;
   while (i < v_player.size())
   {
     if (v_player[i].nb == num_player)
@@ -365,7 +320,6 @@ void Game::cmdPdrDepositResource(std::stringstream &iss)
         v_player[i].thystame--;
         v_square[x + (y * this->size_map_x)].thystame++;
       }
-      // std::cout << "*** bouffe déposé\n";
     }
     i++;
   }
@@ -377,11 +331,10 @@ void Game::cmdPgtGetResource(std::stringstream &iss)
 	int   num_resource;
   int   x;
   int   y;
+  unsigned int i = 0;
 
 	iss >> num_player;
 	iss >> num_resource;
-  unsigned int i = 0;
-  // std::cout << "cmdPgtGetResource num_player :" << num_player << " num_resource : " << num_resource << " ";
   while (i < v_player.size())
   {
     if (v_player[i].nb == num_player)
@@ -423,7 +376,6 @@ void Game::cmdPgtGetResource(std::stringstream &iss)
         v_player[i].thystame++;
         v_square[x + (y * this->size_map_x)].thystame--;
       }
-      // std::cout << "*** bouffe prise\n";
     }
     i++;
   }
@@ -434,13 +386,11 @@ void Game::cmdPdiPlayerDead(std::stringstream &iss)
   int nb_player;
 
   iss >> nb_player;
-  // std::cout << "cmdPdiPlayerDead  ";
   std::vector<player>::iterator it = v_player.begin();
   while ( it != v_player.end() )
   {
     if ( it->nb == nb_player )
     {
-      //std::cout << "***player delete\n";
       it = v_player.erase(it);
       break;
     }
@@ -461,8 +411,6 @@ void Game::cmdEnwEggsSpawn(std::stringstream &iss)
 	iss >> x;
 	iss >> y;
   v_square[x + (y * this->size_map_x)].egg++;
-	// std::cout << "cmdEnwEggsSpawn\n";
-
 }
 
 void Game::cmdEhtEclos(std::stringstream &iss)
@@ -470,7 +418,6 @@ void Game::cmdEhtEclos(std::stringstream &iss)
 	int num_eggs;
 
 	iss >> num_eggs;
-	// std::cout << "cmdEhtEclos\n";
 }
 
 void Game::cmdEboEggsConnect(std::stringstream &iss)
@@ -478,22 +425,19 @@ void Game::cmdEboEggsConnect(std::stringstream &iss)
 	int num_eggs;
 
 	iss >> num_eggs;
-	// std::cout << "cmdEboEggsConnect\n";
 }
 
 void Game::cmdEdiDead(std::stringstream &iss)
 {
 	int num_eggs;
 
-	iss >> num_eggs;	
-	// std::cout << "cmdEdiDead\n";
+	iss >> num_eggs;
 }
 
 void Game::cmdSegVictory(std::stringstream &iss)
 {
 	std::string   name_team;
 	iss >> name_team;
-  // std::cout << "cmdSegVictory equipe " << name_team << " gagne\n";
 }
 
 void	Game::isset_server(int fd)
@@ -515,14 +459,9 @@ void	Game::isset_server(int fd)
     std::string    data(buffer, itt);
     std::stringstream iss(data);   
     std::string n;
-
     iss >> n;
-    // std::cout << "\ncommand[" << data << "]~>";
     if (cmd.find(n) != cmd.end())
-    {
-      // std::cout << "EXIST\t: ";
       (this->*(cmd[n]))(iss);
-    }
     // else
       // std::cout << "DONT exist\t: ";
     iss.clear();

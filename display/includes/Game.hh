@@ -69,11 +69,10 @@ class Game
 		int                 fd_server;
 		int                 size_map_x;
 		int                 size_map_y;
-		int                 map_ready = 0;
+		std::string         player_win;
 
 		Game();
 		~Game();
-		void initMap();
 		void isset_server(int fd);
 		void ClientRead(int cs);
 		void cmdMszSizeMap(std::stringstream &);

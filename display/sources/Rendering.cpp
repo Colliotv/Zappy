@@ -22,8 +22,6 @@ using namespace std;
 
 #define FRAMEDELAY 70
 
- // int RunLevel = 1;
-
 Rendering::Rendering()
 {
   loadObj(modelList[0], (char *)"resources/Ground.md2", (char *)"resources/Grass.tga");
@@ -109,7 +107,6 @@ void  Rendering::drawList(MD2Obj *modelList, int &CurFrame, std::vector<square> 
 
   while (n < v_player.size())
   {
-//    std::cout << "orient [" << v_player[n].orientation << "] x0 [" << v_player[n].pos_x[0] << "] y0 [ " << v_player[n].pos_y[0] << "] x1 {" << v_player[n].pos_x[1] << "} y1 {" << v_player[n].pos_y[1] << "}" << std::endl;
     if (v_square[v_player[n].pos_x[0] + v_player[n].pos_y[0] * size_map_x].food != -1 && v_square[v_player[n].pos_x[0] + v_player[n].pos_y[0] * size_map_x].incant == 0 && v_player[n].cursor == 1)
       drawObject(modelList[1], 60.0f * v_player[n].pos_x[0], 60.0f * v_player[n].pos_y[0], 0.0f, 1.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, CurFrame);
     if (v_player[n].nb > 0)
@@ -136,9 +133,9 @@ void  Rendering::drawList(MD2Obj *modelList, int &CurFrame, std::vector<square> 
   n = 0;
   while (n < v_square.size())
   {
-    if (v_square[n].incant == 0)
+    if (v_square[n].food != -42 && v_square[n].incant == 0)
       drawObject(modelList[0], 60.0f * v_square[n].pos_x, 60.0f * v_square[n].pos_y, 0.0f, 1.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, CurFrame);
-    else if (v_square[n].incant == 1)
+    else if (v_square[n].food != -42 && v_square[n].incant == 1)
       drawObject(modelList[20], 60.0f * v_square[n].pos_x, 60.0f * v_square[n].pos_y, 0.0f, 1.0f, 1.0f, 0.5f, 0.0f, 0.0f, 0.0f, CurFrame);
     glTranslatef(60.0f * v_square[n].pos_x,60.0f * v_square[n].pos_y,15.0f);
     if (v_square[n].linemate > 0)
